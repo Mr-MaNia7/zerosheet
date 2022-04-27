@@ -5,24 +5,38 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Item {
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long itemId;
-    // @NotBlank(message = "Item Name is required")
+    
+    @NotBlank(message = "Item Name can not be Blank!")
     private String itemName;
-    // @NotBlank(message = "Quantity ")
-    // private String unit;
-    private Category category;
+    @NotBlank(message = "Measurement Unit can not be Blank! ")
+    private String unit;
+    @PositiveOrZero(message = "Unit-Price can not be Blank!")
+    private double unitPrice;
+    @PositiveOrZero(message = "Total Quantity can not be Blank!")
+    private int totalQuantity;
+    // @NotBlank(message = "Status category can not be Blank!")
+    private Status category;
+
+    // manual constructors for the commandlinerunner
+    public Item(String itemName, String unit, double unitPrice, int totalQuantity, Status category){
+        this.itemName = itemName;
+        this.unit = unit;
+        this.unitPrice = unitPrice;
+        this.totalQuantity = totalQuantity;
+        this.category = category;
+    }
 }
