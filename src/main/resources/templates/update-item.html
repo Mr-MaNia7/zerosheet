@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Item</title>
+</head>
+
+<body>
+    <div>
+        <h2>Update Item</h2>
+        <div class="row">
+            <div>
+                <form action="#" th:action="@{/updateitem/{itemId}(itemId=${item.itemId})}" th:object="${item}" method="post">
+                    
+                    
+                    <div class="row">
+                        <div>
+                            <label for="itemName">Item Name</label>
+                            <input type="text" th:field="*{itemName}" id="itemName" placeholder="Item-Name">
+                            <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></span>
+                        </div>
+                        <div>
+                            <label for="unit">Unit Measurement</label>
+                            <input type="text" th:field="*{unit}" id="unit" placeholder="PCS">
+                            <span th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
+                        </div>
+
+                        <div>
+                            <label for="unitPrice">Unit-Price</label>
+                            <input type="text" th:field="*{unitPrice}" id="unitPrice" placeholder="25.0">
+                            <span th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}"></span>
+                        </div>
+                        <div>
+                            <label for="totalQuantity">Total Quantity</label>
+                            <input type="text" th:field="*{totalQuantity}" id="totalQuantity" placeholder="100">
+                            <span th:if="${#fields.hasErrors('totalQuantity')}" th:errors="*{totalQuantity}"></span>
+                        </div>
+                        <div>
+                            <label for="category">Status</label>
+                            <input type="text" th:field="*{category}" id="category" placeholder="LOAN">
+                            <!-- <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mt-5">
+                            <input type="submit" class="btn btn-primary" value="Update Item">
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
