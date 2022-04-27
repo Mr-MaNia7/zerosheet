@@ -6,11 +6,11 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class CategoryConverter implements
- AttributeConverter<Category, String> {
+public class StatusConverter implements
+ AttributeConverter<Status, String> {
 
     @Override
-    public String convertToDatabaseColumn(Category category) {
+    public String convertToDatabaseColumn(Status category) {
         if (category == null) {
             return null;
         }
@@ -18,11 +18,11 @@ public class CategoryConverter implements
     }
 
     @Override
-    public Category convertToEntityAttribute(String code) {
+    public Status convertToEntityAttribute(String code) {
         if (code == null){
             return null;
         }
-        return Stream.of(Category.values())
+        return Stream.of(Status.values())
             .filter(c -> c.getCode().equals(code))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);

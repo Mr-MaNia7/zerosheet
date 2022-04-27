@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Category {
-    SPORT("S"), MUSIC("M"), TECHNOLOGY("T");
-    
+public enum Status {
+    MAINTENANCE("M"), LOAN("L"), AVAILABLE("A");
     private String code;
 }
 
