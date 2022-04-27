@@ -1,5 +1,9 @@
 package com.mania.zerosheet;
 
+import com.mania.zerosheet.Items.Category;
+import com.mania.zerosheet.Items.Item;
+import com.mania.zerosheet.Items.ItemRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

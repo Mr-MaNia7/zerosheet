@@ -1,4 +1,4 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Items;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

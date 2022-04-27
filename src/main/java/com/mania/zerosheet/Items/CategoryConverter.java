@@ -1,4 +1,4 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Items;
 
 import java.util.stream.Stream;
 

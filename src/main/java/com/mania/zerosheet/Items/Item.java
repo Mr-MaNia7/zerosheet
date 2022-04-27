@@ -1,4 +1,4 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Items;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
