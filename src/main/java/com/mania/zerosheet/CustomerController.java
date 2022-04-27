@@ -19,7 +19,8 @@ public class CustomerController {
   
   // from everywhere
   @GetMapping("/")
-  public String showHomePage(Customer customer){
+  public String showHomePage(Customer customer, Model model){
+    model.addAttribute("customers", customerRepository.findAll());
     return "index";
   }
 
