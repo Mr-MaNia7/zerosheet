@@ -1,6 +1,6 @@
 package com.mania.zerosheet;
 
-import com.mania.zerosheet.Items.Category;
+import com.mania.zerosheet.Items.Status;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 
@@ -17,7 +17,7 @@ public class ZerosheetApplication {
 	@Bean
 	public CommandLineRunner dataSeeder(ItemRepository repo){
 		return args -> {
-			repo.save(new Item(14L, "Phone", Category.MUSIC));
+			repo.save(new Item("Phone","PCS", 2000, 22, Status.AVAILABLE));
 		};
 	}
 }
