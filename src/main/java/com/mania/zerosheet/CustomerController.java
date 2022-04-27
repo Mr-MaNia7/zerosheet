@@ -16,10 +16,20 @@ public class CustomerController {
   public CustomerController(CustomerRepository customerRepository) {
     this.customerRepository = customerRepository;
   }
+  
+  // from everywhere
+  @GetMapping("/")
+  public String showHomePage(Customer customer){
+    return "index";
+  }
+
+  // from index
   @GetMapping("/new")
   public String showSignUpForm(Customer customer) {
     return "add-customer";
   }
+
+  // from index
   @GetMapping("/edit/{id}")
   public String showUpdateForm(@PathVariable("id") long id, Model model) {
     Customer customer =
@@ -29,6 +39,8 @@ public class CustomerController {
     model.addAttribute("customer", customer);
     return "update-customer";
   }
+  
+  // from index
   @GetMapping("/delete/{id}")
   public String deleteUser(@PathVariable("id") long id, Model model) {
     Customer customer =
@@ -39,6 +51,8 @@ public class CustomerController {
     model.addAttribute("customers", customerRepository.findAll());
     return "index";
   }
+
+  // from add-customer
   @PostMapping("/addcustomer")
   public String addUser(@Valid Customer customer, BindingResult result, Model model) {
     if (result.hasErrors()) {
@@ -48,6 +62,8 @@ public class CustomerController {
     model.addAttribute("customers", customerRepository.findAll());
     return "index";
   }
+
+  // from update-customer
   @PostMapping("/update/{id}")
   public String updateUser(
       @PathVariable("id") long id, @Valid Customer customer, BindingResult result, Model model) {

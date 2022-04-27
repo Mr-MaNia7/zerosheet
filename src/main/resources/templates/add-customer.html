@@ -13,6 +13,8 @@
         <h2>New Customer</h2>
         <div>
             <div>
+
+
                 <form action="#" th:action="@{/addcustomer}" th:object="${customer}" method="post">
                     <div class="row">
                         <div>
@@ -30,6 +32,23 @@
                             <input type="text" th:field="*{email}" id="email" placeholder="Email">
                             <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                         </div>
+
+                        <div>
+                            <label for="phoneNumber">PhoneNumber</label>
+                            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="251">
+                            <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+                        </div>
+                        <div>
+                            <label for="houseNumber">HouseNumber</label>
+                            <input type="text" th:field="*{houseNumber}" id="houseNumber" placeholder="333">
+                            <!-- <span th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></span> -->
+                        </div>
+                        <div>
+                            <label for="city">City or Town</label>
+                            <input type="text" th:field="*{city}" id="city" placeholder="Addis Ababa">
+                            <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div>
@@ -37,6 +56,8 @@
                         </div>
                     </div>
                 </form>
+
+
             </div>
         </div>
     </div>

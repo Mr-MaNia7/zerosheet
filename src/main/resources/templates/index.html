@@ -15,12 +15,17 @@
                 <h2 th:case="null">No Customers.</h2>
                 <div th:case="*">
                     <h2>Customers</h2>
+
+
                     <table border="1">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
                                 <th>Email</th>
+                                <th>PhoneNumber</th>
+                                <th>HouseNumber</th>
+                                <th>City</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -30,6 +35,9 @@
                                 <td th:text="${customer.name}"></td>
                                 <td th:text="${customer.surname}"></td>
                                 <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.phoneNumber}"></td>
+                                <td th:text="${customer.houseNumber}"></td>
+                                <td th:text="${customer.city}"></td>
                                 <td>
                                     <a th:href="@{/edit/{id}(id=${customer.id})}">EDIT</a>
                                 </td>
@@ -39,6 +47,8 @@
                             </tr>
                         </tbody>
                     </table>
+
+
                 </div>
                 <p>
                     <a href="/new">Add Customer</a>
