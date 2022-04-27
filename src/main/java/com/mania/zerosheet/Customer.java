@@ -16,17 +16,17 @@ public class Customer {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
-  @NotBlank(message = "Name is required")
+  @NotBlank(message = "Customer Name is required")
   private String name;
-  @NotBlank(message = "Surname is required")
+  @NotBlank(message = "Customer Surname is required")
   private String surname;
-  @NotBlank(message = "Email is required")
+  @NotBlank(message = "Customer Email Address is required")
   private String email;
   
-  @NotBlank(message = "Phone number is required")
+  @NotBlank(message = "Customer Phone number is required")
   private String phoneNumber;
   private String houseNumber;
-  @NotBlank(message = "City or Town is required")
+  @NotBlank(message = "Customer City or Town is required")
   private String city;
   
 
