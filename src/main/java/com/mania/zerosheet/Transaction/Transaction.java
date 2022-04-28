@@ -1,6 +1,8 @@
 package com.mania.zerosheet.Transaction;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,6 +20,7 @@ import lombok.Setter;
 @Entity
 public class Transaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long transId;
 
     // Owning side - Many side
