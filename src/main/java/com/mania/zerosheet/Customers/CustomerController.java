@@ -1,4 +1,4 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Customers;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,10 +1,16 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Customers;
+
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+
+import com.mania.zerosheet.Transaction.Transaction;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,6 +35,9 @@ public class Customer {
   @NotBlank(message = "Customer City or Town is required")
   private String city;
   
+  // Inverse side - One side
+  @OneToMany(mappedBy = "customer")
+  Set<Transaction> transactions;
 
   // constructors
   public Customer() {}

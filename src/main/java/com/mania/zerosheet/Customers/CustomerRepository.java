@@ -1,4 +1,4 @@
-package com.mania.zerosheet;
+package com.mania.zerosheet.Customers;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
