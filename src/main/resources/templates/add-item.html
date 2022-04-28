@@ -37,10 +37,15 @@
                             <input type="text" th:field="*{totalQuantity}" id="totalQuantity" placeholder="100">
                             <span th:if="${#fields.hasErrors('totalQuantity')}" th:errors="*{totalQuantity}"></span>
                         </div>
+
+                        <!-- Drop Down Menu -->
                         <div>
-                            <label for="category">Status</label>
-                            <input type="text" th:field="*{category}" id="category" placeholder="LOAN">
-                            <!-- <span th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span> -->
+                            <label for="category">Choose a Status</label>
+                            <select th:field="*{category}" id="category"    >
+                                <option value="AVAILABLE">Available</option>
+                                <option value="LOAN">On Loan</option>
+                                <option value="MAINTENANCE">In Maintenance</option>
+                            </select>
                         </div>
 
                     </div>
