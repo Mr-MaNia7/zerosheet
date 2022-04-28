@@ -9,11 +9,11 @@
 <body>
     <h2>Completed Transactions</h2>
     <div>
-        <li th:each = "trans : ${transactions}">
-            <ul th:text="${trans.transName}"></ul>
-            <ul th:text="${trans.item}"></ul>
-            <ul th:text="${trans.customer}"></ul>
-        </li>
+        <ul th:each = "trans : ${transactions}">
+            <li th:text="${trans.transName}"></li>
+            <li th:text="${trans.item}">No Item</li>
+            <li th:text="${trans.customer}">No Customer</li>
+        </ul>
     </div>
 </body>
 </html>
