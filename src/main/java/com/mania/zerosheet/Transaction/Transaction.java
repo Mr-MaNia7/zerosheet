@@ -4,10 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +31,9 @@ public class Transaction {
     
     private String transName;
 
+    public Transaction(String transName){
+        this.transName = transName;
+        // this.item = item;
+        // this.customer = customer;
+    }
 }
