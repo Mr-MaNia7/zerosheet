@@ -27,16 +27,14 @@ public class ItemController {
         return "add-item";
     }//
     // from items page
-    @GetMapping(value="/edititem/{itemId}")
-    public String showUpdateItemForm(@PathVariable("itemId") long itemId, @Valid Item item, 
-    BindingResult result, Model model) {
-        if (result.hasErrors()){
-            item.setItemId(itemId);
-            return "update-item";
-        }
-        itemRepository.save(item);
-        model.addAttribute("items", itemRepository.findAll());
-        return "items";
+    @GetMapping("/edititem/{itemId}")
+    public String showUpdateItemForm(@PathVariable("itemId") long itemId, Model model) {
+        Item item =
+            itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
+        model.addAttribute("item", item);
+        return "update-item";
     }
     // from items page
     @GetMapping(value="/deleteitem/{itemId}")
@@ -72,5 +70,4 @@ public class ItemController {
         model.addAttribute("items", itemRepository.findAll());
         return "items";
     }
-    
 }

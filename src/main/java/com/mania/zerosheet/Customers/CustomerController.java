@@ -36,7 +36,7 @@ public class CustomerController {
     Customer customer =
         customerRepository
             .findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
+            .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
     model.addAttribute("customer", customer);
     return "update-customer";
   }

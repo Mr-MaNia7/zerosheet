@@ -5,7 +5,6 @@ import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +18,7 @@ public class ZerosheetApplication {
 	@Bean
 	public CommandLineRunner dataSeeder(ItemRepository repo, TransactionRepository trepo){
 		return args -> {
-			repo.save(new Item("Phone","PCS", 2000, 22, Status.AVAILABLE));
+			repo.save(new Item("Phone","PCS", 2000, 22, 2, Status.AVAILABLE));
 			trepo.save(new Transaction("test1"));
 		};
 	}
