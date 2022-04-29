@@ -21,6 +21,7 @@
                                 <th>Unit</th>
                                 <th>Unit-Price</th>
                                 <th>Total Quantity</th>
+                                <th>Expected Area Coverage</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -32,6 +33,7 @@
                                 <td th:text="${item.unit}"></td>
                                 <td th:text="${item.unitPrice}"></td>
                                 <td th:text="${item.totalQuantity}"></td>
+                                <td th:text="${item.areaCoverage}"></td>
                                 <td th:text="${item.category}"></td>
                                 <td>
                                     <a th:href="@{/edititem/{itemId}(itemId=${item.itemId})}">EDIT</a>

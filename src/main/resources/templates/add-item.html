@@ -37,7 +37,11 @@
                             <input type="text" th:field="*{totalQuantity}" id="totalQuantity" placeholder="100">
                             <span th:if="${#fields.hasErrors('totalQuantity')}" th:errors="*{totalQuantity}"></span>
                         </div>
-
+                        <div>
+                            <label for="areaCoverage">Expected Area Coverage</label>
+                            <input type="text" th:field="*{areaCoverage}" id="areaCoverage" placeholder="100">
+                            <span th:if="${#fields.hasErrors('areaCoverage')}" th:errors="*{areaCoverage}"></span>
+                        </div>
                         <!-- Drop Down Menu -->
                         <div>
                             <label for="category">Choose a Status</label>
