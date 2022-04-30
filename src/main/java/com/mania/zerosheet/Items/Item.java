@@ -31,7 +31,7 @@ public class Item {
     private double unitPrice;
     @PositiveOrZero(message = "Total Quantity can not be Negative or Zero!")
     private int totalQuantity;
-    @Positive(message = "Area Coverage can not be Negative or Zero")
+    @Positive(message = "Area Coverage can not be Negative or Zero!")
     private double areaCoverage;
     // @NotBlank(message = "Status category can not be Blank!")
     private Status category;
