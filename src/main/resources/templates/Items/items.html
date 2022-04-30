@@ -36,10 +36,10 @@
                                 <td th:text="${item.areaCoverage}"></td>
                                 <td th:text="${item.category}"></td>
                                 <td>
-                                    <a th:href="@{/edititem/{itemId}(itemId=${item.itemId})}">EDIT</a>
+                                    <a th:href="@{items/edititem/{itemId}(itemId=${item.itemId})}">EDIT</a>
                                 </td>
                                 <td>
-                                    <a th:href="@{/deleteitem/{itemId}(itemId=${item.itemId})}">DELETE</a>
+                                    <a th:href="@{items/deleteitem/{itemId}(itemId=${item.itemId})}">DELETE</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -47,7 +47,10 @@
                 </div>
             </div>
             <div>
-                <a href="/newitem">Add Item</a>
+                <ul>
+                    <li><a href="items/newitem">Add Item</a></li>
+                </ul>
+               
             </div>
 </body>
 </html>

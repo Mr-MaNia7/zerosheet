@@ -5,59 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HomePage</title>
 </head>
 
-<body>
-    <div th:switch="${customers}">
-        <div class="row">
-            <div>
-                <h2 th:case="null">No Customers.</h2>
-                <div th:case="*">
-                    <h2>Customers</h2>
-
-
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Email</th>
-                                <th>PhoneNumber</th>
-                                <th>HouseNumber</th>
-                                <th>City</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="customer : ${customers}">
-                                <td th:text="${customer.name}"></td>
-                                <td th:text="${customer.surname}"></td>
-                                <td th:text="${customer.email}"></td>
-                                <td th:text="${customer.phoneNumber}"></td>
-                                <td th:text="${customer.houseNumber}"></td>
-                                <td th:text="${customer.city}"></td>
-                                <td>
-                                    <a th:href="@{/edit/{id}(id=${customer.id})}">EDIT</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{/delete/{id}(id=${customer.id})}">DELETE</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-
-                </div>
-                <ul>
-                    <li><a href="/new">Add Customer</a></li>
-                    <li><a href="/items">View Items</a></li>
-                    <li><a href="/transactions">View Transactions</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<body>  
+    <ul>
+        <li><a href="/customers">View Customers</a></li>
+        <li><a href="/items">View Items</a></li>
+        <li><a href="/transactions">View Transactions</a></li>
+    </ul>
 </body>
 
 </html>

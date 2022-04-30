@@ -13,9 +13,7 @@
         <h2>Update Item</h2>
         <div class="row">
             <div>
-                <form action="#" th:action="@{/updateitem/{itemId}(itemId=${item.itemId})}" th:object="${item}" method="post">
-                    
-                    
+                <form action="#" th:action="@{/updateitem/{itemId}(itemId=${item.itemId})}" th:object="${item}" method="post">             
                     <div class="row">
                         <div>
                             <label for="itemName">Item Name</label>
@@ -58,8 +56,6 @@
                             <input type="submit" class="btn btn-primary" value="Update Item">
                         </div>
                     </div>
-
-
                 </form>
             </div>
         </div>
