@@ -16,28 +16,55 @@ public class ItemController {
     public ItemController(ItemRepository itemRepository){
         this.itemRepository = itemRepository;
     }
-
+    
+    // from home to items
     @GetMapping("/items")
     public String showItemsPage(Item item, Model model){
         model.addAttribute("items", itemRepository.findAll());
-        return "items";
-    }//
-    @GetMapping("/newitem")
+        return "Items/items";
+    }
+    
+    // from items to add-item
+    @GetMapping("items/newitem")
     public String showItemAddForm(Item item){
-        return "add-item";
-    }//
-    // from items page
-    @GetMapping("/edititem/{itemId}")
+        return "Items/add-item";
+    }
+    // from add-item redirect to items
+    @PostMapping(value="/additem")
+    public String addItem(@Valid Item item, BindingResult result, Model model){
+        if (result.hasErrors()){
+            return "Items/add-item";
+        }
+        itemRepository.save(item);
+        model.addAttribute("items", itemRepository.findAll());
+        return "redirect:/items";
+    }
+    
+    // from items to update-item
+    @GetMapping("items/edititem/{itemId}")
     public String showUpdateItemForm(@PathVariable("itemId") long itemId, Model model) {
         Item item =
             itemRepository
                 .findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
         model.addAttribute("item", item);
-        return "update-item";
+        return "Items/update-item";
     }
-    // from items page
-    @GetMapping(value="/deleteitem/{itemId}")
+    // from update-item (post and) redirect to items
+    @PostMapping(value="/updateitem/{itemId}")
+    public String updateItem(@PathVariable("itemId") long itemId, @Valid Item item,
+    BindingResult result, Model model) {
+        if (result.hasErrors()){
+            item.setItemId(itemId);
+            return "Items/update-item";
+        }
+        itemRepository.save(item);
+        model.addAttribute("items", itemRepository.findAll());
+        return "redirect:/items";
+    }
+
+    // from items (delete and) redirect to items
+    @GetMapping(value="items/deleteitem/{itemId}")
     public String deleteItem(@PathVariable("itemId") long itemId, Model model) {
         Item item = 
             itemRepository
@@ -45,29 +72,6 @@ public class ItemController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
     itemRepository.delete(item);
     model.addAttribute("items", itemRepository.findAll());
-    return "items";
-    }
-    
-    // from add-item page
-    @PostMapping("/additem")
-    public String addItem(@Valid Item item, BindingResult result, Model model){
-        if (result.hasErrors()){
-            return "add-item";
-        }
-        itemRepository.save(item);
-        model.addAttribute("items", itemRepository.findAll());
-        return "items";
-    }
-    // from update-item
-    @PostMapping(value="/updateitem/{itemId}")
-    public String updateItem(@PathVariable("itemId") long itemId, @Valid Item item,
-    BindingResult result, Model model) {
-        if (result.hasErrors()){
-            item.setItemId(itemId);
-            return "update-item";
-        }
-        itemRepository.save(item);
-        model.addAttribute("items", itemRepository.findAll());
-        return "items";
-    }
+    return "redirect:/items";
+    }   
 }
