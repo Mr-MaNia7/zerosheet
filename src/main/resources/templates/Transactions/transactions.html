@@ -17,6 +17,8 @@
                         <thead>
                             <tr>
                                 <th>Transaction Name</th>
+                                <th>Customer</th>
+                                <th>Item</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -24,6 +26,8 @@
                         <tbody>
                             <tr th:each="transaction : ${transactions}">
                                 <td th:text="${transaction.transName}"></td>
+                                <td th:text="${transaction.customer}"></td>
+                                <td th:text="${transaction.item}"></td>
                                 <td>
                                     <a th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}">EDIT</a>
                                 </td>

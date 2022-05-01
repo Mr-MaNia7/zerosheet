@@ -18,6 +18,24 @@
                             <input type="text" th:field="*{transName}" id="transName" placeholder="Transaction-Name">
                             <span th:if="${#fields.hasErrors('transName')}" th:errors="*{transName}"></span>
                         </div>
+                        <!-- Drop Down Menu -->
+                        <div>
+                            <label for="customer">Choose a customer</label>
+                            <select th:field="*{customer}" id="customer">
+                                <div th:each="customer: ${customers}">
+                                    <option th:value="${customer.name}" th:text="${customer.name}"></option>
+                                </div>
+                            </select>
+                        </div>
+                        <!-- Drop Down Menu -->
+                        <div>
+                            <label for="item">Choose an item</label>
+                            <select th:field="*{item}" id="item">
+                                <div th:each="item: ${items}">
+                                    <option th:value="${item.itemName}" th:text="${item.itemName}"></option>
+                                </div>
+                            </select>
+                        </div>
                     </div>
                     <div class="row">
                         <div>
