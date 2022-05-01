@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import com.mania.zerosheet.Transaction.Transaction;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Item {
     @Id
@@ -27,9 +30,9 @@ public class Item {
     private String itemName;
     @NotBlank(message = "Measurement Unit can not be Blank! ")
     private String unit;
-    @PositiveOrZero(message = "Unit-Price can not be Negative or Zero!")
+    @PositiveOrZero(message = "Unit-Price can not be Negative")
     private double unitPrice;
-    @PositiveOrZero(message = "Total Quantity can not be Negative or Zero!")
+    @PositiveOrZero(message = "Total Quantity can not be Negative")
     private int totalQuantity;
     @Positive(message = "Area Coverage can not be Negative or Zero!")
     private double areaCoverage;
@@ -42,7 +45,7 @@ public class Item {
 
     // manual constructors for the commandlinerunner
     public Item(String itemName, String unit, double unitPrice, 
-    int totalQuantity, double areaCoverage, Status category){
+    int totalQuantity, double areaCoverage, Status category) {
         this.itemName = itemName;
         this.unit = unit;
         this.unitPrice = unitPrice;

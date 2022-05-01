@@ -32,7 +32,7 @@ public class CustomerController {
 
   // from add-customer redirect to customers 
   @PostMapping("/addcustomer")
-  public String addUser(@Valid Customer customer, BindingResult result, Model model) {
+  public String addCustomer(@Valid Customer customer, BindingResult result, Model model) {
     if (result.hasErrors()) {
       return "Customers/add-customer";
     }
