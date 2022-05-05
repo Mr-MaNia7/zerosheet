@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
-@SessionAttributes("customerOrder")
+@SessionAttributes("customer")
 public class OrderController {
     private final CustomerRepository customerRepository;
-
+    
     @GetMapping("/orders/current")
     public String orderForm(Model model) {
-        return "Forms/orderForm";
+        return "Forms/customer-info";
     }
     @PostMapping("/orders")
     public String processOrder(@Valid Customer customer, 
@@ -29,6 +29,8 @@ public class OrderController {
             return "Forms/orderForm";
         }
         
+        // System.out.println(customer.getId()); // debug line
+        customer.getTransactions().forEach(transaction -> transaction.setCustomer(customer));
         this.customerRepository.save(customer);
         status.setComplete();
         return "redirect:/transactions";
