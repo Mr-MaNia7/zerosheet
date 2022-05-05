@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Other files ###
+src/plan/
+# .gitignore
+README.md
+CONTRIBUTING.md
