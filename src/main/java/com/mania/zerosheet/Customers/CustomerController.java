@@ -1,28 +1,24 @@
 package com.mania.zerosheet.Customers;
 
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class CustomerController {
   private final CustomerRepository customerRepository;
-  @Autowired
-  public CustomerController(CustomerRepository customerRepository) {
-    this.customerRepository = customerRepository;
-  }
 
-  // from index to customers, from redirect customers to customers
+  // from index, or redirect to customers
   @GetMapping("/customers")
   public String showCustomers(Customer customer, Model model){
     model.addAttribute("customers", customerRepository.findAll());
-    System.out.println(customerRepository.findAll());
-    return "Customers/customers";
+    return "Customers/view-customers";
   }
 
   // from customers to add-customer
@@ -39,7 +35,7 @@ public class CustomerController {
     }
     customerRepository.save(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/customers"; //redirected to @GetMapping(/customers)
+    return "redirect:/view-customers"; //redirected to @GetMapping(/customers)
   }
 
   // from customers to update-customer
@@ -63,7 +59,7 @@ public class CustomerController {
     }
     customerRepository.save(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/customers";
+    return "redirect:/view-customers";
   }
 
   // from customers page
@@ -75,6 +71,6 @@ public class CustomerController {
             .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
     customerRepository.delete(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/customers";
+    return "redirect:/view-customers";
   }
 }

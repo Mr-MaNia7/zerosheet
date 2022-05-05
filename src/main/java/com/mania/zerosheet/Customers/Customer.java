@@ -1,7 +1,7 @@
 package com.mania.zerosheet.Customers;
 
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Customer implements Serializable{
   private static final long serialVersionUID = 1L;
-  // fields
+  
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
@@ -42,4 +42,14 @@ public class Customer implements Serializable{
   public void addTransaction(Transaction transaction) {
     this.transactions.add(transaction);
   }
+
+  public Customer(String name, String surname, String email,
+    String phoneNumber, String houseNumber, String city) {
+      this.name = name;
+      this.surname = surname;
+      this.email = email;
+      this.phoneNumber = phoneNumber;
+      this.houseNumber = houseNumber;
+      this.city = city;
+    }
 }
