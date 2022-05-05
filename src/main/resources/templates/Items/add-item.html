@@ -25,7 +25,6 @@
                             <input type="text" th:field="*{unit}" id="unit" placeholder="PCS">
                             <span th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
                         </div>
-
                         <div>
                             <label for="unitPrice">Unit-Price</label>
                             <input type="text" th:field="*{unitPrice}" id="unitPrice" placeholder="25.0">

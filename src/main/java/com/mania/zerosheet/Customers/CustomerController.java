@@ -21,6 +21,7 @@ public class CustomerController {
   @GetMapping("/customers")
   public String showCustomers(Customer customer, Model model){
     model.addAttribute("customers", customerRepository.findAll());
+    System.out.println(customerRepository.findAll());
     return "Customers/customers";
   }
 

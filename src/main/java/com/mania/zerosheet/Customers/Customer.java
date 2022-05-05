@@ -1,6 +1,9 @@
 package com.mania.zerosheet.Customers;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,67 +11,35 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import com.mania.zerosheet.Transaction.Transaction;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 @Entity
-@AllArgsConstructor
-public class Customer {
+@NoArgsConstructor
+public class Customer implements Serializable{
+  private static final long serialVersionUID = 1L;
   // fields
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+
   @NotBlank(message = "Customer Name is required")
   private String name;
   @NotBlank(message = "Customer Surname is required")
   private String surname;
   @NotBlank(message = "Customer Email Address is required")
   private String email;
-  
   @NotBlank(message = "Customer Phone number is required")
   private String phoneNumber;
   private String houseNumber;
   @NotBlank(message = "Customer City or Town is required")
   private String city;
   
-  // Inverse side - One side
-  @OneToMany(mappedBy = "customer")
-  Set<Transaction> transactions;
-
-  // constructors
-  public Customer() {}
-  public Customer(String name, String email) {
-    this.name = name;
-    this.email = email;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+  private List<Transaction> transactions = new ArrayList<Transaction>();
+  
+  public void addTransaction(Transaction transaction) {
+    this.transactions.add(transaction);
   }
-
-// Setters and Getters
-//   public void setId(long id) {
-//     this.id = id;
-//   }
-//   public long getId() {
-//     return id;
-//   }
-//   public void setName(String name) {
-//     this.name = name;
-//   }
-//   public String getName() {
-//     return name;
-//   }
-//   public void setEmail(String email) {
-//     this.email = email;
-//   }
-//   public String getEmail() {
-//     return email;
-//   }
-//   public String getSurname() {
-//     return surname;
-//   }
-//   public void setSurname(String surname) {
-//     this.surname = surname;
-//   }
 }

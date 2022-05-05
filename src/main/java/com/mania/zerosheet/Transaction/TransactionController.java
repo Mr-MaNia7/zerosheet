@@ -1,10 +1,8 @@
 package com.mania.zerosheet.Transaction;
 
 import javax.validation.Valid;
-
 import com.mania.zerosheet.Customers.CustomerRepository;
 import com.mania.zerosheet.Items.ItemRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,28 +28,70 @@ public class TransactionController {
     @GetMapping("/transactions")
     public String showTransactions(Transaction transaction, Model model) {
         model.addAttribute("transactions", transactionRepository.findAll());
+        // System.out.println(transactionRepository.findAll());
         return "Transactions/transactions";
     }
-    // from transactions to add-transaction
-    @GetMapping("/transactions/newtransaction")
-    public String showAddTransactionForm(Transaction transaction, Model model) {
-        model.addAttribute("items", itemRepository.findAll());
-        model.addAttribute("customers", customerRepository.findAll());
-        return "Transactions/add-transaction";
-        // return "redirect:/form/customer";
-    }
-    // from add-transaction (post and ) redirect to transactions
-    @PostMapping("/addtransaction")
-    public String addTransaction(@Valid Transaction transaction, BindingResult result, Model model){
-        // if (result.hasErrors()) {
-        //     model.addAttribute("items", itemRepository.findAll());
-        //     model.addAttribute("customers", customerRepository.findAll());
-        //     return "Transactions/add-transaction";
-        // }
-        transactionRepository.save(transaction);
-        model.addAttribute("transactions", transactionRepository.findAll());
-        return "redirect:/transactions";
-    }
+    
+    
+    
+    
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // // from transactions to add-transaction
+    // @GetMapping("/transactions/newtransaction")
+    // public String showAddTransactionForm(Transaction transaction, Model model) {
+    //     model.addAttribute("items", itemRepository.findAll());
+    //     model.addAttribute("customers", customerRepository.findAll());
+    //     return "Transactions/add-transaction";
+    //     // return "redirect:/form/customer";
+    // }
+    // // from add-transaction (post and ) redirect to transactions
+    // @PostMapping("/addtransaction")
+    // public String addTransaction(@Valid Transaction transaction, BindingResult result, Model model){
+    //     // if (result.hasErrors()) {
+    //     //     model.addAttribute("items", itemRepository.findAll());
+    //     //     model.addAttribute("customers", customerRepository.findAll());
+    //     //     return "Transactions/add-transaction";
+    //     // }
+    //     transactionRepository.save(transaction);
+    //     model.addAttribute("transactions", transactionRepository.findAll());
+    //     return "redirect:/transactions";
+    // }
 
     // from transactions (delete and) redirect to transactions
     @GetMapping("transactions/deletetransaction/{transId}")
