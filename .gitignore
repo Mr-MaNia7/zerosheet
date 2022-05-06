@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### Other files ###
-src/plan/
+src/plan/plan.md
 # .gitignore
 README.md
 CONTRIBUTING.md
