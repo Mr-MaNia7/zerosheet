@@ -13,7 +13,7 @@
     <form th:action="@{/orders}" th:object="${customer}" method="post">
         <ul>
             <li th:each="transaction : ${customer.transactions}">
-                <span th:text="${transaction.transName}"></span>
+                <span th:text="${transaction.item.itemName}"></span>
             </li>
         </ul>
         <div class="row">

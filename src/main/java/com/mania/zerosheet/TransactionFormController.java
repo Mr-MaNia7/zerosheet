@@ -2,6 +2,7 @@ package com.mania.zerosheet;
 
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
+import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @SessionAttributes("customer")
 public class TransactionFormController {
+    private final ItemRepository itemRepository;
+
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Model model) {
+        model.addAttribute("items", itemRepository.findAll());
         return "Forms/item-transaction";
     }
     @ModelAttribute(name = "customer")

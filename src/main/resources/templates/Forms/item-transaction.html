@@ -13,20 +13,27 @@
             <div>
                 <form action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
                     <div class="row">
-                        <!-- <div>
-                            <label for="${#ids.prev('items')}">Choose an Item</label>
-                            <select th:field="*{transName}" id="transName">
+
+                        <div>
+                            <label for="item">Choose an Item</label>
+                            <select th:field="*{item}" id="item">
                                 <div th:each="item : ${items}">
-                                    <option th:value="${item.itemName}" th:text="${item.itemName}"></option>
+                                    <option th:value="${item.itemId}" th:text="${item.itemName}"></option>
                                 </div>
                             </select>
-                            <span th:if="${#fields.hasErrors('transName')}" th:errors="*{transName}"></span>
-                        </div> -->
+                            <span th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
+                        </div>
                         
                         <div>
-                            <label for="transName">Transaction Name</label>
-                            <input type="text" th:field="*{transName}" id="transName" placeholder="5">
-                            <span th:if="${#fields.hasErrors('transName')}" th:errors="*{transName}"></span>
+                            <label for="itemQuantity">Item Quantity</label>
+                            <input type="text" th:field="*{itemQuantity}" id="itemQuantity" placeholder="5">
+                            <span th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+                        </div>
+
+                        <div>
+                            <label for="transPrice">Transaction Price</label>
+                            <input type="text" th:field="*{transPrice}" id="transPrice" placeholder="5">
+                            <span th:if="${#fields.hasErrors('transPrice')}" th:errors="*{transPrice}"></span>
                         </div>
                         
                         <div>
