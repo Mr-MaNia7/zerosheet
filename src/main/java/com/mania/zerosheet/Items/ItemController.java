@@ -34,7 +34,7 @@ public class ItemController {
         }
         itemRepository.save(item);
         model.addAttribute("items", itemRepository.findAll());
-        return "redirect:/view-items";
+        return "redirect:/items";
     }
     
     // from items to update-item
@@ -57,7 +57,7 @@ public class ItemController {
         }
         itemRepository.save(item);
         model.addAttribute("items", itemRepository.findAll());
-        return "redirect:/view-items";
+        return "redirect:/items";
     }
 
     // from items (delete and) redirect to items
@@ -69,6 +69,6 @@ public class ItemController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
     itemRepository.delete(item);
     model.addAttribute("items", itemRepository.findAll());
-    return "redirect:/view-items";
+    return "redirect:/items";
     }   
 }

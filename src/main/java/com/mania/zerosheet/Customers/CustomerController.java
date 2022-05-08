@@ -35,7 +35,8 @@ public class CustomerController {
     }
     customerRepository.save(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/view-customers"; //redirected to @GetMapping(/customers)
+    // System.out.println(customerRepository.findAll()); //debug line causes StackOverflow
+    return "redirect:/customers"; //redirected to @GetMapping(/customers)
   }
 
   // from customers to update-customer
@@ -59,7 +60,7 @@ public class CustomerController {
     }
     customerRepository.save(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/view-customers";
+    return "redirect:/customers";
   }
 
   // from customers page
@@ -71,6 +72,6 @@ public class CustomerController {
             .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
     customerRepository.delete(customer);
     model.addAttribute("customers", customerRepository.findAll());
-    return "redirect:/view-customers";
+    return "redirect:/customers";
   }
 }
