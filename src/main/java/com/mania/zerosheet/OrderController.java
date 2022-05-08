@@ -3,6 +3,7 @@ package com.mania.zerosheet;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.Transaction.Transaction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,8 +32,20 @@ public class OrderController {
         
         // System.out.println(customer.getId()); // debug line
         customer.getTransactions().forEach(transaction -> transaction.setCustomer(customer));
+        
+        // Calculating Total Price and Collateral Price
+        double totalPrice = 0.0;
+        double totalCollateral = 0.0;
+        for (Transaction transaction : customer.getTransactions()) {
+            totalPrice += transaction.getTransPrice();
+            totalCollateral += transaction.getCollateral();
+        }
+        customer.setTotalPrice(totalPrice);
+        customer.setDebtBalance(totalPrice);
+        customer.setTotalCollateral(totalCollateral);
+
         this.customerRepository.save(customer);
         status.setComplete();
-        return "redirect:/transactions";
+        return "redirect:/customers";
     }
 }
