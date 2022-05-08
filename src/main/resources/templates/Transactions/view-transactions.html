@@ -32,8 +32,9 @@
                                 <td th:text="${transaction.itemQuantity}"></td>
                                 <td th:text="${transaction.transPrice}"></td>
                                 <td th:text="${transaction.customer.name}"></td>
-                                <td th:text="${transaction.dueDate}"></td>
-                                <td th:text="${transaction.dueBackDate}"></td>
+                                <td th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
+                                
+                                <td th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
                                 <td>
                                     <a th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}">EDIT</a>
                                 </td>
