@@ -5,50 +5,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customers List</title>
+    <title>Customers Report</title>
 </head>
 
-<body>  
-    </div>
+<body>
     <div th:switch="${customers}">
+       
         <div class="row">
             <div>
-                <h2 th:case="null">No Customers.</h2>
+                
+                <h2 th:case="null">No Customers at the moment!</h2>
+                
                 <div th:case="*">
-                    <h2>Customers</h2>
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Email</th>
-                                <th>PhoneNumber</th>
-                                <th>HouseNumber</th>
-                                <th>City</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="customer : ${customers}">
-                                <td th:text="${customer.name}"></td>
-                                <td th:text="${customer.surname}"></td>
-                                <td th:text="${customer.email}"></td>
-                                <td th:text="${customer.phoneNumber}"></td>
-                                <td th:text="${customer.houseNumber}"></td>
-                                <td th:text="${customer.city}"></td>
-                                <td>
-                                    <a th:href="@{customers/editcustomer/{id}(id=${customer.id})}">EDIT</a>
-                                </td>
-                                <td>
-                                    <a th:href="@{customers/deletecustomer/{id}(id=${customer.id})}">DELETE</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1>Customers List</h1>
+                    <div th:each="customer : ${customers}">
+                        <div>
+                            <h4>Customer Personal Information</h4>
+                            <div>
+                                <span th:text="${customer.name}"></span> 
+                                <span th:text="${customer.middleName}"></span> 
+                                <span th:text="${customer.lastName}"></span>
+                            </div>
+                            <div th:text="${customer.email}"></div>
+                            <div th:text="${customer.phoneNumber}"></div>
+                            <div th:text="${customer.houseNumber}"></div>
+                            <div th:text="${customer.city}"></div>
+                            <div>
+                                <a th:href="@{customers/editcustomer/{id}(id=${customer.id})}">EDIT CUSTOMER INFO</a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4>Transactions by this customer</h4>
+                            <div th:if="${#lists.isEmpty(customer.transactions)}">
+                                <p>No Transactions for this customer</p>
+                            </div>
+                            <div th:unless="${#lists.isEmpty(customer.transactions)}">
+                                <div th:each="transaction : ${customer.transactions}">
+                                    <div th:text="${transaction.item.itemName}"></div>
+                                    <div th:text='${"Each Transaction Price " + transaction.transPrice + " Birr"}'></div>
+                                    <div th:text='${"Remaining days " + transaction.dayDifference}'></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div th:text="${'Total Price ' + customer.totalPrice}"></div>
+                            <div th:text="${'Debt Balance ' + customer.debtBalance}"></div>
+                            <div th:text="${'Total Collateral ' + customer.totalCollateral}"></div>
+                        </div>
+                        <div>
+                            <a th:href="@{customers/deletecustomer/{id}(id=${customer.id})}">DELETE CUSTOMER</a>
+                        </div>
+                    </div>
                 </div>
+            <div>
                 <ul>
-                    <li><a href="customers/newcustomer">Add Customer</a></li>
+                    <li><a href="customers/newcustomer">Add New Customer</a></li>
                 </ul>
             </div>
         </div>
