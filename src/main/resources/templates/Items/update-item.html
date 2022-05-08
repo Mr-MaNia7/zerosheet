@@ -25,7 +25,11 @@
                             <input type="text" th:field="*{unit}" id="unit" placeholder="PCS">
                             <span th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
                         </div>
-
+                        <div>
+                            <label for="unitLoanPrice">Unit-Price per day for Loan</label>
+                            <input type="text" th:field="*{unitLoanPrice}" id="unitLoanPrice" placeholder="25.0">
+                            <span th:if="${#fields.hasErrors('unitLoanPrice')}" th:errors="*{unitLoanPrice}"></span>
+                        </div>
                         <div>
                             <label for="unitPrice">Unit-Price</label>
                             <input type="text" th:field="*{unitPrice}" id="unitPrice" placeholder="25.0">

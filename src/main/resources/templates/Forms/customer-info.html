@@ -23,9 +23,14 @@
                 <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
             </div>
             <div>
-                <label for="surname">Surname</label>
-                <input type="text" th:field="*{surname}" id="surname" placeholder="Surname">
-                <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+                <label for="middleName">Middle-Name</label>
+                <input type="text" th:field="*{middleName}" id="middleName" placeholder="Middle-Name">
+                <span th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></span>
+            </div>
+            <div>
+                <label for="lastName">Surname</label>
+                <input type="text" th:field="*{lastName}" id="lastName" placeholder="Surname">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
             </div>
             <div>
                 <label for="email">Email</label>

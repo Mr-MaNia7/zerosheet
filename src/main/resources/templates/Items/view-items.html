@@ -19,7 +19,8 @@
                             <tr>
                                 <th>ItemName</th>
                                 <th>Unit</th>
-                                <th>Unit-Price</th>
+                                <th>Unit Loan Price</th>
+                                <th>Unit Price for Sale</th>
                                 <th>Total Quantity</th>
                                 <th>Expected Area Coverage</th>
                                 <th>Edit</th>
@@ -30,6 +31,7 @@
                             <tr th:each="item : ${items}">
                                 <td th:text="${item.itemName}"></td>
                                 <td th:text="${item.unit}"></td>
+                                <td th:text="${item.unitLoanPrice}"></td>
                                 <td th:text="${item.unitPrice}"></td>
                                 <td th:text="${item.totalQuantity}"></td>
                                 <td th:text="${item.areaCoverage}"></td>
