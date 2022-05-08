@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction Information</title>
+</head>
+<body>
+    <div>
+        <h2>Update Customer</h2>
+        <div class="row">
+            <div>
+                <form action="#" th:action="@{/customers/updatetransaction/{id}(id=${customer.id})}" th:object="${transaction}" method="post">                    
+                    <div class="row">
+                        <div>
+                            <label for="item">Choose an Item</label>
+                            <select th:field="*{item}" id="item">
+                                <div th:each="item : ${items}">
+                                    <option th:value="${item.itemId}" th:text="${item.itemName}"></option>
+                                </div>
+                            </select>
+                            <span th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
+                        </div>
+                        
+                        <div>
+                            <label for="itemQuantity">Item Quantity</label>
+                            <input type="text" th:field="*{itemQuantity}" id="itemQuantity" placeholder="5">
+                            <span th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+                        </div>
+
+                        <div>
+                            <label for="transPrice">Transaction Price</label>
+                            <input type="text" th:field="*{transPrice}" id="transPrice" placeholder="5">
+                            <span th:if="${#fields.hasErrors('transPrice')}" th:errors="*{transPrice}"></span>
+                        </div>
+                        
+                        <div>
+                            <label for="dueDate">Start Date</label>
+                            <input type="date" th:field="*{dueDate}" id="dueDate">
+                            <!-- <span th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span> -->
+                        </div>
+
+                        <div>
+                            <label for="dueBackDate">End Date</label>
+                            <input type="date" th:field="*{dueBackDate}" id="dueBackDate">
+                            <!-- <span th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span> -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mt-5">
+                            <input type="submit" class="btn btn-primary" value="Update Customer">
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers Report</title>
+</head>
+
+<body>
+    <div th:switch="${customers}">
+       
+        <div class="row">
+            <div>
+                
+                <h2 th:case="null">No Customers at the moment!</h2>
+                <div th:case="*">
+                    <h2>Customers</h2>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Middle Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                                <th>PhoneNumber</th>
+                                <th>HouseNumber</th>
+                                <th>City</th>
+                                <th>Transactions by Item Name</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="customer : ${customers}">
+                                <td th:text="${customer.name}"></td>
+                                <td th:text="${customer.middleName}"></td>
+                                <td th:text="${customer.lastName}"></td>
+                                <td th:text="${customer.email}"></td>
+                                <td th:text="${customer.phoneNumber}"></td>
+                                <td th:text="${customer.houseNumber}"></td>
+                                <td th:text="${customer.city}"></td>
+                                
+                                <td>
+                                    <div th:if="${#lists.isEmpty(customer.transactions)}">
+                                        <p>No Transactions for this customer</p>
+                                    </div>
+                                    <div th:unless="${#lists.isEmpty(customer.transactions)}">
+                                        <ul th:each="transaction : ${customer.transactions}">
+                                            <li th:text="${transaction.item.itemName}"></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    <a th:href="@{customers/editcustomer/{id}(id=${customer.id})}">EDIT</a>
+                                </td>
+                                <td>
+                                    <a th:href="@{customers/deletecustomer/{id}(id=${customer.id})}">DELETE</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <div>
+                <ul>
+                    <li><a href="customers/newcustomer">Add Customer</a></li>
+                </ul>
+            </div>
+        </div>
+    
+    </div>
+</body>
+
+</html>
