@@ -34,7 +34,10 @@ public class Item implements Serializable{
     @NotBlank(message = "Measurement Unit can not be Blank! ")
     private String unit;
 
-    @PositiveOrZero(message = "Unit-Price can not be Negative")
+    @PositiveOrZero(message = "Unit-Price for loan can not be Negative")
+    private double unitLoanPrice;
+
+    @PositiveOrZero(message = "Unit-Price for sale can not be Negative")
     private double unitPrice;
 
     @PositiveOrZero(message = "Total Quantity can not be Negative")
@@ -46,10 +49,11 @@ public class Item implements Serializable{
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Transaction> transactions;
     
-    public Item(String itemName, String unit, double unitPrice, int totalQuantity, double areaCoverage)
+    public Item(String itemName, String unit, double unitLoanPrice, double unitPrice, double areaCoverage, int totalQuantity)
     {
         this.itemName = itemName;
         this.unit = unit;
+        this.unitLoanPrice = unitLoanPrice;
         this.unitPrice = unitPrice;
         this.totalQuantity = totalQuantity;
         this.areaCoverage = areaCoverage;
