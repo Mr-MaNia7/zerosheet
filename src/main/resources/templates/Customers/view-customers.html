@@ -45,7 +45,11 @@
                                     <div th:text="${transaction.item.itemName}"></div>
                                     <div th:text='${"Each Transaction Price " + transaction.transPrice + " Birr"}'></div>
                                     <div th:text='${"Remaining days " + transaction.dayDifference}'></div>
+                                    <div>
+                                        <a th:href="@{transactions/edittransaction/{id}/{transId}(id=${customer.id}, transId=${transaction.transId})}">EDIT TRANSACTION</a>
+                                    </div>
                                 </div>
+                                
                             </div>
                         </div>
 

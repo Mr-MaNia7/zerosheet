@@ -51,6 +51,9 @@ public class Customer implements Serializable{
   public void addTransaction(Transaction transaction) {
     this.transactions.add(transaction);
   }
+  public void updateTransaction(Transaction transaction, long id) {
+    this.transactions.set((int)(id - 1), transaction);
+  }
 
   public Customer(String name, String middleName, String lastName, String email,
     String phoneNumber, String houseNumber, String city, 
