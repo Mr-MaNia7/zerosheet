@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.Items.Item;
+import com.mania.zerosheet.Items.ItemRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
+    private final ItemRepository itemRepository;
 
     // from home to transactions
     @GetMapping("/transactions")
@@ -34,12 +38,13 @@ public class TransactionController {
             .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
 
         model.addAttribute("transaction", transaction);
+        model.addAttribute("items", itemRepository.findAll());
         return "Transactions/update-transaction";
     }
     // from update-transaction (post and) redirect to customers
     @PostMapping("transactions/updatetransaction/{transId}")
     public String updateTransaction(@PathVariable("transId") long transId,
-        @Valid Transaction transaction, BindingResult result, Model model){
+    @Valid Transaction transaction, BindingResult result, Model model){
         if (result.hasErrors()) {
             transaction.setTransId(transId);
             return "Transactions/update-transaction";
@@ -53,9 +58,11 @@ public class TransactionController {
         .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
         
         // Get old obj and save it inside the new obj
+        Item item = transaction.getItem();
+        System.out.println(item.toString());
         int item_quantity = transaction.getItemQuantity();
         Date due_back_date = transaction.getDueBackDate();
-        Date due_date = transaction.getDueDate();        
+        Date due_date = transaction.getDueDate();
         
         // calculating loan price per transaction
         double loan_price_per_day = trans.getItem().getUnitLoanPrice();
@@ -69,7 +76,8 @@ public class TransactionController {
         double old_collateral_price = trans.getCollateral();
         double old_trans_price = trans.getTransPrice();
         // System.out.println("Old collateral price" + old_collateral_price);
-        
+
+        trans.setItem(item);
         trans.setItemQuantity(item_quantity);
         trans.setDueBackDate(due_back_date);
         trans.setDueDate(due_date);
