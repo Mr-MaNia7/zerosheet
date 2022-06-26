@@ -43,10 +43,11 @@
                             <div th:unless="${#lists.isEmpty(customer.transactions)}">
                                 <div th:each="transaction : ${customer.transactions}">
                                     <div th:text="${transaction.item.itemName}"></div>
+                                    <div th:text='${"Item Quantity " + transaction.itemQuantity}'></div>
                                     <div th:text='${"Each Transaction Price " + transaction.transPrice + " Birr"}'></div>
                                     <div th:text='${"Remaining days " + transaction.dayDifference}'></div>
                                     <div>
-                                        <a th:href="@{transactions/edittransaction/{id}/{transId}(id=${customer.id}, transId=${transaction.transId})}">EDIT TRANSACTION</a>
+                                        <a th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}">EDIT TRANSACTION</a>
                                     </div>
                                 </div>
                                 
