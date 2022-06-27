@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Information</title>
+</head>
+<body>
+    <div th:switch="${company}">
+        <div class = row>
+            <div>
+                <h2 th:case="null">There is no company information</h2>
+                <div th:case="*">
+                    <h2>Company Information</h2>
+                    <div th:each = "company : ${company}">
+                        <ul>
+                            <li>Company Name <span th:text="${company.compName}"></span></li>
+                            <li>Phone-Number <span th:text="${company.compPhoneNumber}"></span></li>
+                            <li>Woreda <span th:text="${company.compWoreda}"></span></li>
+                            <li>Sub-City <span th:text="${company.compSubCity}"></span></li>
+                            <li>House-Number <span th:text="${company.compHouseNumber}"></span></li>
+                            <li>City <span th:text="${company.compCity}">አዲስ አበባ </span> Country <span th:text="${company.compCountry}">ኢትዮጵያ</span></li>
+                            <li><a th:href="@{/editcompany/{compName}(compName=${company.compName})}">Edit Company Information</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

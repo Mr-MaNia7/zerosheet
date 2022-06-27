@@ -1,5 +1,9 @@
 package com.mania.zerosheet;
 
+import com.mania.zerosheet.Agreement.Agreement;
+import com.mania.zerosheet.Agreement.AgreementRepository;
+import com.mania.zerosheet.Company.Company;
+import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -14,7 +18,7 @@ public class ZerosheetApplication {
 	}
 
 	@Bean
-	public CommandLineRunner dataSeederDemo(ItemRepository itemrepo) {
+	public CommandLineRunner dataSeederDemo(ItemRepository itemrepo, AgreementRepository agrepo, CompanyRepository compRepo ) {
 		return args -> {
 			itemrepo.save(new Item(
 				"H frame 2.4 ( ኤች ፍሬም)", "PCS", 3.84, 2040.00, 3.50, 100
@@ -60,6 +64,14 @@ public class ZerosheetApplication {
 			));
 			itemrepo.save(new Item(
 				"RHS 60*60*3(ሬክታንግል ቱቦ60*60*3)", "PCS", 11.22d, 150.00, 15.0d, 120
+			));
+
+			agrepo.save(new Agreement(
+				"ሂ/ጠ/ሥ 0055/12", "የእስካፎልዲንግ ኪራይ ውል ስምምነት" 
+			));
+
+			compRepo.save(new Company(
+				"ሒያ ጠቅላላ ስራ ተቋራጭ", "251911-216060", 5, "ቦሌ", "141", "አዲስ አበባ", "ኢትዮጵያ"
 			));
 			
 		};

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Company Information</title>
+</head>
+<body>
+    <div>
+        <h2>Update Item</h2>
+        <div class="row">
+            <div>
+                <form action="#" th:action="@{/updatecompany/{compName}(compName=${company.compName})}" th:object="${company}" method="post">             
+                    <div class="row">
+                        <div>
+                            <label for="compName">Company Name</label>
+                            <input type="text" th:field="*{compName}" id="compName" placeholder="Company Name">
+                            <span th:if="${#fields.hasErrors('compName')}" th:errors="*{compName}"></span>
+                        </div>
+                        <div>
+                            <label for="compPhoneNumber">Phone-Number</label>
+                            <input type="text" th:field="*{compPhoneNumber}" id="compPhoneNumber" placeholder="Phone Number">
+                            <span th:if="${#fields.hasErrors('compPhoneNumber')}" th:errors="*{compPhoneNumber}"></span>
+                        </div>
+                        <div>
+                            <label for="compWoreda">Woreda</label>
+                            <input type="text" th:field="*{compWoreda}" id="compWoreda" placeholder="Woreda">
+                            <span th:if="${#fields.hasErrors('compWoreda')}" th:errors="*{compWoreda}"></span>
+                        </div>
+                        <div>
+                            <label for="compSubCity">Sub City</label>
+                            <input type="text" th:field="*{compSubCity}" id="compSubCity" placeholder="Sub City">
+                            <span th:if="${#fields.hasErrors('compSubCity')}" th:errors="*{compSubCity}"></span>
+                        </div>
+                        <div>
+                            <label for="compHouseNumber">House-Number</label>
+                            <input type="text" th:field="*{compHouseNumber}" id="compHouseNumber" placeholder="House Number">
+                            <span th:if="${#fields.hasErrors('compHouseNumber')}" th:errors="*{compHouseNumber}"></span>
+                        </div>
+                        <div>
+                            <label for="compCity">City</label>
+                            <input type="text" th:field="*{compCity}" id="compCity" placeholder="City">
+                            <span th:if="${#fields.hasErrors('compCity')}" th:errors="*{compCity}"></span>
+                        </div>
+                        <div>
+                            <label for="compCountry">Country</label>
+                            <input type="text" th:field="*{compCountry}" id="compCountry" placeholder="Country">
+                            <span th:if="${#fields.hasErrors('compCountry')}" th:errors="*{compCountry}"></span>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mt-5">
+                            <input type="submit" class="btn btn-primary" value="Update Company">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
