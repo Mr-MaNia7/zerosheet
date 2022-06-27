@@ -4,16 +4,13 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
-import com.mania.zerosheet.Customers.CustomerRepository;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
-import com.mania.zerosheet.Transaction.TransactionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +20,6 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes("customer")
 public class TransactionFormController {
     private final ItemRepository itemRepository;
-    private final TransactionRepository transactionRepository;
-    private final CustomerRepository customerRepository;
 
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Model model) {
@@ -76,11 +71,11 @@ public class TransactionFormController {
               .MILLISECONDS
               .toDays(difference_In_Time);
     
-        long difference_In_Years = 
-        TimeUnit
-              .MILLISECONDS
-              .toDays(difference_In_Time)
-          / 365l;
+        // long difference_In_Years = 
+        // TimeUnit
+        //       .MILLISECONDS
+        //       .toDays(difference_In_Time)
+        //   / 365l;
         return difference_In_Days;
     }
 }

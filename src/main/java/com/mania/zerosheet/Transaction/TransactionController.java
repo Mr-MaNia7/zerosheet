@@ -7,7 +7,6 @@ import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,16 +49,16 @@ public class TransactionController {
             return "Transactions/update-transaction";
         }
 
-        System.out.println("Incoming Transaction\n" + transaction.toString()); //debug line
+        // System.out.println("Incoming Transaction\n" + transaction.toString()); //debug line
         
         Transaction trans =
         transactionRepository
         .findById(transId)
         .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
         
-        // Get old obj and save it inside the new obj
+        // Get old object and save it inside the new object
         Item item = transaction.getItem();
-        System.out.println(item.toString());
+        // System.out.println(item.toString());
         int item_quantity = transaction.getItemQuantity();
         Date due_back_date = transaction.getDueBackDate();
         Date due_date = transaction.getDueDate();
@@ -114,12 +113,6 @@ public class TransactionController {
         TimeUnit
               .MILLISECONDS
               .toDays(difference_In_Time);
-    
-        long difference_In_Years = 
-        TimeUnit
-              .MILLISECONDS
-              .toDays(difference_In_Time)
-          / 365l;
         return difference_In_Days;
     }  
 }
