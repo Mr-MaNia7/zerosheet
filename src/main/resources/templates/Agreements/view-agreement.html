@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agreement Page</title>
+</head>
+<body>
+    <main>
+        <div id="date">ሰኔ 13 ቀን 2012 ዓ.ም</div>
+        <div id="agreementNumber">የውል ቁጥር ሂ/ጠ/ሥ<span>0055/12</span></div>
+
+        <div th:switch="${company}">
+            <div class = row>
+                <div>
+                    <h2 th:case="null">There is no company information</h2>
+                    <div th:case="*">
+                        <h2>የእስካፎልዲንግ ኪራይ ውል ስምምነት</h2>
+                        <div th:each = "company : ${company}">
+                            <ul>
+                                <li>አከራይ <span th:text="${company.compName}"></span></li>
+                                <li>ስልክ <span th:text="${company.compPhoneNumber}"></span></li>
+                                <li>ወረዳ <span th:text="${company.compWoreda}"></span></li>
+                                <li>ክፍለ ከተማ <span th:text="${company.compSubCity}"></span></li>
+                                <li>የቤት ቁጥር <span th:text="${company.compHouseNumber}"></span></li>
+                                <li><span th:text="${company.compCity}">አዲስ አበባ</span> <span th:text="${company.compCountry}">ኢትዮጵያ</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <ul>
+                <li>ተከራይ<span></span></li>
+                <li>ስልክ <span></span></li>
+                <li>ወረዳ <span></span></li>
+                <li>ክፍለ ከተማ <span></span></li>
+                <li>የቤት ቁጥር<span></span></li>
+                <li></li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

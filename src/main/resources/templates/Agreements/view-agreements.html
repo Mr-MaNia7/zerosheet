@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agreements Page</title>
+</head>
+<body>
+    <div th:switch="${agreements}">
+        <div class = row>
+            <div>
+                <h2 th:case="null">No Agreements at the moment!</h2>
+                <div th:case="*">
+                    <h2>Agreements</h2>
+                    <div th:each = "agreement : ${agreements}">
+                        <p th:text="${agreement.agreementNumber}"></p>
+                        <p th:text="${agreement.statement}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
