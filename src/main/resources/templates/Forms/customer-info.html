@@ -5,12 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order</title>
+    <script type="text/javascript">
+        const buttons = document.querySelectorAll("input[type='radio']");
+
+        // adding event to all radio buttons
+        buttons.forEach(button => {
+        button.onclick = () => {
+            if (button.checked) {
+            alert(button.value + " selected as contact option!");
+            }
+        }
+        })
+    </script>
 </head>
 <body>
     <div>
         <a th:href="@{/transactions/newtransaction}">Make Another Transaction</a>
     </div>
-    <form th:action="@{/orders}" th:object="${customer}" method="post">
+    <form th:action="@{/orders/agreement}" th:object="${customer}" method="post">
         <ul>
             <li th:each="transaction : ${customer.transactions}">
                 <span th:text="${transaction.item.itemName}"></span>
@@ -39,6 +51,7 @@
             </div>
 
             <div>
+                
                 <label for="phoneNumber">PhoneNumber</label>
                 <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="251">
                 <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
@@ -53,13 +66,43 @@
                 <input type="text" th:field="*{city}" id="city" placeholder="Addis Ababa">
                 <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
             </div>
-
+            <div>
+                <label for="woreda">Woreda</label>
+                <input type="text" th:field="*{woreda}" id="woreda" placeholder="5">
+                <span th:if="${#fields.hasErrors('woreda')}" th:errors="*{woreda}"></span>
+            </div>
+            <div>
+                <label for="subcity">Sub-City</label>
+                <input type="text" th:field="*{subcity}" id="subcity" placeholder="Bole">
+                <span th:if="${#fields.hasErrors('subcity')}" th:errors="*{subcity}"></span>
+            </div>
         </div>
+        
+        
         <div class="row">
             <div>
                 <input type="submit" value="Add Customer">
             </div>
         </div>
     </form>
+    <div th:switch="${customers}">
+        <div th:case="null">
+            <div>There is no available customer</div>
+        </div>
+        
+        <div th:case="*">
+            <div th:each="cust : ${customers}">
+                <form th:action="@{/orders/agreement}" th:object="${customer}" method="post">
+                    <div>
+                        <label for="customer" th:text="${cust.name}"></label>
+                        <input type="radio" name="customer" id="" th:value="${cust}">
+                        <div>
+                            <input type="submit" value="Use Customer">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

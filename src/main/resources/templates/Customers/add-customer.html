@@ -50,6 +50,17 @@
                             <input type="text" th:field="*{city}" id="city" placeholder="Addis Ababa">
                             <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
                         </div>
+                        <div>
+                            <label for="woreda">Woreda</label>
+                            <input type="text" th:field="*{woreda}" id="woreda" placeholder="5">
+                            <span th:if="${#fields.hasErrors('woreda')}" th:errors="*{woreda}"></span>
+                        </div>
+                        <div>
+                            <label for="subcity">Sub-City</label>
+                            <input type="text" th:field="*{subcity}" id="subcity" placeholder="Bole">
+                            <span th:if="${#fields.hasErrors('subcity')}" th:errors="*{subcity}"></span>
+                        </div>
+            
                     </div>
                     <div class="row">
                         <div>
