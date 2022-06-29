@@ -3,9 +3,10 @@ package com.mania.zerosheet.Transaction;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
+
+import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
-import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +14,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
+// @SessionAttributes("customer")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
     private final ItemRepository itemRepository;
+    private final CompanyRepository companyRepository;
 
     // from home to transactions
     @GetMapping("/transactions")
@@ -49,7 +53,7 @@ public class TransactionController {
             return "Transactions/update-transaction";
         }
 
-        // System.out.println("Incoming Transaction\n" + transaction.toString()); //debug line
+        // System.out.println("Incoming Transaction\n" + transaction.getItem().getItemName()); //debug line
         
         Transaction trans =
         transactionRepository
@@ -57,7 +61,7 @@ public class TransactionController {
         .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
         
         // Get old object and save it inside the new object
-        Item item = transaction.getItem();
+        // Item item = trans.getItem();
         // System.out.println(item.toString());
         int item_quantity = transaction.getItemQuantity();
         Date due_back_date = transaction.getDueBackDate();
@@ -76,7 +80,7 @@ public class TransactionController {
         double old_trans_price = trans.getTransPrice();
         // System.out.println("Old collateral price" + old_collateral_price);
 
-        trans.setItem(item);
+        // trans.setItem(item);
         trans.setItemQuantity(item_quantity);
         trans.setDueBackDate(due_back_date);
         trans.setDueDate(due_date);
@@ -102,11 +106,81 @@ public class TransactionController {
         // System.out.println("New total collateral" + new_total_collateral);
         
         transactionRepository.save(trans);
-        this.customerRepository.save(cust);
-        model.addAttribute("customers", customerRepository.findAll());
-        return "redirect:/customers";
+        // this.customerRepository.save(cust);
+
+        model.addAttribute("customer", cust);
+        model.addAttribute("transactions", cust.getTransactions());
+        model.addAttribute("company", companyRepository.findAll());  
+        return "Agreements/view-updated-agreement";
+        // return "redirect:/customers";
     }
-    
+    @GetMapping("transactions/addtransaction/{id}")
+    public String showAddTransactionForm(@PathVariable("id") long id , Model model, Transaction transaction){
+        Customer customer =
+            customerRepository
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("items", itemRepository.findAll());
+        return "Forms/customer-transaction";
+    }
+
+    @PostMapping("/customer/{id}/addtransaction")
+    public String addCustomerTransaction(@PathVariable("id") long id,
+    @Valid Transaction transaction, BindingResult result, Model model){
+        if (result.hasErrors()) {
+            return "Forms/customer-transaction";
+        }
+
+        // System.out.println("Incoming Transaction\n" + transaction.toString()); //debug line
+
+        Customer customer =
+        customerRepository
+        .findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
+        
+        // Calcualting Logic
+        // calculating date difference
+        Date fromDate = transaction.getDueBackDate();
+        Date toDate = transaction.getDueDate();        
+        long loan_days = calculateDayDifference(fromDate, toDate);
+        transaction.setDayDifference(loan_days);
+
+        // calculating loan price per transaction
+        double loan_price_per_day = transaction.getItem().getUnitLoanPrice();
+        double loan_price_per_item = loan_price_per_day * loan_days;
+        double trans_price = transaction.getItem().getAreaCoverage()*loan_price_per_item;
+        transaction.setTransPrice(trans_price);
+        
+        // calculating collateral price per transaction 100%
+        double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity();
+        transaction.setCollateral(collateral_price);
+
+        transaction.setCustomer(customer);
+
+        double total_price = customer.getTotalPrice();
+        double total_collateral = customer.getTotalCollateral();
+        double total_price_VAT = customer.getTotalPriceVAT();   
+        double total_collateral_VAT = customer.getTotalCollateralVAT();
+        total_price += trans_price;
+        total_collateral += collateral_price;
+        total_price_VAT = total_price + (total_price * 0.15);
+        total_collateral_VAT = total_collateral + (total_collateral * 0.15);
+        customer.setTotalPrice(total_price);
+        customer.setTotalCollateral(total_collateral);
+        customer.setTotalPriceVAT(total_price_VAT);
+        customer.setTotalCollateralVAT(total_collateral_VAT);
+        customer.setDebtBalance(total_price_VAT);
+        
+        transactionRepository.save(transaction);
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("transactions", customer.getTransactions());
+        model.addAttribute("company", companyRepository.findAll());
+        return "Agreements/view-updated-agreement";
+    }
+
     public long calculateDayDifference(Date fromDate, Date toDate) {
         long difference_In_Time = fromDate.getTime() - toDate.getTime();
         long difference_In_Days = 
