@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Page</title>
+</head>
+<body>
+    <main>
+        <div>
+            <div>
+                <h2>Summary</h2>
+                <h3>ተከራይ:- <span th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></span></h3>
+            </div>
+
+            <div>
+                <h3>Transactions</h3>
+                <div th:each="trans, status : ${transactions}">
+                    <div><span th:text="${trans.transPrice}"></span></div>
+                    <div><span th:text="${trans.collateral}"></span></div>
+                    <div><span th:text="${trans.dayDifference}"></span></div>
+                </div>
+            </div>
+
+            <div>
+                <div><span th:text="${customer.totalPriceVAT}"></span></div>
+                <div><span th:text="${customer.debtBalance}"></span></div>
+                <div><span th:text="${customer.totalCollateralVAT}"></span></div>
+            </div>
+
+            <div>
+                <h3>Items</h3>
+                <div th:each="trans, status : ${transactions}">
+                    <div><span th:text="${trans.item.itemName}"></span></div>
+                </div>
+            </div>
+        </div>
+        <form action="#" th:action="@{/orders/finish}" th:object="${customer}" method="post">
+            <div>
+                <input type="submit" class="btn btn-primary" value="Finish">
+            </div>
+        </form>
+    </main>
+</body>
+</html>
