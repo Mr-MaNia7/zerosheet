@@ -14,9 +14,8 @@
                 <h2 th:case="null">No Agreements at the moment!</h2>
                 <div th:case="*">
                     <h2>Agreements</h2>
-                    <div th:each = "agreement : ${agreements}">
-                        <p th:text="${agreement.agreementNumber}"></p>
-                        <p th:text="${agreement.statement}"></p>
+                    <div th:each = "article : ${articles}"> 
+                        <p th:text="${article.statement}"></p>
                     </div>
                 </div>
             </div>

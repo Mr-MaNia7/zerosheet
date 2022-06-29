@@ -1,6 +1,5 @@
 package com.mania.zerosheet;
 
-import com.mania.zerosheet.Agreement.Agreement;
 import com.mania.zerosheet.Agreement.AgreementRepository;
 import com.mania.zerosheet.Company.Company;
 import com.mania.zerosheet.Company.CompanyRepository;
@@ -64,10 +63,6 @@ public class ZerosheetApplication {
 			));
 			itemrepo.save(new Item(
 				"RHS 60*60*3(ሬክታንግል ቱቦ60*60*3)", "PCS", 11.22d, 150.00, 15.0d, 120
-			));
-
-			agrepo.save(new Agreement(
-				"ሂ/ጠ/ሥ 0055/12", "የእስካፎልዲንግ ኪራይ ውል ስምምነት" 
 			));
 
 			compRepo.save(new Company(

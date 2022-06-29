@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Article</title>
+</head>
+
+<body>
+    <div>
+        <h2>New Article</h2>
+        <div>
+            <div>
+                <form action="#" th:action="@{/addarticle}" th:object="${article}" method="post">
+                    <div class="row">
+                        <div>
+                            <label for="statement">Statement</label><br>
+                            <textarea id="statement" th:field="*{statement}" cols="80" rows="10">Hi Abdulkarim I have a suggestion</textarea><br>                    
+                            <span th:if="${#fields.hasErrors('statement')}" th:errors="*{statement}"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <input type="submit" value="Add Article">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
