@@ -1,8 +1,10 @@
 package com.mania.zerosheet;
 
 import javax.validation.Valid;
+import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +20,17 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes("customer")
 public class OrderController {
     private final CustomerRepository customerRepository;
+    private final ItemRepository itemRepository;
+    private final CompanyRepository companyRepository;
     
     @GetMapping("/orders/current")
     public String orderForm(Model model) {
+        model.addAttribute("customers", customerRepository.findAll());
         return "Forms/customer-info";
     }
-    @PostMapping("/orders")
+    @PostMapping("/orders/agreement")
     public String processOrder(@Valid Customer customer, 
-    BindingResult result, SessionStatus status) {
+    BindingResult result, SessionStatus status, Model model) {
         if (result.hasErrors()) {
             return "Forms/orderForm";
         }
@@ -41,11 +46,20 @@ public class OrderController {
             totalCollateral += transaction.getCollateral();
         }
         customer.setTotalPrice(totalPrice);
-        customer.setDebtBalance(totalPrice);
-        customer.setTotalCollateral(totalCollateral);
+        double totalPriceVAT = totalPrice + (totalPrice * 0.15);
+        customer.setTotalPriceVAT(totalPriceVAT);
+        
+        customer.setDebtBalance(totalPriceVAT);
 
-        this.customerRepository.save(customer);
-        status.setComplete();
-        return "redirect:/customers";
-    }
+        customer.setTotalCollateral(totalCollateral);
+        double totalCollateralVAT = totalCollateral + (totalCollateral * 0.15);
+        customer.setTotalCollateralVAT(totalCollateralVAT);
+
+        model.addAttribute("customer", customer);
+        model.addAttribute("transactions", customer.getTransactions());
+        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("company", companyRepository.findAll());  
+        return "Agreements/view-agreement";
+
+    } 
 }
