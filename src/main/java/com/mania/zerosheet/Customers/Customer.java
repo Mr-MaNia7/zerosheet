@@ -3,15 +3,19 @@ package com.mania.zerosheet.Customers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.OneToOne;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 
+import com.mania.zerosheet.Agreement.Agreement;
 import com.mania.zerosheet.Transaction.Transaction;
 
 import lombok.Data;
@@ -40,13 +44,21 @@ public class Customer implements Serializable{
   private String houseNumber;
   @NotBlank(message = "Customer City or Town is required")
   private String city;
+  private int woreda;
+  private String subcity;
 
   private double totalPrice;
+  private double totalPriceVAT;
   private double debtBalance;
   private double totalCollateral;
+  private double totalCollateralVAT;
   
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<Transaction> transactions = new ArrayList<Transaction>();
+     
+  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @JoinColumn(name = "agreement_id", nullable = true)
+  Agreement agreement;
   
   public void addTransaction(Transaction transaction) {
     this.transactions.add(transaction);
@@ -57,7 +69,8 @@ public class Customer implements Serializable{
 
   public Customer(String name, String middleName, String lastName, String email,
     String phoneNumber, String houseNumber, String city, 
-    double totalPrice, double debtBalance, double totalCollateral) {
+    double totalPrice, double debtBalance, double totalCollateral, double totalPriceVAT,
+    double totalCollateralVAT,int woreda, String subcity) {
       this.name = name;
       this.middleName = middleName;
       this.lastName = lastName;
@@ -68,5 +81,9 @@ public class Customer implements Serializable{
       this.totalPrice = totalPrice;
       this.debtBalance = debtBalance;
       this.totalCollateral = totalCollateral;
+      this.subcity = subcity;
+      this.woreda = woreda;
+      this.totalPriceVAT = totalPriceVAT;
+      this.totalCollateralVAT = totalCollateralVAT;
     }
 }
