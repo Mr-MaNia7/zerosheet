@@ -39,6 +39,9 @@
                             <h4>Transactions by this customer</h4>
                             <div th:if="${#lists.isEmpty(customer.transactions)}">
                                 <p>No Transactions for this customer</p>
+                                <div>
+                                    <a th:href="@{transactions/addtransaction/{id}(id=${customer.id})}">ADD TRANSACTION FOR THIS CUSTOMER</a>
+                                </div>
                             </div>
                             <div th:unless="${#lists.isEmpty(customer.transactions)}">
                                 <div th:each="transaction : ${customer.transactions}">

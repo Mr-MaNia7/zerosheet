@@ -243,7 +243,7 @@
         </div>
     </main>
     <aside>
-        <form action="#" th:action="@{/orders/summary}" th:object="${customer}" method="post">
+        <form action="#" th:action="@{/orders/updatesummary/{id}(id = ${customer.id})}" method="get">
             <div>
                 <button type="button" onclick="window.print()">Print Window</button>
             </div>

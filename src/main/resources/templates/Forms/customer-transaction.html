@@ -11,7 +11,7 @@
         <h2>Update Customer</h2>
         <div class="row">
             <div>
-                <form action="#" th:action="@{/customers/updatetransaction/{id}(id=${customer.id})}" th:object="${transaction}" method="post">                    
+                <form action="#" th:action="@{/customer/{id}/addtransaction(id=${customer.id})}" th:object="${transaction}" method="post">                    
                     <div class="row">
                         <div>
                             <label for="item">Choose an Item</label>
@@ -29,12 +29,7 @@
                             <span th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
                         </div>
 
-                        <div>
-                            <label for="transPrice">Transaction Price</label>
-                            <input type="text" th:field="*{transPrice}" id="transPrice" placeholder="5">
-                            <span th:if="${#fields.hasErrors('transPrice')}" th:errors="*{transPrice}"></span>
-                        </div>
-                        
+                       
                         <div>
                             <label for="dueDate">Start Date</label>
                             <input type="date" th:field="*{dueDate}" id="dueDate">
