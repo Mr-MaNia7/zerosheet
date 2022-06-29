@@ -52,7 +52,7 @@ public class TransactionFormController {
         // calculating loan price per transaction
         double loan_price_per_day = transaction.getItem().getUnitLoanPrice();
         double loan_price_per_item = loan_price_per_day * loan_days;
-        transaction.setTransPrice(transaction.getItemQuantity()*loan_price_per_item);
+        transaction.setTransPrice(transaction.getItem().getAreaCoverage()*loan_price_per_item);
         
         // calculating collateral price per transaction 100%
         double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity();
