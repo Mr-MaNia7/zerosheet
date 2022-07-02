@@ -5,29 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order</title>
-    <script type="text/javascript">
-        const buttons = document.querySelectorAll("input[type='radio']");
-
-        // adding event to all radio buttons
-        buttons.forEach(button => {
-        button.onclick = () => {
-            if (button.checked) {
-            alert(button.value + " selected as contact option!");
-            }
-        }
-        })
-    </script>
 </head>
 <body>
-    <div>
-        <a th:href="@{/transactions/newtransaction}">Make Another Transaction</a>
-    </div>
+
+    <ul>
+        <li th:each="transaction : ${customer.transactions}">
+            <span th:text="${transaction.item.itemName}"></span>
+            <span th:text="${transaction.itemQuantity}"></span>
+            <!-- <form th:action="@{/transactions/newtransaction/{transId}(transId = ${transaction.transId})}" method="get">
+                <input type="submit" value="Edit">
+            </form> -->
+        </li>
+    </ul>
     <form th:action="@{/orders/agreement}" th:object="${customer}" method="post">
-        <ul>
-            <li th:each="transaction : ${customer.transactions}">
-                <span th:text="${transaction.item.itemName}"></span>
-            </li>
-        </ul>
         <div class="row">
             <div>
                 <label for="name">Name</label>
@@ -78,31 +68,13 @@
             </div>
         </div>
         
-        
         <div class="row">
-            <div>
-                <input type="submit" value="Add Customer">
-            </div>
+            <input type="submit" value="Add Customer">
+            <input type="button" value="Go Back And Edit Transaction" onclick="history.back()">
+            <span>
+                <a th:href="@{/transactions/newtransaction}">Make Another New Transaction</a>
+            </span>
         </div>
     </form>
-    <div th:switch="${customers}">
-        <div th:case="null">
-            <div>There is no available customer</div>
-        </div>
-        
-        <div th:case="*">
-            <div th:each="cust : ${customers}">
-                <form th:action="@{/orders/agreement}" th:object="${customer}" method="post">
-                    <div>
-                        <label for="customer" th:text="${cust.name}"></label>
-                        <input type="radio" name="customer" id="" th:value="${cust}">
-                        <div>
-                            <input type="submit" value="Use Customer">
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </body>
 </html>

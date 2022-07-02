@@ -6,13 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agreement Page</title>
-    <!-- <script  src="message.js" src="/src/main/resources/static/js/Agreement/view.js"></script> -->
-    <script type="text/javascript" >
-        function msg(customer, transactions, items){  
-            alert(customer.name);
-        }
-    </script>
-
 </head>
 <body>
     <main>
@@ -247,9 +240,9 @@
             <div>
                 <button type="button" onclick="window.print()">Print Window</button>
             </div>
-            <input type="button" value="click" onclick="msg()"/>
             <div>
                 <input type="submit" class="btn btn-primary" value="Accept Agreement and Continue">
+                <input type="button" value="Go Back" onclick="history.back()">
             </div>
         </form>
     </aside>
