@@ -61,7 +61,16 @@ public class Customer implements Serializable{
   Agreement agreement;
   
   public void addTransaction(Transaction transaction) {
-    this.transactions.add(transaction);
+    boolean flag = false;
+    for (Transaction eachtrans : this.transactions){
+      if(eachtrans.getItem().getItemId() == transaction.getItem().getItemId()) {
+        this.transactions.set((int)(eachtrans.getTransId()), transaction);
+        flag = true;
+      }
+    }
+    if (flag == false) {
+      this.transactions.add(transaction);
+    }
   }
   public void updateTransaction(Transaction transaction, long id) {
     this.transactions.set((int)(id - 1), transaction);

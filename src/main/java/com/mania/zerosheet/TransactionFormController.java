@@ -6,11 +6,14 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
+import com.mania.zerosheet.Transaction.TransactionRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +23,22 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes("customer")
 public class TransactionFormController {
     private final ItemRepository itemRepository;
+    private final TransactionRepository transactionRepository;
 
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Model model) {
         model.addAttribute("items", itemRepository.findAll());
+        return "Forms/item-transaction";
+    }
+
+    @GetMapping("/transactions/newtransaction/{transId}")
+    public String showTransactionForm2(Model model, @PathVariable ("transId") long transId) {
+        Transaction transaction =
+        transactionRepository
+        .findById(transId)
+        .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
+        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("transaction", transaction);
         return "Forms/item-transaction";
     }
 

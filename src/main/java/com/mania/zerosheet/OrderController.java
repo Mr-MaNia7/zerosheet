@@ -4,7 +4,6 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
-import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes("customer")
 public class OrderController {
     private final CustomerRepository customerRepository;
-    private final ItemRepository itemRepository;
     private final CompanyRepository companyRepository;
     
     @GetMapping("/orders/current")
@@ -57,7 +55,7 @@ public class OrderController {
 
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
-        model.addAttribute("items", itemRepository.findAll());
+        // model.addAttribute("items", itemRepository.findAll());
         model.addAttribute("company", companyRepository.findAll());  
         return "Agreements/view-agreement";
 
