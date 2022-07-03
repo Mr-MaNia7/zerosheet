@@ -74,7 +74,7 @@
     <main class="mx-2">
       <div th:switch="${items}">
         <div>
-          <h2 th:case="null" class="mt-2 mb-3" style="text-align: center;">No Items available at the moment!</h2>
+          <h2 th:case="null" class="mt-2 mb-3" style="text-align: center;">No items available at the moment!</h2>
           <div th:case="*">
             <h2 class="mt-2 mb-3" style="text-align: center;">List of Items</h2>
             <div class="table-responsive">
@@ -107,7 +107,8 @@
                         th:data-bs-itemId="${item.itemId}"
                         th:data-bs-itemName="${item.itemName}"
                       >
-                        <i class="fa-solid fa-trash" style="color:rgb(223, 77, 52) ;"></i>
+                        <!-- <i class="fa-solid fa-trash" style="color:rgb(223, 77, 52) ;"></i> -->
+                        <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i>
                       </a>
                         
                       <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem" aria-hidden="true">
