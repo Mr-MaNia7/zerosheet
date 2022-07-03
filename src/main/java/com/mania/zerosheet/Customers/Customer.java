@@ -13,7 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.mania.zerosheet.Agreement.Agreement;
 import com.mania.zerosheet.Transaction.Transaction;
@@ -37,9 +39,11 @@ public class Customer implements Serializable{
   private String middleName;
   @NotBlank(message = "Customer Last Name is required")
   private String lastName;
+  @Email(message = "Please enter a valid e-mail address")
   @NotBlank(message = "Customer Email Address is required")
   private String email;
-  @NotBlank(message = "Customer Phone number is required")
+  @Pattern(regexp="^[0][9][0-9]{8}$|^[9][0-9]{8}$", message="Should be 9/10 characters long, beginning with 9/09")  
+  @NotBlank(message = "Customer Phone Number is required")
   private String phoneNumber;
   private String houseNumber;
   @NotBlank(message = "Customer City or Town is required")
@@ -48,7 +52,7 @@ public class Customer implements Serializable{
   private String subcity;
 
   private double totalPrice;
-  private double totalPriceVAT;
+  private double totalPriceVAT; 
   private double debtBalance;
   private double totalCollateral;
   private double totalCollateralVAT;
