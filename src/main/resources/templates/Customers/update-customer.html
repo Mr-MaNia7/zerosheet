@@ -76,63 +76,7 @@
           </div>
         </nav>
       </header>
-    <!-- <div>
-        <h2>Update Customer</h2>
-        <div class="row">
-            <div>
-                <form action="#" th:action="@{/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
-                    
-                    
-                    <div class="row">
-                        <div>
-                            <label for="name">Name</label>
-                            <input type="text" th:field="*{name}" id="name" placeholder="Name">
-                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                        </div>
-                        <div>
-                            <label for="middleName">Middle-Name</label>
-                            <input type="text" th:field="*{middleName}" id="middleName" placeholder="Middle-Name">
-                            <span th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></span>
-                        </div>
-                        <div>
-                            <label for="lastName">Surname</label>
-                            <input type="text" th:field="*{lastName}" id="lastName" placeholder="Name">
-                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-                        </div>
-                        <div>
-                            <label for="email">Email</label>
-                            <input type="text" th:field="*{email}" id="email" placeholder="Email">
-                            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-                        </div>
 
-                        <div>
-                            <label for="phoneNumber">PhoneNumber</label>
-                            <input type="text" th:field="*{phoneNumber}" id="phoneNumber" placeholder="251">
-                            <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
-                        </div>
-                        <div>
-                            <label for="houseNumber">HouseNumber</label>
-                            <input type="text" th:field="*{houseNumber}" id="houseNumber" placeholder="333">
-                            <span th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></span>
-                        </div>
-                        <div>
-                            <label for="city">City or Town</label>
-                            <input type="text" th:field="*{city}" id="city" placeholder="Addis Ababa">
-                            <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mt-5">
-                            <input type="submit" class="btn btn-primary" value="Update Customer">
-                        </div>
-                    </div>
-
-
-                </form>
-            </div>
-        </div>
-    </div> -->
-    
     <main class="mx-2">
       <div>
           <h2 class="mt-2 mb-3" style="text-align: center;">Edit Customer Information</h2>
@@ -186,8 +130,9 @@
                           <span class="invalid-feedback" th:if="${#fields.hasErrors('subcity')}" th:errors="*{subcity}"></span>
                       </div>
                       <div class="row justify-content-evenly">
-                          <button type="submit" class="col-2 col-sm-3 btn btn-primary">Submit</button>
-                          <button type="reset" class="col-2 col-sm-3 btn btn-primary">Reset</button>
+                        <a href="/customers" class="col-2 col-sm-3 btn btn-primary">Cancel</a>
+                        <button type="reset" class="col-2 col-sm-3 btn btn-primary">Reset</button>
+                        <button type="submit" class="col-2 col-sm-3 btn btn-primary">Submit</button>
                       </div>
                       <footer>
                           <div>
