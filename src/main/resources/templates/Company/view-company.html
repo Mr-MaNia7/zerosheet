@@ -106,10 +106,10 @@
 
               <div class="row align-self-center justify-content-center" th:each="company : ${company}">
                 <div class="card col-8 col-md-4 mt-2">
-                    <!-- <img src="..." class="card-img-top" alt="..."> -->
+                    <img th:src="@{images/comp_logo.jpg}" class="card-img-top" alt="company logo">
                     <div class="card-body">
                       <h5 class="card-title"><span th:text="${company.compName}"></span></h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                      <h6 class="card-subtitle mb-2 text-muted">The best investment for your construction business</h6>
                       <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
                     </div>
                     <ul class="list-group list-group-flush">
