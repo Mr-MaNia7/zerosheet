@@ -103,7 +103,7 @@
                       <th>Customer Name</th>
                       <th>Agreement Date</th>
                       <th>Returning Date</th>
-                      <th>Edit/Delete</th>
+                      <th>Edit/Return</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -111,19 +111,20 @@
                       <td th:text="${status.count}"></td>
                       <td th:text="${transaction.item.itemName}"></td>
                       <td th:text="${transaction.itemQuantity}"></td>
-                      <td th:text="${transaction.transPrice}"></td>
+                      <td th:text="${#numbers.formatDecimal(transaction.transPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
                       <td th:text="${transaction.customer.name + ' ' + transaction.customer.middleName + ' ' + transaction.customer.lastName}"></td>
                       <td th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
                       <td th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
                       <td>
                         <a class="me-3" th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}">
                           <i class="fa-solid fa-pen"></i></a>
-                        <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete" 
+                        <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                           th:data-bs-transId="${transaction.transId}"
                           th:data-bs-itemName="${transaction.item.itemName}"
                           th:data-bs-custName="${transaction.customer.name + ' ' + transaction.customer.middleName + ' ' + transaction.customer.lastName}"
                         >
-                          <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i>
+                          <!-- <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i> -->
+                          <i class="fa-solid fa-right-to-bracket" style="color:rgb(223, 77, 52) ;"></i>
                         </a>
                           
                         <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem" aria-hidden="true">
@@ -134,7 +135,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                <div class="container">Delete transaction of item <span id="itemName" style="font-weight: bold;">item name</span> by a customer <span id="custName" style="font-weight: bold;">customer name</span> permanently?</div>
+                                <div class="container">Delete transaction of item <span id="itemName" style="font-weight: bold;">item name</span> by a customer <span class="custName" style="font-weight: bold;">customer name</span> permanently?</div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
@@ -219,14 +220,16 @@
             const custName = button.getAttribute('data-bs-custName')
 
             // Update the modal's content.
-            // const deleteItemName = deleteModal.querySelector('.modal-body div span')
-            // const deleteCustName = deleteModal.querySelector('#custName')
-            const deleteButtonLink = deleteModal.querySelector('#itemName')
+            const deleteItemName = deleteModal.querySelector('.modal-body div span')
+            const deleteCustName = deleteModal.querySelector('.custName')
+            const deleteButtonLink = deleteModal.querySelector('.modal-footer button a')
+
   
-            deleteButtonLink.href = `transactions/deletetransaction/${transId}`
-            // deleteItemName.textContent = `${itemName}`
-            // deleteCustName.textContent = `${custName}`
+            deleteButtonLink.href = `transactions/remove/${id}`
+            deleteItemName.textContent = `${itemName}`
+            deleteCustName.textContent = `${custName}`
           })
     </script>
+
 </body>
 </html>
