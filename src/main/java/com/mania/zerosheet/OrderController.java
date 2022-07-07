@@ -52,11 +52,11 @@ public class OrderController {
         customer.setTotalCollateral(totalCollateral);
         double totalCollateralVAT = totalCollateral + (totalCollateral * 0.15);
         customer.setTotalCollateralVAT(totalCollateralVAT);
-
+        
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
         model.addAttribute("company", companyRepository.findAll());  
         return "Agreements/view-agreement";
 
-    } 
+    }
 }

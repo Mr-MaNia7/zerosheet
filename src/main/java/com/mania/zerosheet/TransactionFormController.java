@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
+import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
@@ -76,8 +77,17 @@ public class TransactionFormController {
         // calculating collateral price per transaction 100%
         double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity();
         transaction.setCollateral(collateral_price);
+        
+        // calculate remaining item total quantity
+        Item new_item = transaction.getItem();
+        int oldQty = new_item.getTotalQuantity();
+        int newQty = oldQty - transaction.getItemQuantity();
+        new_item.setTotalQuantity(newQty);
+        // transaction.setItem(new_item);
 
+        // model.addAttribute("new_item", new_item);
         order.addTransaction(transaction);
+        // itemRepository.save(new_item);
         // transactionRepository.save(transaction);
         // System.out.println(order.getTransactions()); // debug line
         return "redirect:/orders/current";
