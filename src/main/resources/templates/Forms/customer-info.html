@@ -80,11 +80,14 @@
       <main class="mx-2">
           <div>
             <div class="container">
+              <div class="progress my-2"  style="height: 25px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated w-50" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
+              </div>
               <div class="accordion mt-3" id="cart">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cart-content" aria-expanded="true" aria-controls="cart-content">
-                      Cart
+                      <i class="fa-solid fa-cart-shopping fa-xl"></i><b>Cart</b>
                     </button>
                   </h2>
                   <div id="cart-content" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#cart">
@@ -114,7 +117,7 @@
                       <div class="my-3 row align-items-center justify-content-center">
                         <a class="btn btn-primary btn-sm col-2"
                           th:href="@{/transactions/newtransaction}" role="button">
-                          <i class="fa-solid fa-plus"></i><span> Add Another to Cart</span>
+                          <i class="fa-solid fa-cart-plus"></i><span> Add Another to Cart</span>
                         </a>
                       </div>
                     </div>
@@ -165,7 +168,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="woreda" class="form-label">Woreda</label>
-                            <input type="text" class="form-control" th:field="*{woreda}" id="woreda" th:errorclass="is-invalid" placeholder="05">
+                            <input type="number" class="form-control" th:field="*{woreda}" id="woreda" th:errorclass="is-invalid" placeholder="05">
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('woreda')}" th:errors="*{woreda}"></span>
                         </div>
                         <div class="mb-3">
@@ -174,12 +177,12 @@
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('subcity')}" th:errors="*{subcity}"></span>
                         </div>
                         <div class="row justify-content-evenly">
-                          <a href="/customers" class="col-2 col-sm-3 btn btn-primary">Cancel</a>
+                          <a href="/cancel" class="col-2 col-sm-3 btn btn-primary">Cancel</a>
                           <button type="reset" class="col-2 col-sm-3 btn btn-primary">Reset</button>
                           <button type="submit" class="col-2 col-sm-3 btn btn-primary">Submit</button>
                         </div>
                         <footer>
-                            <div>
+                            <div class="mt-3">
                                 <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
                             </div>
                         </footer>
