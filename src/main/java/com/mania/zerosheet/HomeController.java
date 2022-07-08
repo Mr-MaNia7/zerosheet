@@ -30,9 +30,4 @@ public class HomeController {
         model.addAttribute("transactions", transactionRepository.findAll());
         return "index";
     }
-    @GetMapping("/contact")
-    public String showContactPage(Model model){
-        // model.addAttribute(arg0, arg1)
-        return "Contact/contact";
-    }
 }
