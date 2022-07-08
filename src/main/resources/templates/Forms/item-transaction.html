@@ -90,7 +90,7 @@
                             <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
                             <select th:field="*{item}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
                                 <div th:each="item : ${items}">
-                                    <option th:value="${item.itemId}" th:text="${item.itemName}"></option>
+                                    <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
                                 </div>
                             </select>
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
