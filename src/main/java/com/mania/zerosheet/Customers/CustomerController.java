@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.mania.zerosheet.Items.Item;
+import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
 
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class CustomerController {
   private final CustomerRepository customerRepository;
   private final TransactionRepository TransactionRepository;
+  private final ItemRepository itemRepository;
 
   // from index, or redirect to customers
   @GetMapping("/customers")
@@ -98,6 +101,13 @@ public class CustomerController {
         customerRepository
             .findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id:" + id));
+    
+    for (Transaction transaction : customer.getTransactions()) {
+      Item item = transaction.getItem();
+      int oldQty = item.getTotalQuantity();
+      item.setTotalQuantity(oldQty +  transaction.getItemQuantity());
+      itemRepository.save(item);
+    }
     customerRepository.delete(customer);
     model.addAttribute("customers", customerRepository.findAll());
     return "redirect:/customers";
