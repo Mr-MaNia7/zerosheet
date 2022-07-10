@@ -77,7 +77,7 @@
       </header>
     
     <main>
-        <div>
+        <div class="container">
             <h2 class="mt-2 mb-3" style="text-align: center;">New Transaction</h2>
             <div>
                 <div class="row align-self-center justify-content-center">
@@ -93,17 +93,17 @@
                         </div>                        
                         <div class="mb-3">
                             <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="text" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" placeholder="10">
+                            <input type="text" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" th:errorclass="is-invalid" placeholder="10">
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate">
+                            <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate" th:errorclass="is-invalid">
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate">
+                            <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
                             <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
                         </div>
                         <div class="row justify-content-evenly mb-3">
