@@ -20,7 +20,7 @@ public class SummaryController {
     private final ItemRepository itemRepository;
     private final CustomerRepository customerRepository;
 
-    @PostMapping("/orders/summary")
+    @GetMapping("/orders/summary")
     public String showSummaryPage(Model model, @Valid Customer customer) {
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());

@@ -32,14 +32,17 @@ public class TransactionFormController {
     }
 
     @GetMapping("/transactions/newtransaction/{transId}")
-    public String showTransactionForm2(Model model, @PathVariable ("transId") long transId) {
+    public String showTransactionForm2(@PathVariable ("transId") long transId, Model model) {
         Transaction transaction =
         transactionRepository
         .findById(transId)
         .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
+
         model.addAttribute("items", itemRepository.findAll());
+        // model.addAttribute("item", transaction.getItem());
         model.addAttribute("transaction", transaction);
         return "Forms/item-transaction";
+        // return "redirect:/transactions/newtransaction";
     }
 
     @ModelAttribute(name = "customer")
@@ -52,9 +55,10 @@ public class TransactionFormController {
     }
 
     @PostMapping("/addtransaction")
-    public String processTransaction(@Valid Transaction transaction, 
-    @ModelAttribute Customer order, BindingResult result) {
+    public String processTransaction(@Valid Transaction transaction, BindingResult result,
+    @ModelAttribute Customer order, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("items", itemRepository.findAll());
             return "Forms/item-transaction";
         }
         // Calcualting Logic
@@ -74,6 +78,7 @@ public class TransactionFormController {
         transaction.setCollateral(collateral_price);
 
         order.addTransaction(transaction);
+        // transactionRepository.save(transaction);
         // System.out.println(order.getTransactions()); // debug line
         return "redirect:/orders/current";
     }
