@@ -85,73 +85,83 @@
       <main class="mx-2">
         <h2 class="mt-2 mb-3" style="text-align: center;">Got me any recommendations?</h2>
         <div class="container">
-          <form action="#" th:action="@{/addfeedback}" th:object="${contact}" method="post">
-            <div class="mb-3">
-              <label for="comment" class="form-label">I am happy to hear it! <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
-              <textarea class="form-control" th:field="*{comment}" id="comment" th:errorclass="is-invalid" rows="3" placeholder="Hi Abdulkarim I have a suggestion"></textarea>
-              <!-- <input type="text" class="form-control" th:field="*{comment}" id="comment" th:errorclass="is-invalid" placeholder="Hi"> -->
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
-            </div>
-            
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
-              <input type="text" class="form-control" th:field="*{email}" id="email" th:errorclass="is-invalid" placeholder="someone@example.com">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-            </div>
-
-            <div class="mb-3">
-              <label for="fname" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
-              <input type="text" class="form-control" th:field="*{fname}" id="fname" th:errorclass="is-invalid" placeholder="John">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('fname')}" th:errors="*{fname}"></span>
-            </div>
-            
-            <div class="row justify-content-evenly">
-              <a href="/" class="col-2 col-sm-3 btn btn-primary" role="button"
-                  data-bs-toggle="tooltip" data-bs-placement="top"
-                  data-bs-custom-class="custom-tooltip"
-                  title="Cancel commenting and discard changes">
-                Cancel
-              </a>
-              <button type="reset" class="col-2 col-sm-3 btn btn-primary"
-                  data-bs-toggle="tooltip" data-bs-placement="top"
-                  data-bs-custom-class="custom-tooltip"
-                  title="Reset to defaults">
-                Reset
-              </button>
-              <button type="submit" class="col-2 col-sm-3 btn btn-primary"
-                  data-bs-toggle="tooltip" data-bs-placement="top"
-                  data-bs-custom-class="custom-tooltip"
-                  title="Comment and save changes">
-                Submit
-              </button>
-            </div>
-            <footer>
-              <div class="mt-3">
-                  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+          <div class="row align-self-center justify-content-center">
+            <form class="col-6" action="#" th:action="@{/addfeedback}" th:object="${contact}" method="post">
+              <div class="mb-3">
+                <label for="comment" class="form-label">I am happy to hear it! <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
+                <textarea class="form-control" th:field="*{comment}" id="comment" th:errorclass="is-invalid" rows="3" placeholder="Hi Abdulkarim I have a suggestion"></textarea>
+                <!-- <input type="text" class="form-control" th:field="*{comment}" id="comment" th:errorclass="is-invalid" placeholder="Hi"> -->
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
               </div>
-            </footer>
-          </form>
-      </div>
-      
-      <!-- <section id="contact_info">
-        <h2>contact me through </h2>
-        <ul id="contact_info_list">
-          <li><img src="../images/icons8-mail-30.png" alt="Email icon"><a
-              href="mailto:abdulkarimgmohammed@gmail.com">abdulkarimgmohammed@gmail.com</a></li>
-          <li><img src="../images/icons8-linkedin-30.png" alt="Linkedin icon"><a
-              href="https://www.linkedin.com/in/abdulkarim-getachew-b3b0201b1/" target="_blank">Abdulkarim Getachew</a></li>
-          <li><img src="../images/icons8-facebook-50.png" alt="Facebook icon" class="big"><a
-              href="https://www.facebook.com/abdu.getachew.3954" target="_blank">Abdulkareem G Mohammed</a></li>
-          <li><img src="../images/icons8-twitter-squared-30.png" alt="Twitter icon"><a
-              href="https://mobile.twitter.com/AbdulkarimGeta1" target="_blank">Abdulkarim Getachew</a></li>
-          <li><img src="../images/icons8-phone-squared-30.png" alt="Phone Number icon"><a href="tel:+2510953045859">+251
-              953045859</a></li>
-          <li><img src="../images/icons8-home-address-50.png" alt="Address icon" class="big"><a
-              href="https://www.google.com/maps/@9.040801,38.7637782,18.51z">Addis Ababa Institute of Technology, King
-              George VI Street, Addis Ababa</a></li>
-        </ul>
-      </section> -->
-      
+              
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
+                <input type="text" class="form-control" th:field="*{email}" id="email" th:errorclass="is-invalid" placeholder="someone@example.com">
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+              </div>
+  
+              <div class="mb-3">
+                <label for="fname" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> </label>
+                <input type="text" class="form-control" th:field="*{fname}" id="fname" th:errorclass="is-invalid" placeholder="John">
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('fname')}" th:errors="*{fname}"></span>
+              </div>
+              
+              <div class="row justify-content-evenly">
+                <a href="/" class="col-2 col-sm-3 btn btn-primary" role="button"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Cancel commenting and discard changes">
+                  Cancel
+                </a>
+                <button type="reset" class="col-2 col-sm-3 btn btn-primary"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Reset to defaults">
+                  Reset
+                </button>
+                <button type="submit" class="col-2 col-sm-3 btn btn-primary"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    title="Comment and save changes">
+                  Submit
+                </button>
+              </div>
+              <footer>
+                <div class="mt-3">
+                    <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+                </div>
+              </footer>
+            </form>
+          </div>
+        </div>
+
+        <div class="container my-5">
+          <h2 class="mt-2 mb-3" style="text-align: center;">Contact me through</h2>
+          <div class="container">
+            <div class="row align-self-center justify-content-center">
+              <div class="list-group col-6">
+                <a href="https://www.linkedin.com/in/abdulkarim-getachew-b3b0201b1/" target="_blank" class="list-group-item list-group-item-action list-group-item-primary">
+                  <i class="fa-brands fa-linkedin-in"></i> Abdulkarim Getachew
+                </a>
+                <a href="mailto:abdulkarimgmohammed@gmail.com" class="list-group-item list-group-item-action list-group-item-secondary">
+                  <i class="fa-solid fa-envelope"></i> abdulkarimgmohammed@gmail.com
+                </a>
+                <a href="https://www.facebook.com/abdu.getachew.3954" target="_blank" class="list-group-item list-group-item-action list-group-item-primary">
+                  <i class="fa-brands fa-facebook-f"></i> Abdulkareem G Mohammed
+                </a>
+                <a href="tel:+2510953045859" class="list-group-item list-group-item-action list-group-item-secondary">
+                  <i class="fa-solid fa-phone"></i> +251 953045859
+                </a>
+                <a href="https://mobile.twitter.com/AbdulkarimGeta1" target="_blank" class="list-group-item list-group-item-action list-group-item-primary">
+                  <i class="fa-brands fa-twitter"></i> Abdulkarim Getachew
+                </a>
+                <a href="https://www.google.com/maps/@9.040801,38.7637782,18.51z" target="_blank" class="list-group-item list-group-item-action list-group-item-secondary">
+                  <i class="fa-solid fa-location-pin"></i> Addis Ababa Institute of Technology, King George VI Street, Addis Ababa 
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
 
       <footer class="bd-footer py-4 py-md-5 mt-5 bg-light">
