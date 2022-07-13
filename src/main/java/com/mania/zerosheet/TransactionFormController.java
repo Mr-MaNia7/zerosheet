@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
+import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
@@ -31,17 +32,6 @@ public class TransactionFormController {
         return "Forms/item-transaction";
     }
 
-    @GetMapping("/transactions/newtransaction/{transId}")
-    public String showTransactionForm2(Model model, @PathVariable ("transId") long transId) {
-        Transaction transaction =
-        transactionRepository
-        .findById(transId)
-        .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
-        model.addAttribute("items", itemRepository.findAll());
-        model.addAttribute("transaction", transaction);
-        return "Forms/item-transaction";
-    }
-
     @ModelAttribute(name = "customer")
     public Customer order() {
         return new Customer();
@@ -52,9 +42,10 @@ public class TransactionFormController {
     }
 
     @PostMapping("/addtransaction")
-    public String processTransaction(@Valid Transaction transaction, 
-    @ModelAttribute Customer order, BindingResult result) {
+    public String processTransaction(@Valid Transaction transaction, BindingResult result,
+    @ModelAttribute Customer order, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("items", itemRepository.findAll());
             return "Forms/item-transaction";
         }
         // Calcualting Logic
@@ -72,13 +63,38 @@ public class TransactionFormController {
         // calculating collateral price per transaction 100%
         double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity();
         transaction.setCollateral(collateral_price);
+        
+        // calculate remaining item total quantity
+        Item new_item = transaction.getItem();
+        int oldQty = new_item.getTotalQuantity();
+        int newQty = oldQty - transaction.getItemQuantity();
+        new_item.setTotalQuantity(newQty);
+        // transaction.setItem(new_item);
 
+        // model.addAttribute("new_item", new_item);
         order.addTransaction(transaction);
+        // itemRepository.save(new_item);
+        // transactionRepository.save(transaction);
         // System.out.println(order.getTransactions()); // debug line
         return "redirect:/orders/current";
     }
     
-    
+    @GetMapping("/transactions/newtransaction/{transId}")
+    public String showTransactionForm2(@PathVariable ("transId") long transId, @ModelAttribute Customer order, Model model) {
+        Transaction transn =
+        transactionRepository
+            .findById(transId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
+        
+        // order.addTransaction(transn);
+        // System.out.println(transn.getItem().getItemName());
+        model.addAttribute("items", itemRepository.findAll());
+        // model.addAttribute("item", transn.getItem());
+        model.addAttribute("transaction", transn);
+        return "Forms/item-transaction";
+        // return "redirect:/transactions/newtransaction";
+    }
+
     public long calculateDayDifference(Date fromDate, Date toDate) {
         long difference_In_Time = fromDate.getTime() - toDate.getTime();
         long difference_In_Days = 

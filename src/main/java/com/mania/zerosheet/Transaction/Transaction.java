@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
@@ -26,14 +29,15 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transId;
     
-    @Positive(message = "Item Quantity should be positive")
-    private int itemQuantity;
+    @Min(value = 1, message = "Item Quantity should be atleast 1")
+    // @Digits(10)
+    private int itemQuantity = 10;
+    
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date dueDate = new Date();
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueDate;
-
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueBackDate;
+    private Date dueBackDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 15));
 
     private double transPrice;
 

@@ -3,7 +3,10 @@ package com.mania.zerosheet;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
+import com.mania.zerosheet.Transaction.Transaction;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +23,7 @@ public class SummaryController {
     private final ItemRepository itemRepository;
     private final CustomerRepository customerRepository;
 
-    @PostMapping("/orders/summary")
+    @GetMapping("/orders/summary")
     public String showSummaryPage(Model model, @Valid Customer customer) {
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
@@ -30,6 +33,10 @@ public class SummaryController {
 
     @PostMapping("/orders/finish")
     public String finishSession(Model model, SessionStatus status, @Valid Customer customer) {
+        for (Transaction transaction : customer.getTransactions()) {
+            Item new_item = transaction.getItem();
+            this.itemRepository.save(new_item);
+        }
         this.customerRepository.save(customer);
         status.setComplete();
         return "redirect:/customers";

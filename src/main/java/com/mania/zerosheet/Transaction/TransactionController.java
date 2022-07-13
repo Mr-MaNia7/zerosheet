@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +79,17 @@ public class TransactionController {
         
         double old_collateral_price = trans.getCollateral();
         double old_trans_price = trans.getTransPrice();
+        int old_item_quantity = trans.getItemQuantity();
         // System.out.println("Old collateral price" + old_collateral_price);
+
+        // calculate remaining item total quantity
+        Item item = trans.getItem();
+        int oldQty = item.getTotalQuantity();
+        int newQty = oldQty + (old_item_quantity - transaction.getItemQuantity());
+        item.setTotalQuantity(newQty);
+        transaction.setItem(item);
+
+        itemRepository.save(item);
 
         // trans.setItem(item);
         trans.setItemQuantity(item_quantity);
@@ -104,6 +115,8 @@ public class TransactionController {
 
         // System.out.println("Old Total collateral" + old_total_collateral);
         // System.out.println("New total collateral" + new_total_collateral);
+
+
         
         transactionRepository.save(trans);
         // this.customerRepository.save(cust);
@@ -173,12 +186,45 @@ public class TransactionController {
         customer.setTotalCollateralVAT(total_collateral_VAT);
         customer.setDebtBalance(total_price_VAT);
         
+        // calculate remaining item total quantity
+        Item item = transaction.getItem();
+        int oldQty = item.getTotalQuantity();
+        int newQty = oldQty - transaction.getItemQuantity();
+        item.setTotalQuantity(newQty);
+        transaction.setItem(item);
+
+        itemRepository.save(item);
+
         transactionRepository.save(transaction);
 
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
         model.addAttribute("company", companyRepository.findAll());
         return "Agreements/view-updated-agreement";
+    }
+
+    @GetMapping("transactions/remove/{transId}")
+    public String deleteTransaction(@PathVariable("transId") long transId, Model model){
+        Transaction transaction =
+            transactionRepository
+                .findById(transId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id:" + transId));
+        
+        int oldQty = transaction.getItem().getTotalQuantity();
+        transaction.getItem().setTotalQuantity(oldQty +  transaction.getItemQuantity());
+
+        double oldDebt = transaction.getCustomer().getDebtBalance() / 1.15;
+        double newDebt = (oldDebt - transaction.getTransPrice()) * 1.15;
+        transaction.getCustomer().setDebtBalance(newDebt);
+
+        double old_total_collateral = transaction.getCustomer().getTotalCollateral();
+        double new_total_collateral = old_total_collateral - transaction.getCollateral();
+        transaction.getCustomer().setTotalCollateral(new_total_collateral);
+
+        transaction.getCustomer().setTotalCollateralVAT(new_total_collateral * 1.15);
+
+        transactionRepository.delete(transaction);
+        return "redirect:/customers";
     }
 
     public long calculateDayDifference(Date fromDate, Date toDate) {

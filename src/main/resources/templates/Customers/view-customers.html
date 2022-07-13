@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" /> -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/d660833754.js" crossorigin="anonymous"></script>
@@ -34,63 +34,63 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(176, 72, 228) ;">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="/">ZeroSheet</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="/">Home</a>  
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="/company">Company</a>
-                </li>
-  
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Customers
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/customers">View Customers</a></li>
-                    <li><a class="dropdown-item" href="/customers/newcustomer">Add Customer</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-                
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Items
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/items">View Items</a></li>
-                    <li><a class="dropdown-item" href="/items/newitem">Add Item</a></li>
-                  </ul>
-                </li>
-  
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle active " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Transactions
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/transactions">View Transactions</a></li>
-                    <li><a class="dropdown-item" href="/transactions/newtransaction">Add Transaction</a></li>
-                  </ul>
-                </li>
-  
+  <header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(176, 72, 228) ;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">ZeroSheet</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>  
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/company">Company</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Customers
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/customers">View Customers</a></li>
+                <li><a class="dropdown-item" href="/customers/newcustomer">Add Customer</a></li>
+                <!-- <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li> -->
               </ul>
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </div>
-          </div>
-        </nav>
-      </header>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Items
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/items">View Items</a></li>
+                <li><a class="dropdown-item" href="/items/newitem">Add Item</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Transactions
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/transactions">View Transactions</a></li>
+                <li><a class="dropdown-item" href="/transactions/newtransaction">Add Transaction</a></li>
+              </ul>
+            </li>
+
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
     
     <main class="mx-2">
       <div class="container">
@@ -102,13 +102,15 @@
             <h2 class="mt-2 mb-3" style="text-align: center;">List of Customers</h2>
             <div class="row">
               <div class="col-sm-6 mb-2" th:each="customer : ${customers}">
-                <div class="card">
-                  <div class="card-body" data-bs-toggle="collapse" th:data-bs-target="${'#' + customer.name + customer.id}"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    <h5 class="card-title" th:text="${customer.name + ' ' + customer.lastName}"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"
-                      th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></h6>
-                    <!-- <span>
+                <div class="accordion" id="customerReport">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="customerName">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#' + customer.name + customer.id}"
+                         aria-expanded="true" th:aria-controls="${customer.name + customer.id}" th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                      </button>
+                    </h2>
+                    <div th:id="${customer.name + customer.id}" class="accordion-collapse collapse" aria-labelledby="customerName" data-bs-parent="#customerReport">
+                      <!-- <span>
                                             <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete" 
                                                 th:data-bs-customerId="${customer.id}"
                                                 th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"
@@ -116,121 +118,158 @@
                                                 <i class="fa-solid fa-delete-left fa-lg" style="color:rgb(223, 77, 52) ;"></i>
                                             </a>
                                         </span> -->
-                  </div>
-                  <span class="collapse" th:id="${customer.name + customer.id}">
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        <h6>Personal Address Information</h6>
-                        <div class="justify-content-center">
-                          <div>
-                            <i class="fa-solid fa-envelope me-2" style="color:rgb(176, 72, 228)" ;></i><span
-                              th:text="${customer.email}"></span>
-                          </div>
-                          <div>
-                            <i class="fa-solid fa-phone me-2" style="color:rgb(176, 72, 228)"></i><span
-                              th:text="${customer.phoneNumber}"></span>
-                          </div>
-                          <div>
-                            <i class="fa-solid fa-house me-2" style="color:rgb(176, 72, 228)"></i><span
-                              th:text="${customer.houseNumber}"></span>
-                          </div>
-                          <div>
-                            <span class="badge rounded-pill me-1"
-                              style="background-color:rgb(176, 72, 228);">city</span><span
-                              th:text="${customer.city}"></span>
-                          </div>
-                          <div>
-                            <span class="badge rounded-pill me-1" style="background-color:rgb(176, 72, 228);">subcity</span>
-                            <span th:text="${customer.subcity}"></span>
-                            <span class="badge rounded-pill me-1" style="background-color:rgb(176, 72, 228);">woreda</span>
-                            <span th:text="${customer.woreda}"></span>
-                          </div>
-                        </div>
-                        <div class="my-3">
-                          <a class="btn btn-primary btn-sm" th:href="@{customers/editcustomer/{id}(id=${customer.id})}"
-                            role="button">
-                            <i class="fa-solid fa-pen"></i><span> Edit Personal Info</span>
-                          </a>
-                        </div>
-                      </li>
-    
-                      <li class="list-group-item">
-                        <h6>Transactions by this customer</h6>
-                        <div th:if="${#lists.isEmpty(customer.transactions)}">
-                          <p>No Transactions for this customer!</p>
-                          <div class="my-3">
-                            <a class="btn btn-primary btn-sm"
-                              th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                              <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
-                            </a>
-                          </div>
-                        </div>
-                        <div th:unless="${#lists.isEmpty(customer.transactions)}">
-                          <div th:each="transaction : ${customer.transactions}">
-                            <div><span th:text="${transaction.item.itemName}"></span></div>
-                            <div><span th:text='${"Item Quantity " + transaction.itemQuantity}'></span></div>
-                            <div><span th:text='${"Each Transaction Price " + transaction.transPrice + " Birr"}'></span>
-                            </div>
-                            <div><span th:text='${"Remaining days " + transaction.dayDifference}'></span></div>
-                            <div class="my-3">
-                              <a class="btn btn-primary btn-sm"
-                                th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}"
-                                role="button">
-                                <i class="fa-solid fa-pen"></i><span> Edit Transaction</span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-    
-                      <li class="list-group-item">
-                        <h6>Total</h6>
-                        <div>
-                          <div th:text="${'Total Price ' + customer.totalPriceVAT}"></div>
-                          <div th:text="${'Debt Balance ' + customer.debtBalance}"></div>
-                          <div th:text="${'Total Collateral ' + customer.totalCollateralVAT}"></div>
-                        </div>
-                      </li>
-                    </ul>
-                    <div class="card-footer">
-                      <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal" data-bs-target="#confirm-delete"
-                        th:data-bs-customerId="${customer.id}"
-                        th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
-                        <!-- <a class="btn btn-danger btn-sm" th:href="@{customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
-                        <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
-                      </a>
-    
-                      <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container">
-                                <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
-                                  associated informations permanently?</p>
-                                <p>Deleting will also delete the following:</p>
-                                <ul class="list-group list-group-flush list-group-numbered">
-                                  <li class="list-group-item">Customer's Personal Data</li>
-                                  <li class="list-group-item">All Transactions of the customer</li>
-                                  <li class="list-group-item">Any kind of monetary information related to this customer</li>
-                                </ul>
+                      <div class="accordion-body">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <h6>Personal Address Information</h6>
+                            <div class="justify-content-center">
+                              <div>
+                                <i class="fa-solid fa-envelope me-2" style="color:rgb(176, 72, 228)" ;></i><span
+                                  th:text="${customer.email}"></span>
+                              </div>
+                              <div>
+                                <i class="fa-solid fa-phone me-2" style="color:rgb(176, 72, 228)"></i><span
+                                  th:text="${customer.phoneNumber}"></span>
+                              </div>
+                              <div>
+                                <i class="fa-solid fa-house me-2" style="color:rgb(176, 72, 228)"></i><span
+                                  th:text="${customer.houseNumber}"></span>
+                              </div>
+                              <div>
+                                <span class="badge rounded-pill me-1"
+                                  style="background-color:rgb(176, 72, 228);">city</span><span
+                                  th:text="${customer.city}"></span>
+                              </div>
+                              <div>
+                                <span class="badge rounded-pill me-1" style="background-color:rgb(176, 72, 228);">subcity</span>
+                                <span th:text="${#strings.defaultString(customer.subcity, 'N/A')}"></span>
+                                <span class="badge rounded-pill me-1" style="background-color:rgb(176, 72, 228);">woreda</span>
+                                <span th:text="${customer.woreda != 0} ? ${customer.woreda} : 'N/A'"></span>
                               </div>
                             </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-                              <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                <a id="deletelink" class="link-light text-decoration-none">Delete</a>
-                              </button>
+                            <div class="my-3">
+                              <a class="btn btn-primary btn-sm" th:href="@{customers/editcustomer/{id}(id=${customer.id})}"
+                                role="button">
+                                <i class="fa-solid fa-pen"></i><span> Edit Personal Info</span>
+                              </a>
+                            </div>
+                          </li>
+        
+                          <li class="list-group-item">
+                            <h6>Transactions by this customer</h6>
+                            <div th:if="${#lists.isEmpty(customer.transactions)}">
+                              <p>No Transactions for this customer!</p>
+                              <div class="my-3">
+                                <a class="btn btn-primary btn-sm"
+                                  th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                                  <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
+                                </a>
+                              </div>
+                            </div>
+                            <div th:unless="${#lists.isEmpty(customer.transactions)}">
+                              <ul class="list-group">
+                                <li class="list-group-item" th:each="transaction, status : ${customer.transactions}">
+                                  <div><span th:text="${transaction.item.itemName}" style="font-weight: bold;"></span></div>
+                                  <div>Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></div>
+                                  <div>Each Transaction Price: <span th:text='${#numbers.formatDecimal(transaction.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}' style="font-weight: bold;"></span></div>
+                                  <div>Loan days: <span th:text='${transaction.dayDifference + "  days"}' style="font-weight: bold;"></span></div>
+                                  <div th:each="remainingDay, rstat : ${remainingDaysList}">
+                                    <span th:if="${rstat.index == status.index}">Remaining days: </span>
+                                    <span th:if="${rstat.index == status.index}" th:text='${remainingDay + " days"}' style="font-weight: bold;"></span>
+                                  </div>
+                                  <div class="my-3">
+                                    <a class="col-sm-4 btn btn-primary btn-sm"
+                                      th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}"
+                                      role="button">
+                                      <i class="fa-solid fa-pen"></i><span> Edit Transaction</span>
+                                    </a>
+                                    <a class="col-4 col-md-3 btn btn-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#confirm-return" th:data-bs-transId="${transaction.transId}"
+                                      th:data-bs-itemName="${transaction.item.itemName}"
+                                      th:data-bs-custName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                                      <i class="fa-solid fa-right-to-bracket"></i><span> Return</span>
+                                    </a>
+                                    <div class="modal fade" id="confirm-return" tabindex="-1" aria-labelledby="deleteItem" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="container">Delete transaction of item <span id="itemName" style="font-weight: bold;">item name</span> by a customer <span class="custName" style="font-weight: bold;">customer name</span> permanently?</div>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                                            <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal" >
+                                              <a id="deletelink" class="link-light text-decoration-none">Delete</a>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </li>
+                                <div class="my-3">
+                                  <a class="btn btn-primary btn-sm"
+                                    th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                                    <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
+                                  </a>
+                                </div>
+                              </ul>
+                            </div>
+                          </li>
+        
+                          <li class="list-group-item">
+                            <h6>Total Cost</h6>
+                            <div>
+                              <div>Total Price = <span th:text="${#numbers.formatDecimal(customer.totalPriceVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}" style="font-weight: bold;"></span></div>
+                              <div>Debt Balance = <span th:text="${#numbers.formatDecimal(customer.debtBalance, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}" style="font-weight: bold;"></span></div>
+                              <div>Total Collateral = <span th:text="${#numbers.formatDecimal(customer.totalCollateralVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}" style="font-weight: bold;"></span></div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div class="my-3 ms-4">
+                        <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal" data-bs-target="#confirm-delete"
+                          th:data-bs-customerId="${customer.id}"
+                          th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                          <!-- <a class="btn btn-danger btn-sm" th:href="@{customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
+                          <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
+                        </a>
+      
+                        <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
+                          aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="container">
+                                  <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
+                                    associated informations permanently?</p>
+                                  <p>Deleting will also delete the following:</p>
+                                  <ul class="list-group list-group-flush list-group-numbered">
+                                    <li class="list-group-item">Customer's Personal Data</li>
+                                    <li class="list-group-item">All Transactions of the customer</li>
+                                    <li class="list-group-item">Any kind of monetary information related to this customer</li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                                <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                  <a id="deletelink" class="link-light text-decoration-none">Delete</a>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -246,50 +285,52 @@
     </main>
     
     <footer class="bd-footer py-4 py-md-5 mt-5 bg-light">
-        <div class="container py-4 py-md-5 px-4 px-md-3">
-          <div class="row">
-            <div class="col-lg-3 mb-3">
-              <a class="d-inline-flex align-items-center mb-2 link-dark text-decoration-none" href="/" aria-label="ZeroSheet">
-                <h5 class="fs-5" style="color:darkorchid ;">ZeroSheet</h5>
-              </a>
-              <ul class="list-unstyled small text-muted">
-                <li class="mb-2">Designed and built with <i class="fa fa-heart" aria-hidden="true" style="color:rgb(176, 72, 228);"></i> by <a href="https://github.com/Mr-MaNia7" target="_blank">Abdulkarim(Mania)</a>.</li>
-                <li class="mb-2">Code licensed under <a href="https://github.com/Mr-MaNia7/zs-heroku-psql/blob/main/LICENSE" target="_blank" rel="license noopener">GPL-3.0</a>.</li>
-                <li class="mb-2">Currently v0.0</li>
-              </ul>
-            </div>
-            <div class="col-6 col-lg-2 offset-lg-1 mb-3">
-              <h5 style="color:darkorchid ;">Links</h5>
-              <ul class="list-unstyled">
-                <li class="mb-2"><a href="/">Home</a></li>
-                <li class="mb-2"><a href="#">Docs</a></li>
-              </ul>
-            </div>
-            <div class="col-6 col-lg-2 mb-3">
-              <h5 style="color:darkorchid ;">Guides</h5>
-              <ul class="list-unstyled">
-                <li class="mb-2"><a href="#">Getting started</a></li>
-              </ul>
-            </div>
-            <div class="col-6 col-lg-2 mb-3">
-              <h5 style="color:darkorchid ;">Projects</h5>
-              <ul class="list-unstyled">
-                <li class="mb-2"><a href="#">ZeroSheet</a></li>
-              </ul>
-            </div>
-            <div class="col-6 col-lg-2 mb-3">
-              <h5 style="color:darkorchid ;">Community</h5>
-              <ul class="list-unstyled">
-                <li class="mb-2"><a href="hhttps://github.com/Mr-MaNia7/zs-heroku-psql" target="_blank">Github</a></li>
-                <li class="mb-2"><a href="hhttps://github.com/Mr-MaNia7/zs-heroku-psql/issues" target="_blank">Issues</a></li>
-              </ul>
-            </div>
+      <div class="container py-4 py-md-5 px-4 px-md-3">
+        <div class="row">
+          <div class="col-lg-3 mb-3">
+            <a class="d-inline-flex align-items-center mb-2 link-dark text-decoration-none" href="/" aria-label="ZeroSheet">
+              <h5 class="fs-5" style="color:darkorchid ;">ZeroSheet</h5>
+            </a>
+            <ul class="list-unstyled small text-muted">
+              <li class="mb-2">Designed and built with <i id="heart" class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/Mr-MaNia7" target="_blank">Abdulkarim&llarr;&phmmat;&afr;&nfr;&iscr;&afr;</a>.</li>
+              <li class="mb-2">Code licensed under <a href="https://github.com/Mr-MaNia7/zs-heroku-psql/blob/main/LICENSE" target="_blank" rel="license noopener">GPL-3.0</a>.</li>
+              <li class="mb-2">Currently v0.0</li>
+            </ul>
           </div>
-          <div class="row small text-muted justify-content-center">
-            &copy; Copyright 2022
+          <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+            <h5 style="color:darkorchid ;">Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="/">Home</a></li>
+              <li class="mb-2"><a href="/contact">Contact&lt;Dev&gt;</a></li>
+              <li class="mb-2"><a href="#">Docs</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2 mb-3">
+            <h5 style="color:darkorchid ;">Guides</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="#">Getting started</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2 mb-3">
+            <h5 style="color:darkorchid ;">Projects</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="#">ZeroSheet</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2 mb-3">
+            <h5 style="color:darkorchid ;">Community</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="hhttps://github.com/Mr-MaNia7/zs-heroku-psql" target="_blank">Github</a></li>
+              <li class="mb-2"><a href="hhttps://github.com/Mr-MaNia7/zs-heroku-psql/issues" target="_blank">Issues</a></li>
+            </ul>
           </div>
         </div>
+        <div class="row small text-muted justify-content-center">
+          <span id="copyright">&copy; Copyright 2022</span> 
+        </div>
+      </div>
     </footer>
+    
     <script>
         const deleteModal = document.getElementById('confirm-delete')
           deleteModal.addEventListener('show.bs.modal', event => {
@@ -306,6 +347,28 @@
             deleteCustName.textContent = `${name}`
           })
       </script>
+      <script>
+        const returnModal = document.getElementById('confirm-return')
+          returnModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            const id = button.getAttribute('data-bs-transId')
+            const itemName = button.getAttribute('data-bs-itemName')
+            const custName = button.getAttribute('data-bs-custName')
+
+            // Update the modal's content.
+            const deleteItemName = returnModal.querySelector('.modal-body div span')
+            const deleteCustName = returnModal.querySelector('.custName')
+            const deleteButtonLink = returnModal.querySelector('.modal-footer button a')
+
+  
+            deleteButtonLink.href = `transactions/remove/${id}`
+            // th:href="@{transactions/remove/{transId}(transId=${transaction.transId})}"
+            deleteItemName.textContent = `${itemName}`
+            deleteCustName.textContent = `${custName}`
+          })
+    </script>
     <!-- <script th:src="@{/js/bootstrap.bundle.min.js}"></script> -->
 </body>
 </html>

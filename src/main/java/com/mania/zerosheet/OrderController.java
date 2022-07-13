@@ -30,7 +30,7 @@ public class OrderController {
     public String processOrder(@Valid Customer customer, 
     BindingResult result, SessionStatus status, Model model) {
         if (result.hasErrors()) {
-            return "Forms/orderForm";
+            return "Forms/customer-info";
         }
         
         // System.out.println(customer.getId()); // debug line
@@ -52,12 +52,11 @@ public class OrderController {
         customer.setTotalCollateral(totalCollateral);
         double totalCollateralVAT = totalCollateral + (totalCollateral * 0.15);
         customer.setTotalCollateralVAT(totalCollateralVAT);
-
+        
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
-        // model.addAttribute("items", itemRepository.findAll());
         model.addAttribute("company", companyRepository.findAll());  
         return "Agreements/view-agreement";
 
-    } 
+    }
 }
