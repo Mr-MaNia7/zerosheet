@@ -17,18 +17,27 @@
         crossorigin="anonymous"></script>
 
     <style type="text/css" media="print">
-        .dontprint { 
-            display: none; 
-        }        
+        .dontprint {
+            display: none;
+        }
     </style>
-    
     <style type="text/css">
         .price {
-        font-weight: bold;
-        color:saddlebrown;
-        padding: 0em .5em;
-        font-style: italic;
-        text-decoration: underline;
+            font-weight: bold;
+            color: saddlebrown;
+            padding: 0em .5em;
+            font-style: italic;
+            text-decoration: underline;
+        }
+    
+        .custom-tooltip {
+            --bs-tooltip-bg: var(--bs-secondary);
+        }
+    
+        @media print {
+            .pagebreak {
+                page-break-before: always;
+            }
         }
     </style>
 
@@ -36,7 +45,7 @@
 </head>
 
 <body>
-    <header class="sticky-top">
+    <header class="sticky-top dontprint">
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(176, 72, 228) ;">
           <div class="container-fluid">
             <a class="navbar-brand" href="/">ZeroSheet</a>
@@ -350,61 +359,63 @@
                     </div>
                 </div>
             </div>
-    
-            <div class="my-5" style="border:solid grey ;">
-                <div class="container">
-                    <div class="mb-3">
-                        <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
-                            <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4) + '/14'}">0055/12</span></p>
+            
+            <div class="pagebreak">
+                <div class="my-5" style="border:solid grey ;">
+                    <div class="container">
+                        <div class="mb-3">
+                            <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
+                                <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4) + '/14'}">0055/12</span></p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="row align-items-center justify-content-center">
-                        <div class="col-10 col-md-6">
-                            <h5 style="text-align: center;"><b>አከራይ</b></h5>
-                            <ul class="list-unstyled ms-3">
-                                <div>
-                                    <li>ሙሉ ስም <span>____________________________________________</span> </li>
+    
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-10 col-md-6">
+                                <h5 style="text-align: center;"><b>አከራይ</b></h5>
+                                <ul class="list-unstyled ms-3">
+                                    <div>
+                                        <li>ሙሉ ስም <span>____________________________________________</span> </li>
+                                        <li>ፊርማ <span>____________________________________________</span></li>
+                                        <li>የስራ ድርሻ <span>____________________________________________</span></li>
+                                    </div>
+                                </ul>
+                            </div>
+                            <div class="col-10 col-md-6">
+                                <h5 style="text-align: center;"><b>ተከራይ</b></h5>
+                                <ul class="list-unstyled ms-3">
+                                    <li>ሙሉ ስም <span>____________________________________________</span></li>
                                     <li>ፊርማ <span>____________________________________________</span></li>
                                     <li>የስራ ድርሻ <span>____________________________________________</span></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <h5 style="text-align: center;"><b>ምስክር</b></h5>
+                                <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td>ተቁ</td>
+                                                <td>ሙሉ ስም</td>
+                                                <td>ፊርማ</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>____________________________________________</td>
+                                                <td>____________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>____________________________________________</td>
+                                                <td>____________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>____________________________________________</td>
+                                                <td>____________________________________________</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </ul>
-                        </div>
-                        <div class="col-10 col-md-6">
-                            <h5 style="text-align: center;"><b>ተከራይ</b></h5>
-                            <ul class="list-unstyled ms-3">
-                                <li>ሙሉ ስም <span>____________________________________________</span></li>
-                                <li>ፊርማ <span>____________________________________________</span></li>
-                                <li>የስራ ድርሻ <span>____________________________________________</span></li>
-                            </ul>
-                        </div>
-                        <div class="col-12 mt-3">
-                            <h5 style="text-align: center;"><b>ምስክር</b></h5>
-                            <div class="table-responsive">
-                                <table class="table table-borderless">
-                                    <tbody>
-                                        <tr>
-                                            <td>ተቁ</td>
-                                            <td>ሙሉ ስም</td>
-                                            <td>ፊርማ</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>____________________________________________</td>
-                                            <td>____________________________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>____________________________________________</td>
-                                            <td>____________________________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>____________________________________________</td>
-                                            <td>____________________________________________</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -414,9 +425,24 @@
             <div class="dontprint">
                 <form action="#" th:action="@{/orders/updatesummary/{id}(id = ${customer.id})}" th:object="${customer}" method="get">
                     <div class="row justify-content-evenly">
-                        <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button">Cancel</a>
-                        <a th:href="@{/orders/updatesummary/{id}(id = ${customer.id})}" class="col-2 col-sm-3 btn btn-primary" role="button">Continue</a>
-                        <button type="submit" class="col-2 col-sm-3 btn btn-primary" onclick="window.print();">Submit</button>
+                        <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            title="Cancel and discard changes">
+                          Cancel
+                        </a>
+                        <a th:href="@{/orders/updatesummary/{id}(id = ${customer.id})}" class="col-2 col-sm-3 btn btn-primary" role="button"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                title="Accept and Continue">
+                            Continue
+                        </a>
+                        <button class="col-2 col-sm-3 btn btn-primary" onclick="window.print(); return false;"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-custom-class="custom-tooltip"
+                            title="Print this agreement and continue">
+                            <i class="fa-solid fa-print"></i> Print
+                        </button>
                     </div>
                 </form>
             </div>
@@ -471,6 +497,12 @@
             </div>
         </footer>
     </div>
+
+    <!-- Make an issue on the print page! -->
+    <!-- <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script> -->
 
 </body>
 
