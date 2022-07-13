@@ -32,20 +32,6 @@ public class TransactionFormController {
         return "Forms/item-transaction";
     }
 
-    @GetMapping("/transactions/newtransaction/{transId}")
-    public String showTransactionForm2(@PathVariable ("transId") long transId, Model model) {
-        Transaction transaction =
-        transactionRepository
-        .findById(transId)
-        .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
-
-        model.addAttribute("items", itemRepository.findAll());
-        // model.addAttribute("item", transaction.getItem());
-        model.addAttribute("transaction", transaction);
-        return "Forms/item-transaction";
-        // return "redirect:/transactions/newtransaction";
-    }
-
     @ModelAttribute(name = "customer")
     public Customer order() {
         return new Customer();
@@ -93,7 +79,22 @@ public class TransactionFormController {
         return "redirect:/orders/current";
     }
     
-    
+    @GetMapping("/transactions/newtransaction/{transId}")
+    public String showTransactionForm2(@PathVariable ("transId") long transId, @ModelAttribute Customer order, Model model) {
+        Transaction transn =
+        transactionRepository
+            .findById(transId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
+        
+        // order.addTransaction(transn);
+        // System.out.println(transn.getItem().getItemName());
+        model.addAttribute("items", itemRepository.findAll());
+        // model.addAttribute("item", transn.getItem());
+        model.addAttribute("transaction", transn);
+        return "Forms/item-transaction";
+        // return "redirect:/transactions/newtransaction";
+    }
+
     public long calculateDayDifference(Date fromDate, Date toDate) {
         long difference_In_Time = fromDate.getTime() - toDate.getTime();
         long difference_In_Days = 
