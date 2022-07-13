@@ -2,14 +2,11 @@ package com.mania.zerosheet.Items;
 
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.mania.zerosheet.Transaction.TransactionRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class ItemController {
     private final ItemRepository itemRepository;
-    private final TransactionRepository transactionRepository;
     
     // from home to items
     @GetMapping("/items")

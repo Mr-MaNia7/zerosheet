@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class AgreementController {
     private final AgreementRepository agreementRepository;
     private final CompanyRepository companyRepository;
-    private final ArticleRepository articleRepository;
+    // private final ArticleRepository articleRepository;
 
     @GetMapping("/agreements")
     public String showAgreementsPage(Agreement agreement, Model model){
