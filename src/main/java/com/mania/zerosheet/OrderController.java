@@ -1,5 +1,7 @@
 package com.mania.zerosheet;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
@@ -53,9 +55,11 @@ public class OrderController {
         double totalCollateralVAT = totalCollateral + (totalCollateral * 0.15);
         customer.setTotalCollateralVAT(totalCollateralVAT);
         
+        Date today = new Date();
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
-        model.addAttribute("company", companyRepository.findAll());  
+        model.addAttribute("company", companyRepository.findAll());
+        model.addAttribute("today", today);
         return "Agreements/view-agreement";
 
     }

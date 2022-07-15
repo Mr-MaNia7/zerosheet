@@ -123,7 +123,9 @@ public class TransactionController {
 
         model.addAttribute("customer", cust);
         model.addAttribute("transactions", cust.getTransactions());
-        model.addAttribute("company", companyRepository.findAll());  
+        model.addAttribute("company", companyRepository.findAll());
+        Date today = new Date();
+        model.addAttribute("today", today);
         return "Agreements/view-updated-agreement";
         // return "redirect:/customers";
     }
@@ -200,6 +202,8 @@ public class TransactionController {
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getTransactions());
         model.addAttribute("company", companyRepository.findAll());
+        Date today = new Date();
+        model.addAttribute("today", today);
         return "Agreements/view-updated-agreement";
     }
 

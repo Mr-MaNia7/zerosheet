@@ -116,7 +116,7 @@
                 <div class="container">
                     <div>
                         <div id="date" class="row justify-content-end">
-                            <p class="col-6 col-md-3">ሰኔ 13 ቀን 2012 ዓ.ም</p>
+                            <p class="col-6 col-md-3"  th:text="${#dates.format(today, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም</p>
                         </div>
                 
                         <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
@@ -222,7 +222,7 @@
                             <div th:each="trans,status : ${transactions}">
                                 <li>
                                     ይህ የኪራይ ውል ከ ዛሬ ቀን 
-                                    <span th:text="${status.first}? ${#dates.format(trans.dueDate, 'dd-MM-yyyy')}"></span> 
+                                    <span th:text="${#dates.format(today, 'dd-MM-yyyy')}"></span> 
                                     ጀምሮ በአዲስ አበባ ከተማ የተደረገ ሲሆን ተከራዩ እቃውን ከወሰደበት ጊዜ ጀምሮ ለ 
                                     <span th:text="${status.first}? ${trans.dayDifference}"></span> 
                                     ቀናት ፀንቶ ይቆያል፤ ሆኖም ግን ተዋዋዮች ከተስማሙና የቀጣይ ወራት ኪራይ ከተከፈለ ማራዘም ይችላሉ ፡፡
