@@ -1,3 +1,17 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+main {
+    flex: auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
 #heart,
 #copyright {
     color: dimgray;
