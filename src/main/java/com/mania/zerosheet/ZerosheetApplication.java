@@ -1,12 +1,12 @@
 package com.mania.zerosheet;
 
-import com.mania.zerosheet.Agreement.AgreementRepository;
-import com.mania.zerosheet.Company.Company;
-import com.mania.zerosheet.Company.CompanyRepository;
-import com.mania.zerosheet.Items.Item;
-import com.mania.zerosheet.Items.ItemRepository;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
+// import com.mania.zerosheet.Agreement.AgreementRepository;
+// import com.mania.zerosheet.Company.Company;
+// import com.mania.zerosheet.Company.CompanyRepository;
+// import com.mania.zerosheet.Items.Item;
+// import com.mania.zerosheet.Items.ItemRepository;
+// import org.springframework.boot.CommandLineRunner;
+// import org.springframework.context.annotation.Bean;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
