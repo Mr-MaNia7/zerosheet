@@ -1,7 +1,9 @@
 package com.mania.zerosheet.Items;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+// import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +47,9 @@ public class Item implements Serializable{
     private double areaCoverage;
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Transaction> transactions;
+    // private Set<Transaction> transactions;
+    // @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private List<Transaction> transactions = new ArrayList<Transaction>();
     
     public Item(String itemName, String unit, double unitLoanPrice, double unitPrice, double areaCoverage, int totalQuantity)
     {
