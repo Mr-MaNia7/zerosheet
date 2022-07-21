@@ -88,60 +88,76 @@
               <div class="progress-bar progress-bar-striped progress-bar-animated w-25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
             </div>
             <h2 class="mt-2 mb-3" style="text-align: center;">New Transaction</h2>
-            <div>
-                <div class="row align-self-center justify-content-center">
-                    <form class="col-8 col-md-6" action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
-                        <div class="mb-3">
-                            <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <select th:field="*{item}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
-                                <div th:each="item : ${items}">
-                                    <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
-                                </div>
-                            </select>
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
-                        </div>                        
-                        <div class="mb-3">
-                            <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="number" min="1" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" th:errorclass="is-invalid" placeholder="10">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate" th:errorclass="is-invalid">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
-                        </div>
-                        <div class="row justify-content-evenly">
-                          <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button"
-                              data-bs-toggle="tooltip" data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              title="Cancel and discard changes">
-                            Cancel
-                          </a>
-                          <button type="reset" class="col-2 col-sm-3 btn btn-primary"
-                              data-bs-toggle="tooltip" data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              title="Reset to defaults">
-                            Reset
-                          </button>
-                          <button type="submit" class="col-2 col-sm-3 btn btn-primary"
-                              data-bs-toggle="tooltip" data-bs-placement="top"
-                              data-bs-custom-class="custom-tooltip"
-                              title="Add and continue">
-                            Submit
-                          </button>
-                        </div>
-                        <footer>
-                            <div class="mt-3">
-                                <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
-                            </div>
-                        </footer>
-                    </form>
+            <div class="row align-self-center justify-content-center">
+              <div th:if="${#lists.isEmpty(items)}" class="col-8 col-md-6">
+                <div class="card border-warning mb-3">
+                  <h6 class="card-header bg-warning text-light">Warning</h6>
+                  <div class="card-body">
+                    <h5 class="card-title">There are no items available!</h5>
+                    <p class="card-text">
+                      You can not add transactions when there are no items available. You should <a href="/items/newitem">add some items</a> and come back here.
+                    </p>
+                    <div class="row justify-content-center">
+                      <a class="btn btn-primary btn-sm col-4" href="/items/newitem" role="button">
+                        <i class="fas fa-plus fa-lg"></i> Add New Item
+                      </a>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div th:unless="${#lists.isEmpty(items)}">
+                <form class="col-8 col-md-6" action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <select th:field="*{item}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
+                            <div th:each="item : ${items}">
+                                <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+                            </div>
+                        </select>
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
+                    </div>                        
+                    <div class="mb-3">
+                        <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <input type="number" min="1" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" th:errorclass="is-invalid" placeholder="10">
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate" th:errorclass="is-invalid">
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
+                    </div>
+                    <div class="row justify-content-evenly">
+                      <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button"
+                          data-bs-toggle="tooltip" data-bs-placement="top"
+                          data-bs-custom-class="custom-tooltip"
+                          title="Cancel and discard changes">
+                        Cancel
+                      </a>
+                      <button type="reset" class="col-2 col-sm-3 btn btn-primary"
+                          data-bs-toggle="tooltip" data-bs-placement="top"
+                          data-bs-custom-class="custom-tooltip"
+                          title="Reset to defaults">
+                        Reset
+                      </button>
+                      <button type="submit" class="col-2 col-sm-3 btn btn-primary"
+                          data-bs-toggle="tooltip" data-bs-placement="top"
+                          data-bs-custom-class="custom-tooltip"
+                          title="Add and continue">
+                        Submit
+                      </button>
+                    </div>
+                    <footer>
+                        <div class="mt-3">
+                            <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+                        </div>
+                    </footer>
+                </form>
+              </div>
             </div>
         </div>
     </main>
