@@ -105,13 +105,14 @@
                   </div>
                 </div>
               </div>
-              <div th:unless="${#lists.isEmpty(items)}">
-                <form class="col-8 col-md-6" action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
+
+              <div th:unless="${#lists.isEmpty(items)}" class="col-8 col-md-6">
+                <form action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
                     <div class="mb-3">
                         <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
                         <select th:field="*{item}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
                             <div th:each="item : ${items}">
-                                <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+                              <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
                             </div>
                         </select>
                         <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
