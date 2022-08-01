@@ -88,57 +88,61 @@
             <div>
                 <div class="row align-self-center justify-content-center">
                     <form class="col-8 col-md-6" action="#" th:action="@{/transactions/updatetransaction/{transId}(transId=${transaction.transId})}" th:object="${transaction}" method="post">
-                        <div class="mb-3">
-                            <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <select th:field="*{item.itemId}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
-                                <div th:each="item : ${items}">
-                                  <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
-                                </div>
-                            </select>
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('item.itemId')}" th:errors="*{item}"></span>
-                        </div>                        
-                        <div class="mb-3">
-                            <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="text" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" th:errorclass="is-invalid" placeholder="10">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate" th:errorclass="is-invalid">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                            <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
-                            <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
-                        </div>
-                        <div class="row justify-content-evenly mb-3">
-                          <div class="row justify-content-evenly">
-                            <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                title="Cancel editing and discard changes">
-                              Cancel
-                            </a>
-                            <button type="reset" class="col-2 col-sm-3 btn btn-primary"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                title="Reset to defaults">
-                              Reset
-                            </button>
-                            <button type="submit" class="col-2 col-sm-3 btn btn-primary"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                data-bs-custom-class="custom-tooltip"
-                                title="Update and continue">
-                              Submit
-                            </button>
+                      <div class="mb-3">
+                        <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <select id="itemSel" th:field="*{item.itemId}" class="form-select" aria-label="Select an item" th:errorclass="is-invalid" onchange="changeHandler()">
+                          <div th:each="item : ${items}">
+                            <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}" th:data-bs-totalquantity="${item.totalQuantity}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
                           </div>
+                        </select>
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('item.itemId')}" th:errors="*{item}"></span>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <input type="number" class="form-control" id="itemPrice" name="itemPrice" value="12">
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                        <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity" th:errorclass="is-invalid" value="10">
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+                      </div>
+                          <div class="mb-3">
+                          <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                          <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate" th:errorclass="is-invalid">
+                          <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                          <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
+                          <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
+                      </div>
+                      <div class="row justify-content-evenly mb-3">
+                        <div class="row justify-content-evenly">
+                          <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              title="Cancel editing and discard changes">
+                            Cancel
+                          </a>
+                          <button type="reset" class="col-2 col-sm-3 btn btn-primary"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              title="Reset to defaults">
+                            Reset
+                          </button>
+                          <button type="submit" class="col-2 col-sm-3 btn btn-primary"
+                              data-bs-toggle="tooltip" data-bs-placement="top"
+                              data-bs-custom-class="custom-tooltip"
+                              title="Update and continue">
+                            Submit
+                          </button>
                         </div>
-                        <footer>
-                            <div class="mt-3">
-                                <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
-                            </div>
-                        </footer>
+                      </div>
+                      <footer>
+                          <div class="mt-3">
+                              <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+                          </div>
+                      </footer>
                     </form>
                 </div>
             </div>
@@ -192,7 +196,29 @@
       </div>
     </footer>
 
-    <script>
+    <script type="text/javascript">
+      var selectedElement = document.getElementById('itemSel')
+      var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+      var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+      
+      var priceElement = document.getElementById('itemPrice')
+      priceElement.setAttribute('value', `${loanprice}`)
+
+      var quantityElement = document.getElementById('itemQuantity')
+      quantityElement.setAttribute('max', `${totalquantity}`)
+      
+      function changeHandler() {
+        var selectedElement = document.getElementById('itemSel')
+        var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+        var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+
+        var priceElement = document.getElementById('itemPrice')
+        priceElement.setAttribute('value', `${loanprice}`)
+
+        var quantityElement = document.getElementById('itemQuantity')
+        quantityElement.setAttribute('max', `${totalquantity}`)
+      }
+
       const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
       const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>

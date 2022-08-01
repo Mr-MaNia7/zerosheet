@@ -69,7 +69,7 @@ public class TransactionController {
         Date due_date = transaction.getDueDate();
         
         // calculating loan price per transaction
-        double loan_price_per_day = trans.getItem().getUnitLoanPrice();
+        double loan_price_per_day = trans.getItemPrice();
         long loan_days = calculateDayDifference(due_back_date, due_date);
         double loan_price_per_item = loan_price_per_day * loan_days;
         
@@ -163,7 +163,7 @@ public class TransactionController {
         transaction.setDayDifference(loan_days);
 
         // calculating loan price per transaction
-        double loan_price_per_day = transaction.getItem().getUnitLoanPrice();
+        double loan_price_per_day = transaction.getItemPrice();
         double loan_price_per_item = loan_price_per_day * loan_days;
         double trans_price = transaction.getItem().getAreaCoverage()*loan_price_per_item;
         transaction.setTransPrice(trans_price);

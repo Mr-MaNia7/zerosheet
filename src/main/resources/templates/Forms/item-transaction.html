@@ -110,17 +110,21 @@
                 <form action="#" th:action="@{/addtransaction}" th:object="${transaction}" method="post">
                     <div class="mb-3">
                         <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                        <select th:field="*{item}" id="item" class="form-select" aria-label="Select an item" th:errorclass="is-invalid">
-                            <div th:each="item : ${items}">
-                              <option th:value="${item.itemId}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
-                            </div>
+                        <select id="itemSel" th:field="*{item}" class="form-select" aria-label="Select an item" th:errorclass="is-invalid" onchange="changeHandler()">
+                          <div th:each="item : ${items}">
+                            <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}" th:data-bs-totalquantity="${item.totalQuantity}" th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+                          </div>
                         </select>
                         <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
-                    </div>                        
+                    </div>
                     <div class="mb-3">
-                        <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                        <input type="number" min="1" class="form-control" th:field="*{itemQuantity}" id="itemQuantity" th:errorclass="is-invalid" placeholder="10">
-                        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+                      <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                      <input type="number" class="form-control" id="itemPrice" name="itemPrice" value="12">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
+                      <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity" th:errorclass="is-invalid" value="10">
+                      <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
@@ -210,15 +214,33 @@
       </div>
     </footer>
 
-    <script>
-      var sel = document.getElementById('item');
-      var opt = sel.options[sel.selectedIndex];
-    </script>
-    
-    <script>
+    <script type="text/javascript">
+      var selectedElement = document.getElementById('itemSel')
+      var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+      var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+      
+      var priceElement = document.getElementById('itemPrice')
+      priceElement.setAttribute('value', `${loanprice}`)
+
+      var quantityElement = document.getElementById('itemQuantity')
+      quantityElement.setAttribute('max', `${totalquantity}`)
+      
+      function changeHandler() {
+        var selectedElement = document.getElementById('itemSel')
+        var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+        var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+
+        var priceElement = document.getElementById('itemPrice')
+        priceElement.setAttribute('value', `${loanprice}`)
+
+        var quantityElement = document.getElementById('itemQuantity')
+        quantityElement.setAttribute('max', `${totalquantity}`)
+      }
+
       const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
       const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
-    
+
 </body>
+
 </html>

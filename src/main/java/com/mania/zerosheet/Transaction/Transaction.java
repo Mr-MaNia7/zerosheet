@@ -34,7 +34,9 @@ public class Transaction implements Serializable {
     private Date dueDate = new Date();
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueBackDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24 * 15));
+    private Date dueBackDate = new Date(dueDate.getTime() + (1000 * 60 * 60 * 24 * 30));
+
+    private double itemPrice;
 
     private double transPrice;
 
@@ -51,13 +53,14 @@ public class Transaction implements Serializable {
     Item item;
 
     public Transaction(int itemQuantity, Date dueDate, Date dueBackDate, 
-    long dayDifference, double collateral, double transPrice, Customer customer, Item item) {
+    long dayDifference, double collateral, double transPrice, double itemPrice, Customer customer, Item item) {
         this.itemQuantity = itemQuantity;
         this.dueDate = dueDate;
         this.dueBackDate = dueBackDate;
         this.dayDifference = dayDifference;
         this.collateral = collateral;
         this.transPrice = transPrice;
+        this.itemPrice = itemPrice;
         this.customer = customer;
         this.item = item;
     }
