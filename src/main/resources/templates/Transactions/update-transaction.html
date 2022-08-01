@@ -99,7 +99,8 @@
                       </div>
                       <div class="mb-3">
                         <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
-                        <input type="number" class="form-control" id="itemPrice" name="itemPrice" value="12">
+                        <input type="text" class="form-control" id="itemPrice" name="itemPrice" th:errorclass="is-invalid" value="12">
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></span>
                       </div>
                       <div class="mb-3">
                         <label class="form-label" for="itemQuantity">Item Quantity  <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i></label>
