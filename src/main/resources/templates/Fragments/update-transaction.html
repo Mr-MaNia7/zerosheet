@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="general.html :: head"></head>
+
+<body>
+  <div th:fragment="form">
+    <div class="mb-3">
+      <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <select id="itemSel" th:field="*{item.itemId}" class="form-select" aria-label="Select an item"
+        th:errorclass="is-invalid" onchange="changeHandler()">
+        <div th:each="item : ${items}">
+          <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}"
+            th:data-bs-totalquantity="${item.totalQuantity}"
+            th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+        </div>
+      </select>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('item.itemId')}" th:errors="*{item}"></span>
+    </div>
+    <div th:replace="Fragments/add-transaction.html :: update"></div>
+    <div class="row justify-content-evenly mb-3">
+      <div class="row justify-content-evenly">
+        <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+          title="Cancel editing and discard changes">
+          Cancel
+        </a>
+        <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Reset to defaults">
+          Reset
+        </button>
+        <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Update and continue">
+          Submit
+        </button>
+      </div>
+    </div>
+    <footer>
+      <div class="mt-3">
+        <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+      </div>
+    </footer>
+  </div>
+</body>
+
+</html>
