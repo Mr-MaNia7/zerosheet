@@ -93,7 +93,7 @@
         </div>
 
         <div>
-          <!-- One Field -->
+          <!-- First Field -->
           <h6><b>አንቀጽ አንድ:- የአከራይ መብትና እና ግዴታ</b></h6>
           <ol>
             <li>አከራይ ለአገልግሎት ብቁና በጥሩ ሁኔታ ላይ ያሉ ማቴሪአሎችን ከነ መገጣጠሚያቸው ያቀርባል ፡፡</li>
@@ -168,7 +168,7 @@
                     <td th:text="${transaction.item.unit}"></td>
                     <td th:text="${transaction.itemQuantity}"></td>
                     <td th:text="${transaction.item.areaCoverage}"></td>
-                    <td th:text="${#numbers.formatDecimal(transaction.item.unitLoanPrice, 1, 'COMMA', 2, 'DEFAULT')}">
+                    <td th:text="${#numbers.formatDecimal(transaction.itemPrice, 1, 'COMMA', 2, 'DEFAULT')}">
                     </td>
                     <td th:text="${transaction.dayDifference}"></td>
                     <td th:text="${#numbers.formatDecimal(transaction.transPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
