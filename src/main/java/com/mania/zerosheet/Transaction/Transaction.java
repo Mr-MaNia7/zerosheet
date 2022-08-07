@@ -31,10 +31,10 @@ public class Transaction implements Serializable {
     private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueDate = new Date();
+    private Date dueDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueBackDate = new Date(dueDate.getTime() + (1000 * 60 * 60 * 24 * 30));
+    private Date dueBackDate = new Date(dueDate.getTime() + (1000 * 60 * 60 * 24 * 15) + (1000 * 60 * 60 * 24 * 15));
 
     private double itemPrice;
 
