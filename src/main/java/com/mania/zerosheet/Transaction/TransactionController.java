@@ -3,24 +3,25 @@ package com.mania.zerosheet.Transaction;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
-
-import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
-import com.mania.zerosheet.Customers.CustomerRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.RequiredArgsConstructor;
+import com.mania.zerosheet.Company.CompanyRepository;
+import com.mania.zerosheet.Customers.CustomerRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RequiredArgsConstructor
 @Controller
-// @SessionAttributes("customer")
+@RequiredArgsConstructor
+@SessionAttributes("customer")
 public class TransactionController {
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
@@ -31,9 +32,65 @@ public class TransactionController {
     @GetMapping("/transactions")
     public String showTransactions(Transaction transaction, Model model) {
         model.addAttribute("transactions", transactionRepository.findAll());
-        // System.out.println(transactionRepository.findAll()); // debug line
         return "Transactions/view-transactions";
     }
+    @GetMapping("/transactions/newtransaction")
+    public String showTransactionForm(Model model) {
+        model.addAttribute("items", itemRepository.findAll());
+        return "Forms/item-transaction";
+    }
+    @ModelAttribute(name = "customer")
+    public Customer order() {
+        return new Customer();
+    }
+    @ModelAttribute(name = "transaction")
+    public Transaction transaction() {
+        return new Transaction();
+    }
+    @PostMapping("/addtransaction")
+    public String processTransaction(@Valid Transaction transaction, BindingResult result,
+    @ModelAttribute Customer order, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("items", itemRepository.findAll());
+            return "Forms/item-transaction";
+        }
+        // calculating date difference
+        long loan_days = calculateDayDifference(transaction.getDueBackDate(), transaction.getDueDate());
+        // calculating loan price per transaction
+        double transPrice = calculateTransactionPrice(transaction.getItemPrice(), transaction.getItemQuantity(), loan_days);
+        // calculating collateral price per transaction 100%
+        double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity(); 
+        // calculate remaining item total quantity
+        int newQty = calculateItemQuantity(transaction.getItem().getTotalQuantity(), transaction.getItemQuantity(), 0);
+        
+        // setting calculated values
+        transaction.setDayDifference(loan_days);
+        transaction.setCollateral(collateral_price);
+        transaction.setTransPrice(transPrice);
+        transaction.getItem().setTotalQuantity(newQty);
+
+        order.addTransaction(transaction);
+        // transactionRepository.save(transaction);
+        return "redirect:/orders/current";
+    }
+
+    // Experimental method
+    @GetMapping("/transactions/newtransaction/{transId}")
+    public String showTransactionForm2(@PathVariable ("transId") long transId, @ModelAttribute Customer order, Model model) {
+        Transaction transn =
+        transactionRepository
+            .findById(transId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
+        
+        // order.addTransaction(transn);
+        // System.out.println(transn.getItem().getItemName());
+        model.addAttribute("items", itemRepository.findAll());
+        // model.addAttribute("item", transn.getItem());
+        model.addAttribute("transaction", transn);
+        return "Forms/item-transaction";
+        // return "redirect:/transactions/newtransaction";
+    }
+
     @GetMapping("transactions/edittransaction/{transId}")
     public String showUpdateTransactionForm(@PathVariable("transId") long transId , Model model){
         Transaction transaction =
@@ -53,55 +110,42 @@ public class TransactionController {
             transaction.setTransId(transId);
             return "Transactions/update-transaction";
         }
-
-        // System.out.println("Incoming Transaction\n" + transaction.getItem().getItemName()); //debug line
         
-        Transaction trans =
+        Transaction old_trans =
         transactionRepository
         .findById(transId)
         .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
         
         // Get old object and save it inside the new object
-        // Item item = trans.getItem();
-        // System.out.println(item.toString());
+
         int item_quantity = transaction.getItemQuantity();
         Date due_back_date = transaction.getDueBackDate();
         Date due_date = transaction.getDueDate();
-        
-        // calculating loan price per transaction
-        double loan_price_per_day = trans.getItemPrice();
-        long loan_days = calculateDayDifference(due_back_date, due_date);
-        double loan_price_per_item = loan_price_per_day * loan_days;
-        
-        // calculating collateral price per transaction
-        double collateral_price = trans.getItem().getUnitPrice()*item_quantity;
-        double trans_price = trans.getItemQuantity()*loan_price_per_item;
-        
-        double old_collateral_price = trans.getCollateral();
-        double old_trans_price = trans.getTransPrice();
-        int old_item_quantity = trans.getItemQuantity();
-        // System.out.println("Old collateral price" + old_collateral_price);
 
+        long loan_days = calculateDayDifference(due_back_date, due_date);
+        double trans_price = calculateTransactionPrice(old_trans.getItemPrice(), old_trans.getItemQuantity(), loan_days);
+        double collateral_price = old_trans.getItem().getUnitPrice()*item_quantity;
+        
+        double old_collateral_price = old_trans.getCollateral();
+        double old_trans_price = old_trans.getTransPrice();
+        int old_trans_quantity = old_trans.getItemQuantity();
+        
         // calculate remaining item total quantity
-        Item item = trans.getItem();
-        int oldQty = item.getTotalQuantity();
-        int newQty = oldQty + (old_item_quantity - transaction.getItemQuantity());
+        Item item = old_trans.getItem();
+        int newQty = calculateItemQuantity(old_trans.getItem().getTotalQuantity(), transaction.getItemQuantity(), old_trans_quantity);
         item.setTotalQuantity(newQty);
         transaction.setItem(item);
 
         itemRepository.save(item);
 
-        // trans.setItem(item);
-        trans.setItemQuantity(item_quantity);
-        trans.setDueBackDate(due_back_date);
-        trans.setDueDate(due_date);
-        trans.setDayDifference(loan_days);
-        trans.setCollateral(collateral_price);
-        trans.setTransPrice(trans_price);
+        old_trans.setItemQuantity(item_quantity);
+        old_trans.setDueBackDate(due_back_date);
+        old_trans.setDueDate(due_date);
+        old_trans.setDayDifference(loan_days);
+        old_trans.setCollateral(collateral_price);
+        old_trans.setTransPrice(trans_price);
 
-        // System.out.println("New collateral price" + collateral_price);
-
-        Customer cust = trans.getCustomer();
+        Customer cust = old_trans.getCustomer();
         double old_total_collateral = cust.getTotalCollateral();
         double new_total_collateral = old_total_collateral - old_collateral_price + collateral_price;
         double old_total_price = cust.getTotalPrice();
@@ -112,13 +156,8 @@ public class TransactionController {
         cust.setTotalPrice(new_total_price);
         cust.setTotalCollateral(new_total_collateral);
         cust.setDebtBalance(new_debt_balance);
-
-        // System.out.println("Old Total collateral" + old_total_collateral);
-        // System.out.println("New total collateral" + new_total_collateral);
-
-
         
-        transactionRepository.save(trans);
+        transactionRepository.save(old_trans);
         // this.customerRepository.save(cust);
 
         model.addAttribute("customer", cust);
@@ -127,8 +166,8 @@ public class TransactionController {
         Date today = new Date();
         model.addAttribute("today", today);
         return "Agreements/view-updated-agreement";
-        // return "redirect:/customers";
     }
+    
     @GetMapping("transactions/addtransaction/{id}")
     public String showAddTransactionForm(@PathVariable("id") long id , Model model, Transaction transaction){
         Customer customer =
@@ -165,7 +204,7 @@ public class TransactionController {
         // calculating loan price per transaction
         double loan_price_per_day = transaction.getItemPrice();
         double loan_price_per_item = loan_price_per_day * loan_days;
-        double trans_price = transaction.getItem().getAreaCoverage()*loan_price_per_item;
+        double trans_price = transaction.getItemQuantity()*loan_price_per_item;
         transaction.setTransPrice(trans_price);
         
         // calculating collateral price per transaction 100%
@@ -231,12 +270,58 @@ public class TransactionController {
         return "redirect:/customers";
     }
 
+    @GetMapping("transactions/return/{transId}")
+    public String returnItems(@PathVariable("transId") long transId, @RequestParam(value="returnQuantity") int returnQuantity, Model model){
+        Transaction transaction =
+            transactionRepository
+                .findById(transId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id:" + transId));
+        
+        
+        int new_item_quantity = transaction.getItemQuantity() - returnQuantity;
+        double old_trans_price = transaction.getTransPrice();
+        double new_trans_price = (old_trans_price  / transaction.getItemQuantity())*new_item_quantity;
+        int total_quantity = transaction.getItem().getTotalQuantity();
+
+        double old_collateral_price = transaction.getCollateral();
+        double collateral_price = transaction.getItem().getUnitPrice()*new_item_quantity;
+        transaction.setCollateral(collateral_price);
+        
+        double oldDebt = transaction.getCustomer().getDebtBalance() / 1.15;
+        double newDebt = oldDebt - old_trans_price + new_trans_price;
+        transaction.getCustomer().setDebtBalance(newDebt * 1.15);
+
+        double old_total_collateral = transaction.getCustomer().getTotalCollateral();
+        double new_total_collateral = old_total_collateral - old_collateral_price + collateral_price;
+        transaction.getCustomer().setTotalCollateral(new_total_collateral);
+
+        transaction.getCustomer().setTotalCollateralVAT(new_total_collateral * 1.15);
+
+        transaction.setItemQuantity(new_item_quantity);
+        transaction.setTransPrice(new_trans_price);
+        transaction.getItem().setTotalQuantity(total_quantity + returnQuantity);
+        transactionRepository.save(transaction);
+        return "redirect:/customers";
+    }
+
     public long calculateDayDifference(Date fromDate, Date toDate) {
         long difference_In_Time = fromDate.getTime() - toDate.getTime();
         long difference_In_Days = 
         TimeUnit
               .MILLISECONDS
               .toDays(difference_In_Time);
+    
+        // long difference_In_Years = 
+        // TimeUnit
+        //       .MILLISECONDS
+        //       .toDays(difference_In_Time)
+        //   / 365l;
         return difference_In_Days;
-    }  
+    }
+    public double calculateTransactionPrice(double loan_price_per_day, int quantity, long loan_days){
+        return loan_price_per_day * loan_days * quantity;
+    }
+    public int calculateItemQuantity(int old_item_quantity, int trans_item_quantity, int old_trans_quantity){
+        return old_item_quantity - trans_item_quantity + old_trans_quantity;
+    }
 }
