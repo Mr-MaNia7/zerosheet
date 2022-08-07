@@ -114,7 +114,15 @@
                               <ul class="list-group">
                                 <li class="list-group-item" th:each="transaction, status : ${customer.transactions}">
                                   <div><span th:text="${transaction.item.itemName}" style="font-weight: bold;"></span></div>
-                                  <div>Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></div>
+                                  <div>
+                                    <form th:action="@{transactions/return/{transId}(transId=${transaction.transId})}" method="get">
+                                      <div class="input-group">
+                                        <label for="returnQuantity" class="col-6 align-self-center form-label" style="padding-bottom: 0em; margin-bottom: 0em;">Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></label>
+                                        <input class="col-2 form-control form-control-sm" id="returnQuantity" name="returnQuantity" type="number" min="1" th:max="${transaction.itemQuantity}" value="1">
+                                        <button class="col-3 btn btn-danger btn-sm ms-3" type="submit"><i class="fa-solid fa-right-to-bracket"></i><span> Return</span></button>
+                                      </div>
+                                    </form>
+                                  </div>
                                   <div>Each Transaction Price: <span th:text='${#numbers.formatDecimal(transaction.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}' style="font-weight: bold;"></span></div>
                                   <div>Loan days: <span th:text='${transaction.dayDifference + "  days"}' style="font-weight: bold;"></span></div>
                                   <div th:each="remainingDay, rstat : ${remainingDaysList}">
@@ -130,7 +138,7 @@
                                     <a class="col-4 col-md-3 btn btn-danger btn-sm ms-3" data-bs-toggle="modal" data-bs-target="#confirm-return" th:data-bs-transId="${transaction.transId}"
                                       th:data-bs-itemName="${transaction.item.itemName}"
                                       th:data-bs-custName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
-                                      <i class="fa-solid fa-right-to-bracket"></i><span> Return</span>
+                                      <i class="fa-solid fa-right-to-bracket"></i><span> Return All</span>
                                     </a>
                                     <div class="modal fade" id="confirm-return" tabindex="-1" aria-labelledby="deleteItem" aria-hidden="true">
                                       <div class="modal-dialog">
