@@ -6,6 +6,8 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
+import com.mania.zerosheet.Performa.Performa;
+import com.mania.zerosheet.Performa.PerformaRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +29,7 @@ public class TransactionController {
     private final CustomerRepository customerRepository;
     private final ItemRepository itemRepository;
     private final CompanyRepository companyRepository;
+    private final PerformaRepository performaRepository;
 
     // from home to transactions
     @GetMapping("/transactions")
@@ -34,8 +37,9 @@ public class TransactionController {
         model.addAttribute("transactions", transactionRepository.findAll());
         return "Transactions/view-transactions";
     }
+
     @GetMapping("/transactions/newtransaction")
-    public String showTransactionForm(Model model) {
+    public String showTransactionForm(Performa performa, Model model) {
         model.addAttribute("items", itemRepository.findAll());
         return "Forms/item-transaction";
     }
@@ -48,29 +52,25 @@ public class TransactionController {
         return new Transaction();
     }
     @PostMapping("/addtransaction")
-    public String processTransaction(@Valid Transaction transaction, BindingResult result,
+    public String processTransaction(@Valid Performa performa, BindingResult result,
     @ModelAttribute Customer order, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("items", itemRepository.findAll());
             return "Forms/item-transaction";
         }
         // calculating date difference
-        long loan_days = calculateDayDifference(transaction.getDueBackDate(), transaction.getDueDate());
-        // calculating loan price per transaction
-        double transPrice = calculateTransactionPrice(transaction.getItemPrice(), transaction.getItemQuantity(), loan_days);
-        // calculating collateral price per transaction 100%
-        double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity(); 
-        // calculate remaining item total quantity
-        int newQty = calculateItemQuantity(transaction.getItem().getTotalQuantity(), transaction.getItemQuantity(), 0);
-        
-        // setting calculated values
-        transaction.setDayDifference(loan_days);
-        transaction.setCollateral(collateral_price);
-        transaction.setTransPrice(transPrice);
-        transaction.getItem().setTotalQuantity(newQty);
+        long loan_days = calculateDayDifference(performa.getDueBackDate(), performa.getDueDate());
+        // calculating loan price per performa
+        double transPrice = calculateTransactionPrice(performa.getItemPrice(), performa.getItemQuantity(), loan_days);
+        // calculating collateral price per performa 100%
+        double collateral_price = performa.getItem().getUnitPrice()*performa.getItemQuantity(); 
 
-        order.addTransaction(transaction);
-        // transactionRepository.save(transaction);
+        // setting calculated values
+        performa.setDayDifference(loan_days);
+        performa.setCollateral(collateral_price);
+        performa.setTransPrice(transPrice);
+
+        order.addPerforma(performa);
         return "redirect:/orders/current";
     }
 
@@ -105,12 +105,17 @@ public class TransactionController {
     // from update-transaction (post and) redirect to customers
     @PostMapping("transactions/updatetransaction/{transId}")
     public String updateTransaction(@PathVariable("transId") long transId,
-    @Valid Transaction transaction, BindingResult result, Model model){
+    @Valid Transaction new_trans, BindingResult result, Model model){
         if (result.hasErrors()) {
-            transaction.setTransId(transId);
+            new_trans.setTransId(transId);
             return "Transactions/update-transaction";
         }
-        
+
+        Item new_item =
+            itemRepository
+                .findById(new_trans.getItem().getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + new_trans.getItem().getItemId()));
+
         Transaction old_trans =
         transactionRepository
         .findById(transId)
@@ -118,25 +123,34 @@ public class TransactionController {
         
         // Get old object and save it inside the new object
 
-        int item_quantity = transaction.getItemQuantity();
-        Date due_back_date = transaction.getDueBackDate();
-        Date due_date = transaction.getDueDate();
+        int item_quantity = new_trans.getItemQuantity();
+        Date due_back_date = new_trans.getDueBackDate();
+        Date due_date = new_trans.getDueDate();
 
         long loan_days = calculateDayDifference(due_back_date, due_date);
-        double trans_price = calculateTransactionPrice(old_trans.getItemPrice(), old_trans.getItemQuantity(), loan_days);
-        double collateral_price = old_trans.getItem().getUnitPrice()*item_quantity;
+        double trans_price = calculateTransactionPrice(new_trans.getItemPrice(), new_trans.getItemQuantity(), loan_days);
+        double collateral_price = new_item.getUnitPrice()*item_quantity;        
         
         double old_collateral_price = old_trans.getCollateral();
         double old_trans_price = old_trans.getTransPrice();
         int old_trans_quantity = old_trans.getItemQuantity();
         
         // calculate remaining item total quantity
-        Item item = old_trans.getItem();
-        int newQty = calculateItemQuantity(old_trans.getItem().getTotalQuantity(), transaction.getItemQuantity(), old_trans_quantity);
-        item.setTotalQuantity(newQty);
-        transaction.setItem(item);
+        Item old_item = old_trans.getItem();
+        if (old_item.getItemId() == new_item.getItemId()) {
+            int newQty = calculateItemQuantity(new_item.getTotalQuantity(), new_trans.getItemQuantity(), old_trans_quantity);
+            new_item.setTotalQuantity(newQty);
+            old_trans.setItem(new_item);
+        }
+        else {
+            int old_item_Qty = old_item.getTotalQuantity() + old_trans_quantity;
+            old_item.setTotalQuantity(old_item_Qty);
+            itemRepository.save(old_item);
 
-        itemRepository.save(item);
+            int newQty = calculateItemQuantity(new_item.getTotalQuantity(), new_trans.getItemQuantity(), 0);
+            new_item.setTotalQuantity(newQty);
+            old_trans.setItem(new_item);
+        }
 
         old_trans.setItemQuantity(item_quantity);
         old_trans.setDueBackDate(due_back_date);
@@ -151,11 +165,13 @@ public class TransactionController {
         double old_total_price = cust.getTotalPrice();
         double new_total_price = old_total_price - old_trans_price + trans_price;
         double old_debt_balance = cust.getDebtBalance();
-        double new_debt_balance = old_debt_balance - old_trans_price + trans_price;
+        double new_debt_balance = (old_debt_balance/1.15) - old_trans_price + trans_price;
         
         cust.setTotalPrice(new_total_price);
+        cust.setTotalPriceVAT(new_total_price * 1.15);
         cust.setTotalCollateral(new_total_collateral);
-        cust.setDebtBalance(new_debt_balance);
+        cust.setTotalCollateralVAT(new_total_collateral * 1.15);
+        cust.setDebtBalance(new_debt_balance * 1.15);
         
         transactionRepository.save(old_trans);
         // this.customerRepository.save(cust);
@@ -165,7 +181,7 @@ public class TransactionController {
         model.addAttribute("company", companyRepository.findAll());
         Date today = new Date();
         model.addAttribute("today", today);
-        return "Agreements/view-updated-agreement";
+        return "Agreements/view-edited-agreement";
     }
     
     @GetMapping("transactions/addtransaction/{id}")
@@ -182,12 +198,12 @@ public class TransactionController {
 
     @PostMapping("/customer/{id}/addtransaction")
     public String addCustomerTransaction(@PathVariable("id") long id,
-    @Valid Transaction transaction, BindingResult result, Model model){
+    @Valid Performa performa, BindingResult result, Model model){
         if (result.hasErrors()) {
             return "Forms/customer-transaction";
         }
 
-        // System.out.println("Incoming Transaction\n" + transaction.toString()); //debug line
+        // System.out.println("Incoming Transaction\n" + performa.toString()); //debug line
 
         Customer customer =
         customerRepository
@@ -196,50 +212,43 @@ public class TransactionController {
         
         // Calcualting Logic
         // calculating date difference
-        Date fromDate = transaction.getDueBackDate();
-        Date toDate = transaction.getDueDate();        
+        Date fromDate = performa.getDueBackDate();
+        Date toDate = performa.getDueDate();        
         long loan_days = calculateDayDifference(fromDate, toDate);
-        transaction.setDayDifference(loan_days);
+        performa.setDayDifference(loan_days);
 
-        // calculating loan price per transaction
-        double loan_price_per_day = transaction.getItemPrice();
+        // calculating loan price per performa
+        double loan_price_per_day = performa.getItemPrice();
         double loan_price_per_item = loan_price_per_day * loan_days;
-        double trans_price = transaction.getItemQuantity()*loan_price_per_item;
-        transaction.setTransPrice(trans_price);
+        double trans_price = performa.getItemQuantity()*loan_price_per_item;
+        performa.setTransPrice(trans_price);
         
-        // calculating collateral price per transaction 100%
-        double collateral_price = transaction.getItem().getUnitPrice()*transaction.getItemQuantity();
-        transaction.setCollateral(collateral_price);
+        // calculating collateral price per performa 100%
+        double collateral_price = performa.getItem().getUnitPrice()*performa.getItemQuantity();
+        performa.setCollateral(collateral_price);
 
-        transaction.setCustomer(customer);
+        performa.setCust(customer);
 
-        double total_price = customer.getTotalPrice();
-        double total_collateral = customer.getTotalCollateral();
-        double total_price_VAT = customer.getTotalPriceVAT();   
-        double total_collateral_VAT = customer.getTotalCollateralVAT();
+        double total_price = customer.getTotalPriceP();
+        double total_collateral = customer.getTotalCollateralP();
+        double total_price_VAT = customer.getTotalPriceVATP();   
+        double total_collateral_VAT = customer.getTotalCollateralVATP();
+
         total_price += trans_price;
         total_collateral += collateral_price;
         total_price_VAT = total_price + (total_price * 0.15);
         total_collateral_VAT = total_collateral + (total_collateral * 0.15);
-        customer.setTotalPrice(total_price);
-        customer.setTotalCollateral(total_collateral);
-        customer.setTotalPriceVAT(total_price_VAT);
-        customer.setTotalCollateralVAT(total_collateral_VAT);
-        customer.setDebtBalance(total_price_VAT);
         
-        // calculate remaining item total quantity
-        Item item = transaction.getItem();
-        int oldQty = item.getTotalQuantity();
-        int newQty = oldQty - transaction.getItemQuantity();
-        item.setTotalQuantity(newQty);
-        transaction.setItem(item);
-
-        itemRepository.save(item);
-
-        transactionRepository.save(transaction);
+        customer.setTotalPriceP(total_price);
+        customer.setTotalCollateralP(total_collateral);
+        customer.setTotalPriceVATP(total_price_VAT);
+        customer.setTotalCollateralVATP(total_collateral_VAT);
+        customer.setDebtBalanceP(total_price_VAT);
+        
+        performaRepository.save(performa);
 
         model.addAttribute("customer", customer);
-        model.addAttribute("transactions", customer.getTransactions());
+        model.addAttribute("transactions", customer.getPerformas());
         model.addAttribute("company", companyRepository.findAll());
         Date today = new Date();
         model.addAttribute("today", today);

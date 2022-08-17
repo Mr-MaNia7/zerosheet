@@ -22,7 +22,7 @@
 <body>
   <div th:fragment="form">
     <div class="mb-3">
-      <label class="form-label" for="item">Choose an Item <i class="fa-solid fa-asterisk fa-xs"
+      <label class="form-label" for="itemP">Choose an Item <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
       <select id="itemSel" th:field="*{item}" class="form-select" aria-label="Select an item"
         th:errorclass="is-invalid" onchange="changeHandler()">

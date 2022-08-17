@@ -38,9 +38,19 @@
       </div>
 
       <div th:replace="Fragments/summary.html :: card"></div>
-      <form action="#" th:action="@{/orders/finish}" th:object="${customer}" method="post">
-        <div th:replace="Fragments/summary.html :: form"></div>
-      </form>
+      <!-- <form action="#" th:action="@{/orders/finishperforma/{id}(id=${customer.id})}" th:object="${customer}">
+        <div th:replace="Fragments/summary :: form"></div>
+      </form> -->
+      <div class="row justify-content-evenly my-5">
+        <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard all changes">
+          Cancel
+        </a>
+        <a th:href="@{/orders/finishperforma/{id}(id=${customer.id})}" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Finish and save all changes">
+          Finish
+        </a>
+      </div>  
       <form action="#" th:action="@{/orders/saveperforma}" th:object="${customer}" method="post">
         <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
             data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Save and Continue later">Save</button>

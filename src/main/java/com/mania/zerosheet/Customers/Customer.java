@@ -18,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import com.mania.zerosheet.Agreement.Agreement;
+import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Transaction.Transaction;
 
 import lombok.Data;
@@ -56,10 +57,19 @@ public class Customer implements Serializable{
   private double debtBalance;
   private double totalCollateral;
   private double totalCollateralVAT;
+
+  private double totalPriceP;
+  private double totalPriceVATP; 
+  private double debtBalanceP;
+  private double totalCollateralP;
+  private double totalCollateralVATP;
   
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<Transaction> transactions = new ArrayList<Transaction>();
-     
+  
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "cust")
+  private List<Performa> performas = new ArrayList<Performa>();
+
   @OneToOne(fetch = FetchType.LAZY, optional = true)
   @JoinColumn(name = "agreement_id", nullable = true)
   Agreement agreement;
@@ -76,6 +86,21 @@ public class Customer implements Serializable{
       this.transactions.add(transaction);
     }
   }
+  public void addPerforma(Performa performa) {
+    boolean flag = false;
+    for (Performa eachperforma : this.performas){
+      if(eachperforma.getItem().getItemId() == performa.getItem().getItemId()) {
+        this.performas.set((int)(eachperforma.getTransId()), performa);
+        flag = true;
+      }
+    }
+    if (flag == false) {
+      this.performas.add(performa);
+    }
+  }
+  public void removePerformas(List<Performa> performas){
+    this.performas.removeAll(performas);
+  }
   public void updateTransaction(Transaction transaction, long id) {
     this.transactions.set((int)(id - 1), transaction);
   }
@@ -83,7 +108,8 @@ public class Customer implements Serializable{
   public Customer(String name, String middleName, String lastName, String email,
     String phoneNumber, String houseNumber, String city, 
     double totalPrice, double debtBalance, double totalCollateral, double totalPriceVAT,
-    double totalCollateralVAT,int woreda, String subcity) {
+    double totalCollateralVAT, double totalPriceP, double debtBalanceP, double totalCollateralP, double totalPriceVATP,
+    double totalCollateralVATP, int woreda, String subcity) {
       this.name = name;
       this.middleName = middleName;
       this.lastName = lastName;
@@ -91,12 +117,17 @@ public class Customer implements Serializable{
       this.phoneNumber = phoneNumber;
       this.houseNumber = houseNumber;
       this.city = city;
+      this.subcity = subcity;
+      this.woreda = woreda;
       this.totalPrice = totalPrice;
       this.debtBalance = debtBalance;
       this.totalCollateral = totalCollateral;
-      this.subcity = subcity;
-      this.woreda = woreda;
       this.totalPriceVAT = totalPriceVAT;
       this.totalCollateralVAT = totalCollateralVAT;
+      this.totalPriceP = totalPriceP;
+      this.debtBalanceP = debtBalanceP;
+      this.totalCollateralP = totalCollateralP;
+      this.totalPriceVATP = totalPriceVATP;
+      this.totalCollateralVATP = totalCollateralVATP;
     }
 }

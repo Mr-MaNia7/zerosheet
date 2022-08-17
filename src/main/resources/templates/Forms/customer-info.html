@@ -57,13 +57,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="transaction, status : ${customer.transactions}">
+                      <tr th:each="performa, status : ${customer.performas}">
                         <td th:text="${status.count}"></td>
-                        <td th:text="${transaction.item.itemName}"></td>
-                        <td th:text="${transaction.itemQuantity}"></td>
-                        <td th:text="${transaction.dayDifference}"></td>
+                        <td th:text="${performa.item.itemName}"></td>
+                        <td th:text="${performa.itemQuantity}"></td>
+                        <td th:text="${performa.dayDifference}"></td>
                         <!-- <td>
-                              <a th:href="@{/transactions/newtransaction/{transId}(transId=${transaction.transId})}">Edit</a>
+                              <a th:href="@{/transactions/newtransaction/{transId}(transId=${performa.transId})}">Edit</a>
                             </td> -->
                       </tr>
                     </tbody>

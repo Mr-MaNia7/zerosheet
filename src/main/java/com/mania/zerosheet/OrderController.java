@@ -6,7 +6,7 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
-import com.mania.zerosheet.Transaction.Transaction;
+import com.mania.zerosheet.Performa.Performa;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,28 +36,27 @@ public class OrderController {
         }
         
         // System.out.println(customer.getId()); // debug line
-        customer.getTransactions().forEach(transaction -> transaction.setCustomer(customer));
-        
+        customer.getPerformas().forEach(performa -> performa.setCust(customer));
+
         // Calculating Total Price and Collateral Price
         double totalPrice = 0.0;
         double totalCollateral = 0.0;
-        for (Transaction transaction : customer.getTransactions()) {
-            totalPrice += transaction.getTransPrice();
-            totalCollateral += transaction.getCollateral();
+        for (Performa performa : customer.getPerformas()) {
+            totalPrice += performa.getTransPrice();
+            totalCollateral += performa.getCollateral();
         }
-        customer.setTotalPrice(totalPrice);
         double totalPriceVAT = totalPrice + (totalPrice * 0.15);
-        customer.setTotalPriceVAT(totalPriceVAT);
-        
-        customer.setDebtBalance(totalPriceVAT);
-
-        customer.setTotalCollateral(totalCollateral);
         double totalCollateralVAT = totalCollateral + (totalCollateral * 0.15);
-        customer.setTotalCollateralVAT(totalCollateralVAT);
-        
+
+        customer.setTotalPriceP(totalPrice);
+        customer.setTotalPriceVATP(totalPriceVAT);
+        customer.setDebtBalanceP(totalPriceVAT);
+        customer.setTotalCollateralP(totalCollateral);
+        customer.setTotalCollateralVATP(totalCollateralVAT);
+
         Date today = new Date();
         model.addAttribute("customer", customer);
-        model.addAttribute("transactions", customer.getTransactions());
+        model.addAttribute("transactions", customer.getPerformas());
         model.addAttribute("company", companyRepository.findAll());
         model.addAttribute("today", today);
         return "Agreements/view-agreement";

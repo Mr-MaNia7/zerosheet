@@ -56,7 +56,7 @@
               <div class="card-title">Total Price</div>
             </div>
             <div class="card-body">
-              <div><span th:text="${#numbers.formatDecimal(customer.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+              <div><span th:text="${#numbers.formatDecimal(customer.totalPriceVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                   style="font-size:x-large ;"></span></div>
             </div>
           </div>
@@ -65,7 +65,7 @@
               <div class="card-title">Total Debt Balance</div>
             </div>
             <div class="card-body">
-              <div><span th:text="${#numbers.formatDecimal(customer.debtBalanceP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+              <div><span th:text="${#numbers.formatDecimal(customer.debtBalance, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                   style="font-size:x-large ;"></span></div>
             </div>
           </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="card-body">
               <div><span
-                  th:text="${#numbers.formatDecimal(customer.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                  th:text="${#numbers.formatDecimal(customer.totalCollateralVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                   style="font-size:x-large ;"></span></div>
             </div>
           </div>
