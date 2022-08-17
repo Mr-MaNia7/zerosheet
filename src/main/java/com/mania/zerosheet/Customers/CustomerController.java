@@ -46,6 +46,19 @@ public class CustomerController {
     model.addAttribute("customers", customerRepository.findAll());
     return "Customers/view-customers";
   }
+  @GetMapping("/customerstabular")
+  public String showCustomersTabular(Customer customer, Model model, SessionStatus status){
+    List<Long> remainingDaysList = new ArrayList<Long>();
+    Date today = new Date();
+    for (Transaction transaction : TransactionRepository.findAll()) {
+      long remainingDays = calculateDayDifference(transaction.getDueBackDate(), today);
+      remainingDaysList.add(remainingDays);
+    }
+    
+    model.addAttribute("remainingDaysList", remainingDaysList);
+    model.addAttribute("customers", customerRepository.findAll());
+    return "Customers/view-customers-tabular";
+  }
 
   @GetMapping("/cancel")
   public String cancelTransaction(SessionStatus status){
