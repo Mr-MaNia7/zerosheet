@@ -9,7 +9,7 @@
       <div class="container">
         <div>
           <div id="date" class="row justify-content-end">
-            <p class="col-6 col-md-3" th:text="${#dates.format(today, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም</p>
+            <p class="col-6 col-md-3" th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም</p>
           </div>
 
           <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
@@ -114,15 +114,14 @@
             <li>ተከራይ ለሚጠፉና ለሚበላሹ እቃዎች በሰንጠረዝ ቁጥር 2 የዋጋ ዝርዝር መሰረት ክፍያ ይፈጽማል ፡፡</li>
             <li>ተከራይ ንብረቱን ለኮንስትራክሽን አገልግሎት ብቻ ይጠቀምበታል ለሶስተኛ ወገንም አሳልፎ መስጠት አይችልም ፡፡</li>
             <li>ተከራይ ለሚከራየው ንብረት በሰንጠረዥ ቁጥር ሁለት ጠቅላላ ድምሩን <span class="price"
-                th:text="${'ብር ' + #numbers.formatDecimal(customer.totalCollateralVAT, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                th:text="${'ብር ' + #numbers.formatDecimal(customer.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
               በቼክ ያስይዛል ፡፡</li>
-            <li>ተከራይ የሚከራየውን ንብረት ከተገለገለበት በኃላ ጊዜው ሲጠናቀቅ እቃዎቹን በተረከበበት ሁኔታ የማያስረክብ ቢሆን ግን ለ ዕቃዎቹ ሲባል በ መያዣነት የ ተቀበለውን
+            <li>ተከራይ የሚከራየውን ንብረት ከተገለገለበት በኃላ ጊዜው ሲጠናቀቅ እቃዎቹን በተረከበበት ሁኔታ የማያስረክብ ቢሆን ግን ለ ዕቃዎቹ ሲባል በመያዣነት የተቀበለውን
               ቼክ ባንክ ይዞ በመቅረብ የመመንዘር መብት አከራይ አለው ፡፡</li>
             <div th:each="trans,status : ${transactions}">
               <li>
                 ይህ የኪራይ ውል ከ ዛሬ ቀን
-                <!-- <span th:text="${status.first}? ${#dates.format(trans.dueDate, 'dd-MM-yyyy')}"></span> -->
-                <span th:text="${#dates.format(today, 'dd-MM-yyyy')}"></span>
+                <span th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}"></span>
                 ጀምሮ በአዲስ አበባ ከተማ የተደረገ ሲሆን ተከራዩ እቃውን ከወሰደበት ጊዜ ጀምሮ ለ
                 <span th:text="${status.first}? ${trans.dayDifference}"></span>
                 ቀናት ፀንቶ ይቆያል፤ ሆኖም ግን ተዋዋዮች ከተስማሙና የቀጣይ ወራት ኪራይ ከተከፈለ ማራዘም ይችላሉ ፡፡
@@ -138,10 +137,10 @@
             <div th:each="trans,status : ${transactions}">
               <li>
                 የኪራይ ዋጋ ለአንድ ቀን <span class="price"
-                  th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVAT / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                  th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATP / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን <span
                   class="price"
-                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVAT, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 <!-- (<span ></span>) -->
                 ቫትን ጨምሮ ይሆናል፡፡
               </li>
@@ -164,10 +163,10 @@
                 <tbody>
                   <tr th:each="transaction, status : ${transactions}">
                     <td th:text="${status.count}"></td>
-                    <td th:text="${transaction.item.itemName}"></td>
-                    <td th:text="${transaction.item.unit}"></td>
+                    <td th:text="${transaction.itemName}"></td>
+                    <td th:text="${transaction.unit}"></td>
                     <td th:text="${transaction.itemQuantity}"></td>
-                    <td th:text="${transaction.item.areaCoverage}"></td>
+                    <td th:text="${transaction.areaCoverage}"></td>
                     <td th:text="${#numbers.formatDecimal(transaction.itemPrice, 1, 'COMMA', 2, 'DEFAULT')}">
                     </td>
                     <td th:text="${transaction.dayDifference}"></td>
@@ -178,21 +177,21 @@
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ጠቅላላ ዋጋ</td>
-                    <td><span th:text="${#numbers.formatDecimal(customer.totalPrice, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                    <td><span th:text="${#numbers.formatDecimal(customer.totalPriceP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ቫት 15%</td>
                     <td><span
-                        th:text="${#numbers.formatDecimal(customer.totalPrice * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                        th:text="${#numbers.formatDecimal(customer.totalPriceP * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ጠቅላላ ዋጋ ቫትን ጨምሮ</td>
                     <td><span
-                        th:text="${#numbers.formatDecimal(customer.totalPriceVAT, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                        th:text="${#numbers.formatDecimal(customer.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                 </tfoot>
@@ -229,10 +228,10 @@
               <tbody>
                 <tr th:each="transaction, status : ${transactions}">
                   <td th:text="${status.count}"></td>
-                  <td th:text="${transaction.item.itemName}"></td>
-                  <td th:text="${transaction.item.unit}"></td>
+                  <td th:text="${transaction.itemName}"></td>
+                  <td th:text="${transaction.unit}"></td>
                   <td th:text="${transaction.itemQuantity}"></td>
-                  <td th:text="${#numbers.formatDecimal(transaction.item.unitPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
+                  <td th:text="${#numbers.formatDecimal(transaction.unitPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
                   <td th:text="${#numbers.formatDecimal(transaction.collateral, 1, 'COMMA', 2, 'DEFAULT')}"></td>
                 </tr>
               </tbody>
@@ -241,21 +240,21 @@
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ጠቅላላ ማስያዣ</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateral, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ቫት 15%</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateral * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralP * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ጠቅላላ ማስያዣ ቫትን ጨምሮ</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateralVAT, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
               </tfoot>

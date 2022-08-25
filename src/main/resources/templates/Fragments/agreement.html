@@ -114,9 +114,9 @@
             <li>ተከራይ ለሚጠፉና ለሚበላሹ እቃዎች በሰንጠረዝ ቁጥር 2 የዋጋ ዝርዝር መሰረት ክፍያ ይፈጽማል ፡፡</li>
             <li>ተከራይ ንብረቱን ለኮንስትራክሽን አገልግሎት ብቻ ይጠቀምበታል ለሶስተኛ ወገንም አሳልፎ መስጠት አይችልም ፡፡</li>
             <li>ተከራይ ለሚከራየው ንብረት በሰንጠረዥ ቁጥር ሁለት ጠቅላላ ድምሩን <span class="price"
-                th:text="${'ብር ' + #numbers.formatDecimal(customer.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                th:text="${'ብር ' + #numbers.formatDecimal(customer.totalCollateralVATAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
               በቼክ ያስይዛል ፡፡</li>
-            <li>ተከራይ የሚከራየውን ንብረት ከተገለገለበት በኃላ ጊዜው ሲጠናቀቅ እቃዎቹን በተረከበበት ሁኔታ የማያስረክብ ቢሆን ግን ለ ዕቃዎቹ ሲባል በ መያዣነት የ ተቀበለውን
+            <li>ተከራይ የሚከራየውን ንብረት ከተገለገለበት በኃላ ጊዜው ሲጠናቀቅ እቃዎቹን በተረከበበት ሁኔታ የማያስረክብ ቢሆን ግን ለ ዕቃዎቹ ሲባል በመያዣነት የተቀበለውን
               ቼክ ባንክ ይዞ በመቅረብ የመመንዘር መብት አከራይ አለው ፡፡</li>
             <div th:each="trans,status : ${transactions}">
               <li>
@@ -138,10 +138,10 @@
             <div th:each="trans,status : ${transactions}">
               <li>
                 የኪራይ ዋጋ ለአንድ ቀን <span class="price"
-                  th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATP / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                  th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን <span
                   class="price"
-                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 <!-- (<span ></span>) -->
                 ቫትን ጨምሮ ይሆናል፡፡
               </li>
@@ -178,21 +178,21 @@
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ጠቅላላ ዋጋ</td>
-                    <td><span th:text="${#numbers.formatDecimal(customer.totalPriceP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                    <td><span th:text="${#numbers.formatDecimal(customer.totalPriceAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ቫት 15%</td>
                     <td><span
-                        th:text="${#numbers.formatDecimal(customer.totalPriceP * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                        th:text="${#numbers.formatDecimal(customer.totalPriceAt * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ጠቅላላ ዋጋ ቫትን ጨምሮ</td>
                     <td><span
-                        th:text="${#numbers.formatDecimal(customer.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                        th:text="${#numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                 </tfoot>
@@ -241,21 +241,21 @@
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ጠቅላላ ማስያዣ</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateralP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ቫት 15%</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateralP * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralAt * 0.15, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="4" style="border-bottom: hidden; border-left:hidden;"></td>
                   <td>ጠቅላላ ማስያዣ ቫትን ጨምሮ</td>
                   <td><span
-                      th:text="${#numbers.formatDecimal(customer.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                      th:text="${#numbers.formatDecimal(customer.totalCollateralVATAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                   </td>
                 </tr>
               </tfoot>

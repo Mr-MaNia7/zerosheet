@@ -41,7 +41,7 @@
             class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
               <div class="fw-bold"><span th:text="${trans.item.itemName}"></span></div>
-              Remaining Quantity = <span th:text="${trans.item.totalQuantity}"></span>
+              Remaining Quantity = <span th:text="${trans.item.totalQuantity - trans.itemQuantity}"></span>
             </div>
             <span class="badge bg-primary rounded-pill" style="background-color:rgb(176, 72, 228);"
               th:text="${trans.itemQuantity}"></span>

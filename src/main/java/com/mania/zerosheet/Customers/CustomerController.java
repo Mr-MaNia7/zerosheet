@@ -3,8 +3,6 @@ package com.mania.zerosheet.Customers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
-
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -38,7 +33,7 @@ public class CustomerController {
     List<Long> remainingDaysList = new ArrayList<Long>();
     Date today = new Date();
     for (Transaction transaction : TransactionRepository.findAll()) {
-      long remainingDays = calculateDayDifference(transaction.getDueBackDate(), today);
+      long remainingDays = transaction.calculateDayDifference(transaction.getDueBackDate(), today);
       remainingDaysList.add(remainingDays);
     }
     
@@ -51,7 +46,7 @@ public class CustomerController {
     List<Long> remainingDaysList = new ArrayList<Long>();
     Date today = new Date();
     for (Transaction transaction : TransactionRepository.findAll()) {
-      long remainingDays = calculateDayDifference(transaction.getDueBackDate(), today);
+      long remainingDays = transaction.calculateDayDifference(transaction.getDueBackDate(), today);
       remainingDaysList.add(remainingDays);
     }
     
@@ -67,7 +62,8 @@ public class CustomerController {
   }
   // from customers to add-customer
   @GetMapping("customers/newcustomer")
-  public String showAddCustomerForm(Customer customer) {
+  public String showAddCustomerForm(Customer customer, Model model) {
+    model.addAttribute(customer);
     return "Customers/add-customer";
   }
 
@@ -125,14 +121,4 @@ public class CustomerController {
     model.addAttribute("customers", customerRepository.findAll());
     return "redirect:/customers";
   }
-
-  public long calculateDayDifference(Date fromDate, Date toDate) {
-    long difference_In_Time = fromDate.getTime() - toDate.getTime();
-    long difference_In_Days = 
-    TimeUnit
-          .MILLISECONDS
-          .toDays(difference_In_Time);
-
-    return difference_In_Days;
-}
 }

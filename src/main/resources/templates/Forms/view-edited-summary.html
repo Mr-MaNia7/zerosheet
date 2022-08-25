@@ -38,10 +38,12 @@
       </div>
 
       <div th:replace="Fragments/edited-summary.html :: card"></div>
-      <form action="#" th:action="@{/orders/finishedit/{id}(id = ${customer.id})}" th:object="${customer}"
-        method="post">
-        <div th:replace="Fragments/edited-summary.html :: form"></div>
-      </form>
+      <div th:each="transaction : ${transactions}">
+        <form action="#" th:action="@{/orders/finishedit/{id}/{transId}(id = ${customer.id}, transId=${transaction.transId})}" th:object="${customer}"
+          method="post">
+          <div th:replace="Fragments/edited-summary.html :: form"></div>
+        </form>
+      </div>
     </div>
   </main>
 

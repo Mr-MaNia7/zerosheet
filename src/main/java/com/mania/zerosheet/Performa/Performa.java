@@ -2,6 +2,8 @@ package com.mania.zerosheet.Performa;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -49,9 +51,47 @@ public class Performa implements Serializable {
     Customer cust;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "itemp_id", nullable = true)
+    @JoinColumn(name = "item_id", nullable = true)
     Item item;
 
+    public void addNewTransaction(){
+        this.setDayDifference();
+        this.setTransPrice();
+        this.setCollateral();
+    }
+    public void addTrans2ExistinCust(Customer customer){
+        this.cust = customer;
+        this.addNewTransaction();
+        customer.updateCost(this.transPrice, this.collateral);
+    }
+    public void setDayDifference() {
+        long difference_In_Time = this.dueBackDate.getTime() - this.dueDate.getTime();
+        this.dayDifference = 
+        TimeUnit
+              .MILLISECONDS
+              .toDays(difference_In_Time);
+    }
+    public void setTransPrice(){
+        this.transPrice = this.itemPrice * this.dayDifference * this.itemQuantity;
+    }
+    public void setCollateral(){
+        this.collateral = this.item.getUnitPrice() * this.itemQuantity;
+    }
+    public long calculateDayDifference() {
+        long difference_In_Time = this.dueBackDate.getTime() - this.dueDate.getTime();
+        long difference_In_Days = 
+        TimeUnit
+              .MILLISECONDS
+              .toDays(difference_In_Time);
+    
+        // long difference_In_Years = 
+        // TimeUnit
+        //       .MILLISECONDS
+        //       .toDays(difference_In_Time)
+        //   / 365l;
+        return difference_In_Days;
+    }
+    
     public Performa(int itemQuantity, Date dueDate, Date dueBackDate, 
     long dayDifference, double collateral, double transPrice, double itemPrice, Customer customer, Item item) {
         this.itemQuantity = itemQuantity;

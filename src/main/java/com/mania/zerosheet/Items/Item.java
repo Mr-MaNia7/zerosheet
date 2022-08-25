@@ -13,7 +13,6 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Transaction.Transaction;
 import lombok.AllArgsConstructor;
@@ -52,6 +51,13 @@ public class Item implements Serializable{
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Performa> performas = new ArrayList<Performa>();
+
+    public int calculateItemQuantity(int old_item_quantity, int trans_item_quantity, int old_trans_quantity){
+        return old_item_quantity - trans_item_quantity + old_trans_quantity;
+    }
+    public Item calculatRemainingQuantity(){
+        return new Item();
+    }
     
     public Item(String itemName, String unit, double unitLoanPrice, double unitPrice, double areaCoverage, int totalQuantity)
     {

@@ -175,12 +175,6 @@
                             <h6>Incompleted-Transactions (Performas) by this customer</h6>
                             <div th:if="${#lists.isEmpty(customer.performas)}">
                               <p>No Performas for this customer!</p>
-                              <div class="my-3">
-                                <!-- <a class="btn btn-primary btn-sm"
-                                  th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                                  <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
-                                </a> -->
-                              </div>
                             </div>
                             <div th:unless="${#lists.isEmpty(customer.performas)}">
                               <ul class="list-group">
@@ -208,18 +202,42 @@
                                     </a>
                                   </div>
                                 </li>
-                                <!-- <div class="my-3">
-                                  <a class="btn btn-primary btn-sm"
-                                    th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                                    <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
-                                  </a>
-                                </div> -->
                                 <div class="my-3">
                                   <a class="btn btn-primary btn-sm"
                                     th:href="@{orders/performas/{id}(id=${customer.id})}" role="button">
                                     <i class="fa-solid fa-plus"></i><span> Continue Transaction</span>
                                   </a>
                                 </div>
+                              </ul>
+                            </div>
+                          </li>
+
+                          <li class="list-group-item">
+                            <h6>Agreements by this customer</h6>
+                            <div th:if="${#lists.isEmpty(customer.savedAgreements)}">
+                              <p>No Agreements for this customer!</p>
+                            </div>
+                            <div th:unless="${#lists.isEmpty(customer.savedAgreements)}">
+                              <ul class="list-group">
+                                <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
+                                  <div>Agreement Time Stamp: <span th:text='${agreement.agreementDate}' style="font-weight: bold;"></span></div>
+                                  <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                                    <ul class="list-group">
+                                      <div>Item Names: </div>
+                                      <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                                        <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                                      </div>
+                                    </ul>
+                                  </div>
+                                  <div>TotalPrice: <span th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}" style="font-weight: bold;"></span></div>
+                                  <div>Total Collateral = <span th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}" style="font-weight: bold;"></span></div>    
+                                  <div class="my-3">
+                                    <a class="btn btn-primary btn-sm"
+                                      th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
+                                      <i class="fa-solid fa-plus"></i><span> View Agreement</span>
+                                    </a>
+                                  </div>
+                                </li>
                               </ul>
                             </div>
                           </li>
