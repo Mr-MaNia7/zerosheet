@@ -91,6 +91,20 @@ public class Performa implements Serializable {
         //   / 365l;
         return difference_In_Days;
     }
+    public void editPerforma(Performa new_performa, Item new_item) {
+        this.itemQuantity = new_performa.getItemQuantity();
+        this.item = new_item;
+        this.dueDate = new_performa.getDueDate();
+        this.dueBackDate = new_performa.getDueBackDate();
+        this.setDayDifference();
+        this.itemPrice = new_performa.getItemPrice();
+        double old_trans_price = this.transPrice;
+        this.setTransPrice();
+        double old_collateral_price = this.collateral;
+        this.setCollateral();
+
+        this.cust.editCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
+    }
     
     public Performa(int itemQuantity, Date dueDate, Date dueBackDate, 
     long dayDifference, double collateral, double transPrice, double itemPrice, Customer customer, Item item) {
