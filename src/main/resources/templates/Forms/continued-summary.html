@@ -51,9 +51,11 @@
           Finish
         </a>
       </div>  
-      <form action="#" th:action="@{/orders/saveperforma}" th:object="${customer}" method="post">
-        <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
-            data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Save and Continue later">Save</button>
+      <form class="my-3" action="#" th:action="@{/orders/saveperforma}" th:object="${customer}" method="post">
+        <div class="row justify-content-center">
+          <button type="submit" class="col-8 col-md-6 btn btn-success" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Save as performa and continue later">Save as performa</button>
+        </div>
       </form>
     </div>
   </main>
