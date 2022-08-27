@@ -26,4 +26,9 @@ public class SavedController {
         model.addAttribute("company", companyRepository.findAll());
         return "Agreements/view-saved-agreement";
     }
+    @GetMapping("/agreements/saved")
+    public String showSavedAgreements(Model model) {
+        model.addAttribute("agreements", savedAgreementRepo.findAll());
+        return "Saved/view-saved-agreements";
+    }
 }
