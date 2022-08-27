@@ -164,7 +164,7 @@
                                 <div class="my-3">
                                   <a class="btn btn-primary btn-sm"
                                     th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                                    <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
+                                    <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
                                   </a>
                                 </div>
                               </ul>
@@ -187,25 +187,23 @@
                                     <span th:if="${rstat.index == status.index}">Remaining days: </span>
                                     <span th:if="${rstat.index == status.index}" th:text='${remainingDay + " days"}' style="font-weight: bold;"></span>
                                   </div>
-                                  <div class="my-3">
+                                  <div class="row justify-content-evenly my-3">
                                     <a class="col-sm-4 btn btn-primary btn-sm"
                                       th:href="@{performas/editperforma/{transId}(transId=${performa.transId})}"
                                       role="button">
                                       <i class="fa-solid fa-pen"></i><span> Edit Performa</span>
                                     </a>
-                                  </div>
-                                  <div class="my-3">
-                                    <a class="col-sm-4 btn btn-primary btn-sm"
+                                    <a class="col-sm-4 btn btn-danger btn-sm"
                                       th:href="@{transactions/performas/remove/{transId}(transId=${performa.transId})}"
                                       role="button">
-                                      <i class="fa-solid fa-pen"></i><span> Delete Performa</span>
+                                      <i class="fa-solid fa-minus"></i><span> Delete Performa</span>
                                     </a>
                                   </div>
                                 </li>
                                 <div class="my-3">
                                   <a class="btn btn-primary btn-sm"
                                     th:href="@{orders/performas/{id}(id=${customer.id})}" role="button">
-                                    <i class="fa-solid fa-plus"></i><span> Continue Transaction</span>
+                                    <i class="fa-solid fa-play"></i><span> Continue Transactions</span>
                                   </a>
                                 </div>
                               </ul>
@@ -234,7 +232,7 @@
                                   <div class="my-3">
                                     <a class="btn btn-primary btn-sm"
                                       th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
-                                      <i class="fa-solid fa-plus"></i><span> View Agreement</span>
+                                      <i class="fa-solid fa-eye"></i><span> View Agreement</span>
                                     </a>
                                   </div>
                                 </li>

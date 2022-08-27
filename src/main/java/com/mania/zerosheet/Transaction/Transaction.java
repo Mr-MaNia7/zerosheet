@@ -102,7 +102,7 @@ public class Transaction implements Serializable{
             new_item.setTotalQuantity(newQty);
         }
         else {
-            int old_item_Qty = old_item.getTotalQuantity() + this.itemQuantity;
+            int old_item_Qty = old_item.getTotalQuantity() + old_trans_quantity;
             old_item.setTotalQuantity(old_item_Qty);
             saveItem = old_item;
 

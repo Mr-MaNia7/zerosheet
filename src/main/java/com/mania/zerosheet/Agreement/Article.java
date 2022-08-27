@@ -1,5 +1,7 @@
 package com.mania.zerosheet.Agreement;
 
+// import java.util.List;
+// import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,10 +22,16 @@ public class Article {
     
     private String statement;
 
+    // private List<String> statements = new ArrayList<String>();
+
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "agreement_id", nullable = true)
     private Agreement agmnt;
 
+    // public Article(List<String> statements) {
+    //     this.statements = statements;
+    // }
+    
     public Article(String statement) {
         this.statement = statement;
     }
