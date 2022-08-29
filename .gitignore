@@ -32,8 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-### Other files ###
+### Other custom files ###
+src/main/java/com/mania/zerosheet/SMS/SMS.java
 src/plan/plan.md
-# .gitignore
 README.md
 CONTRIBUTING.md

@@ -55,9 +55,6 @@ public class Item implements Serializable{
     public int calculateItemQuantity(int old_item_quantity, int trans_item_quantity, int old_trans_quantity){
         return old_item_quantity - trans_item_quantity + old_trans_quantity;
     }
-    public Item calculatRemainingQuantity(){
-        return new Item();
-    }
     
     public Item(String itemName, String unit, double unitLoanPrice, double unitPrice, double areaCoverage, int totalQuantity)
     {
