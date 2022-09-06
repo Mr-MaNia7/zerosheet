@@ -23,31 +23,33 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Transaction implements Serializable{
+    private final long oneDay = 1000L * 60L * 60L * 24L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transId")
     private long transId;
 
     @Min(value = 1, message = "Item Quantity should be atleast 1")
-    // @Digits(10)
-    public int itemQuantity = 10;
+    private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    public Date dueDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
+    private Date dueDate = new Date(new Date().getTime() + oneDay);
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    public Date dueBackDate = new Date(dueDate.getTime() + (1000 * 60 * 60 * 24 * 15) + (1000 * 60 * 60 * 24 * 15));
+    private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
 
-    public double itemPrice;
+    private double itemPrice;
 
-    public double transPrice;
+    private double transPrice;
 
-    public long dayDifference;
+    private long dayDifference;
 
-    public double collateral;
+    private double collateral;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "customer_id", nullable = true)
-    Customer customer;
+    private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
