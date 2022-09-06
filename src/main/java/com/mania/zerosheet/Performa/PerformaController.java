@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class PerformaController {
     private final ItemRepository itemRepository;
     private final PerformaRepository performaRepository;
+    private boolean isDuplicate = false;
 
     @GetMapping("/transactions/performas")
     public String showPerformas(Performa transaction, Model model) {
@@ -47,6 +48,7 @@ public class PerformaController {
         
         model.addAttribute("transaction", performa);
         model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("isDuplicate", isDuplicate);
         return "Performas/update-performa";
     }
     @PostMapping("performas/updateperforma/{transId}")
@@ -66,6 +68,19 @@ public class PerformaController {
             performaRepository
                 .findById(transId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid performa Id: " + transId));
+
+        isDuplicate = false;
+        if (
+            new_performa.getItem().getItemId() == old_performa.getItem().getItemId() &&
+            new_performa.getItemPrice() == old_performa.getItemPrice() &&
+            new_performa.getItemQuantity() == old_performa.getItemQuantity() &&
+            new_performa.getDueDate().equals(old_performa.getDueDate()) &&
+            new_performa.getDueBackDate().equals(old_performa.getDueBackDate())
+            )
+        {
+            isDuplicate = true;
+            return "redirect:/performas/editperforma/{transId}";
+        }
         
         old_performa.editPerforma(new_performa, new_item);
         

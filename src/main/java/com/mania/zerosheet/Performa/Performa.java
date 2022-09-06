@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Performa implements Serializable {
+    private final long oneDay = 1000L * 60L * 60L * 24L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long transId;
@@ -33,10 +35,10 @@ public class Performa implements Serializable {
     private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 24));
+    private Date dueDate = new Date(new Date().getTime() + oneDay);
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueBackDate = new Date(dueDate.getTime() + (1000 * 60 * 60 * 24 * 15) + (1000 * 60 * 60 * 24 * 15));
+    private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
 
     private double itemPrice;
 
@@ -104,6 +106,10 @@ public class Performa implements Serializable {
         this.setCollateral();
 
         this.cust.editCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
+    }
+    public void reverseDayDifference(long dayDifference){
+        this.dueDate =  new Date(new Date().getTime() + oneDay);
+        this.dueBackDate =  new Date(this.dueDate.getTime() + oneDay * dayDifference);
     }
     
     public Performa(int itemQuantity, Date dueDate, Date dueBackDate, 

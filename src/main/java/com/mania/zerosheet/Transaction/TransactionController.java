@@ -31,8 +31,8 @@ public class TransactionController {
     private final ItemRepository itemRepository;
     private final CompanyRepository companyRepository;
     private final PerformaRepository performaRepository;
+    private boolean isDuplicate = false;
 
-    // from home to transactions
     @GetMapping("/transactions")
     public String showTransactions(Transaction transaction, Model model) {
         model.addAttribute("transactions", transactionRepository.findAll());
@@ -90,9 +90,9 @@ public class TransactionController {
 
         model.addAttribute("transaction", transaction);
         model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("isDuplicate", isDuplicate);
         return "Transactions/update-transaction";
     }
-    // from update-transaction (post and) redirect to customers
     @PostMapping("transactions/updatetransaction/{transId}")
     public String updateTransaction(@PathVariable("transId") long transId,
     @Valid Transaction new_trans, BindingResult result, Model model){
@@ -105,14 +105,26 @@ public class TransactionController {
                 .findById(new_trans.getItem().getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + new_trans.getItem().getItemId()));
         Transaction old_trans =
-            transactionRepository
+        transactionRepository
                 .findById(transId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
-        
+                
+        isDuplicate = false;
+        if (
+            new_trans.getItem().getItemId() == old_trans.getItem().getItemId() &&
+            new_trans.getItemPrice() == old_trans.getItemPrice() &&
+            new_trans.getItemQuantity() == old_trans.getItemQuantity() &&
+            new_trans.getDueDate().equals(old_trans.getDueDate()) &&
+            new_trans.getDueBackDate().equals(old_trans.getDueBackDate())
+            )
+        {
+            isDuplicate = true;
+            return "redirect:/transactions/edittransaction/{transId}";
+        }
+
         Item item = old_trans.editTransaction(new_trans, new_item);
         itemRepository.save(item);        
         transactionRepository.save(old_trans);
-
         List<Transaction> transactions = new ArrayList<Transaction>();
         transactions.add(old_trans);
         model.addAttribute("customer", old_trans.getCustomer());
@@ -167,13 +179,14 @@ public class TransactionController {
     }
 
     @GetMapping("transactions/return/{transId}")
-    public String returnItems(@PathVariable("transId") long transId, @RequestParam(value="returnQuantity") int returnQuantity, Model model){
+    public String returnItems(@PathVariable("transId") long transId, @RequestParam(value="returnQuantity") int returnQuantity,
+    @RequestParam(value="maintenanceQty") int maintenanceQty, @RequestParam(value="defectedQty") int defectedQty, Model model){
         Transaction transaction =
             transactionRepository
                 .findById(transId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id:" + transId));
         
-        boolean isDel = transaction.partialReturn(returnQuantity);
+        boolean isDel = transaction.partialReturn(returnQuantity, maintenanceQty, defectedQty);
         if (isDel == true) {
             transactionRepository.delete(transaction);
         }

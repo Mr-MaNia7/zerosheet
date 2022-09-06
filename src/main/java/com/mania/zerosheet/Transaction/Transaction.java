@@ -3,6 +3,8 @@ package com.mania.zerosheet.Transaction;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import com.mania.zerosheet.Customers.Customer;
+import com.mania.zerosheet.ItemInstance.Instance;
 import com.mania.zerosheet.Items.Item;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
@@ -53,7 +57,11 @@ public class Transaction implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
-    Item item;
+    private Item item;
+    
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @JoinColumn(name = "instance_id", referencedColumnName = "instanceId")
+    private Instance instance;
 
     public void removeTransaction() {
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
@@ -62,14 +70,15 @@ public class Transaction implements Serializable{
         this.customer.setDebtBalance(newDebt);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
+        this.item.updateAvailableInstance();
     }
-    public boolean partialReturn(int returnQuantity) {
+    public boolean partialReturn(int returnQuantity, int maintenanceQty, int defectedQty) {
         if (returnQuantity == this.itemQuantity) {
             this.removeTransaction();
             return true;
         }
         else {
-            int new_item_quantity = this.itemQuantity - returnQuantity;
+            int new_item_quantity = this.itemQuantity - returnQuantity - maintenanceQty - defectedQty;
             double old_trans_price = this.transPrice;
             double new_trans_price = (old_trans_price  / this.itemQuantity) * new_item_quantity;
             int total_quantity = this.item.getTotalQuantity();
@@ -91,6 +100,15 @@ public class Transaction implements Serializable{
             this.itemQuantity = new_item_quantity;
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
+            
+            this.item.updateMaintenanceInstance(maintenanceQty);
+            this.item.updateDefectedInstance(defectedQty);
+            this.item.updateAvailableInstance();
+            Instance instance = this.instance;
+            instance.setItemQuantity(this.itemQuantity);
+            instance.setItem(this.item);
+            this.item.addInstance(instance);
+            
             return false;
         }
     }
@@ -111,7 +129,7 @@ public class Transaction implements Serializable{
             int newQty = new_item.calculateItemQuantity(new_item.getTotalQuantity(), new_trans.getItemQuantity(), 0);
             new_item.setTotalQuantity(newQty);
         }
-
+        
         this.item = new_item;
         this.dueDate = new_trans.getDueDate();
         this.dueBackDate = new_trans.getDueBackDate();
@@ -122,6 +140,15 @@ public class Transaction implements Serializable{
         double old_collateral_price = this.collateral;
         this.setCollateral();
 
+        Instance available_instance = old_item.findAvailableInstance();
+        available_instance.setItemQuantity(this.item.getTotalQuantity());
+        this.item.addInstance(available_instance);
+        
+        Instance instance = this.instance;
+        instance.setItemQuantity(this.itemQuantity);
+        instance.setItem(this.item);
+        this.item.addInstance(instance);
+        
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;
     }

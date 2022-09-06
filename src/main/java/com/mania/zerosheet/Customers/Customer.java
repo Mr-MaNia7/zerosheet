@@ -17,6 +17,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import com.mania.zerosheet.Agreement.Agreement;
+import com.mania.zerosheet.ItemInstance.Instance;
+import com.mania.zerosheet.ItemInstance.Instance.Status;
+import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Saved.SavedAgreement;
 import com.mania.zerosheet.Saved.SavedTrans;
@@ -34,6 +37,8 @@ public class Customer implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  private String fullName;
+  
   @NotBlank(message = "Customer First Name is required")
   private String name;
   @NotBlank(message = "Customer Middle Name is required")
@@ -76,6 +81,7 @@ public class Customer implements Serializable {
   private double totalCollateralAt;
   private double totalCollateralVATAt;
 
+
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<Transaction> transactions = new ArrayList<Transaction>();
 
@@ -89,10 +95,13 @@ public class Customer implements Serializable {
   @JoinColumn(name = "agreement_id", nullable = true)
   Agreement agreement;
 
-  public void addTransaction(Transaction transaction) {
+  public Instance addTransaction(Transaction transaction) {
     boolean flag = false;
     for (Transaction eachtrans : this.transactions) {
-      if (eachtrans.getItem().getItemId() == transaction.getItem().getItemId()) {
+      if (eachtrans.getItem().getItemId() == transaction.getItem().getItemId() &&
+          eachtrans.getDueBackDate() == transaction.getDueBackDate() &&
+          eachtrans.getDueDate() == transaction.getDueDate()
+        ) {
         this.transactions.set((int) (eachtrans.getTransId()), transaction);
         flag = true;
       }
@@ -100,12 +109,23 @@ public class Customer implements Serializable {
     if (flag == false) {
       this.transactions.add(transaction);
     }
+    Item item  = transaction.getItem();
+    Instance available_instance = item.findAvailableInstance();
+    available_instance.setItemQuantity(item.getTotalQuantity());
+    item.addInstance(available_instance);
+    
+    Instance new_instance = new Instance(transaction.getItemQuantity(), Status.ONLOAN, item);
+    transaction.setInstance(new_instance);
+
+    return available_instance;
   }
 
   public void addPerforma(Performa performa) {
     boolean flag = false;
     for (Performa eachperforma : this.performas) {
-      if (eachperforma.getItem().getItemId() == performa.getItem().getItemId()) {
+      if (eachperforma.getItem().getItemId() == performa.getItem().getItemId() &&
+          eachperforma.getDueDate() == performa.getDueDate()
+      ) {
         this.performas.set((int) (eachperforma.getTransId()), performa);
         flag = true;
       }
@@ -117,6 +137,9 @@ public class Customer implements Serializable {
 
   public void removePerformas(List<Performa> performas) {
     this.performas.removeAll(performas);
+  }
+  public void removeTransactions(List<Transaction> transactions) {
+    this.transactions.removeAll(transactions);
   }
   public void setAgreementCost(double transPrice, double collateral){
     this.totalPriceAt = transPrice;
@@ -207,13 +230,15 @@ public class Customer implements Serializable {
     savedAgreement.addSavedTrans(savedTrans);
     return savedAgreement;
   }
-  public void copyTransaction() {
+  public List<Instance> copyPerforma2Transaction() {
+    List<Instance> instances = new ArrayList<Instance>();
     for (Performa performa : this.performas) {
+      performa.reverseDayDifference(performa.getDayDifference());
       Transaction transaction = new Transaction(
           performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(), performa.getDayDifference(),
           performa.getCollateral(), performa.getTransPrice(), performa.getItemPrice(), performa.getCust(), performa.getItem()
           );
-      this.addTransaction(transaction);
+      instances.add(this.addTransaction(transaction));
     }
 
     this.totalPrice += this.totalPriceP;
@@ -233,6 +258,7 @@ public class Customer implements Serializable {
     this.setDebtBalanceP(0);
     this.setTotalCollateralP(0);
     this.setTotalCollateralVATP(0);
+    return instances;
   }
 
   public void updateTransaction(Transaction transaction, long id) {

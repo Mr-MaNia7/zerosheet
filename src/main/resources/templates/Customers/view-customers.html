@@ -117,8 +117,10 @@
                                   <div>
                                     <form th:action="@{transactions/return/{transId}(transId=${transaction.transId})}" method="get">
                                       <div class="input-group">
-                                        <label for="returnQuantity" class="col-6 align-self-center form-label" style="padding-bottom: 0em; margin-bottom: 0em;">Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></label>
-                                        <input class="col-2 form-control form-control-sm" id="returnQuantity" name="returnQuantity" type="number" min="1" th:max="${transaction.itemQuantity}" value="1">
+                                        <label for="returnQuantity" class="col-4 align-self-center form-label" style="padding-bottom: 0em; margin-bottom: 0em;">Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></label>
+                                          <input class="col-2 form-control form-control-sm me-1" id="returnQuantity" name="returnQuantity" type="number" min="1" th:max="${transaction.itemQuantity}" value="1">
+                                          <input class="col-2 form-control form-control-sm me-1" id="maintenanceQty" name="maintenanceQty" type="number" min="0" th:max="${transaction.itemQuantity}" value="0">
+                                          <input class="col-2 form-control form-control-sm" id="defectedQty" name="defectedQty" type="number" min="0" th:max="${transaction.itemQuantity}" value="0">
                                         <button class="col-3 btn btn-danger btn-sm ms-3" type="submit"><i class="fa-solid fa-right-to-bracket"></i><span> Return</span></button>
                                       </div>
                                     </form>
@@ -345,6 +347,5 @@
             deleteCustName.textContent = `${custName}`
           })
     </script>
-    <!-- <script th:src="@{/js/bootstrap.bundle.min.js}"></script> -->
 </body>
 </html>

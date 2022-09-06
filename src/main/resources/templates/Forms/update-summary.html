@@ -20,7 +20,7 @@
       --bs-tooltip-bg: var(--bs-secondary);
     }
   </style>
-  <title>Updated Summary Page · ZeroSheet</title>
+  <title>Summary Page · ZeroSheet</title>
 </head>
 
 <body>
@@ -34,13 +34,19 @@
           aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
       </div>
       <div>
-        <h2 style="text-align:center;" class="my-3">Updated Summary</h2>
+        <h2 style="text-align:center;" class="my-3">Summary</h2>
       </div>
 
       <div th:replace="Fragments/summary.html :: card"></div>
       <form action="#" th:action="@{/orders/updatefinish/{id}(id = ${customer.id})}" th:object="${customer}"
         method="post">
         <div th:replace="Fragments/summary.html :: form"></div>
+      </form>
+      <form class="my-3" action="#" th:action="@{/orders/saveperforma}" th:object="${customer}" method="post">
+        <div class="row justify-content-center">
+          <button type="submit" class="col-8 col-md-6 btn btn-success" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Save as performa and continue later">Save as performa</button>
+        </div>
       </form>
     </div>
   </main>
