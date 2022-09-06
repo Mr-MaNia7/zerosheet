@@ -105,6 +105,16 @@
           </div>
         </div>
       </div>
+      <div th:each="item : ${items}">
+        <div th:text="${item.itemName}"></div>
+        <div th:each="instance : ${item.instances}">
+          <div th:text="${instance.itemQuantity}"></div>
+          <div th:text="${instance.Status}"></div>
+          <div th:if="${instance.Status == instance.Status.ONLOAN}">
+            <span th:text='${"By: " + instance.transaction.customer.name}'></span>
+          </div>
+        </div>
+      </div>
 
       <div class="row justify-content-center my-5">
         <a name="" id="" class="btn btn-primary col-6 col-md-3" href="/items/newitem" role="button">
