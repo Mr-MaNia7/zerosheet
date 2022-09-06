@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.Performa;
@@ -31,6 +32,7 @@ public class SummaryController {
     private final PerformaRepository performaRepository;
     private final SavedAgreementRepository savedAgreementRepo;
     private final TransactionRepository transactionRepository;
+    private final InstanceRepository instanceRepository;
 
     @GetMapping("/orders/summary")
     public String showSummaryPage(Model model, @Valid Customer customer) {
@@ -48,7 +50,7 @@ public class SummaryController {
             this.itemRepository.save(new_item);
         }
         
-        customer.copyTransaction();
+        instanceRepository.saveAll(customer.copyPerforma2Transaction());
         List<Performa> performas = new ArrayList<Performa>(customer.getPerformas());
         customer.removePerformas(customer.getPerformas());
 
@@ -86,7 +88,7 @@ public class SummaryController {
                     performa.getItemQuantity(), 0));
             this.itemRepository.save(new_item);
         }
-        customer.copyTransaction();
+        customer.copyPerforma2Transaction();
         List<Performa> performas = new ArrayList<Performa>(customer.getPerformas());
         customer.removePerformas(customer.getPerformas());
 
@@ -140,8 +142,8 @@ public class SummaryController {
     @PostMapping("/orders/updatefinish/{id}")
     public String finishUpdateSession(Model model, SessionStatus status, @PathVariable("id") long id) {
         Customer customer = this.customerRepository
-                .findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
 
         for (Performa performa : customer.getPerformas()) {
             Item new_item = performa.getItem();
@@ -149,7 +151,7 @@ public class SummaryController {
                 performa.getItemQuantity(), 0));
             this.itemRepository.save(new_item);
         }
-        customer.copyTransaction();
+        customer.copyPerforma2Transaction();
 
         List<Performa> performas = new ArrayList<Performa>(customer.getPerformas());
         customer.removePerformas(customer.getPerformas());
