@@ -37,7 +37,11 @@ public class OrderController {
         customer.setFullName(customer.getName() + customer.getMiddleName() + customer.getLastName());
         isDuplicate = false;
         for (Customer cust : customerRepository.findAll()){
-            if (customer.getFullName().equals(cust.getFullName())){
+            if (
+              customer.getFullName().equals(cust.getFullName()) ||
+              customer.getEmail().equals(cust.getEmail()) ||
+              customer.getPhoneNumber().equals(cust.getPhoneNumber())
+              ){
               isDuplicate = true;
               return "redirect:/orders/current";
             }

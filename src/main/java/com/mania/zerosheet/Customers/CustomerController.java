@@ -69,7 +69,11 @@ public class CustomerController {
     isDuplicate = false;
     customer.setFullName(customer.getName() + customer.getMiddleName() + customer.getLastName());
     for (Customer cust : customerRepository.findAll()){
-      if (customer.getFullName().equals(cust.getFullName())){
+      if (
+        customer.getFullName().equals(cust.getFullName()) || 
+        customer.getEmail().equals(cust.getEmail()) ||
+        customer.getPhoneNumber().equals(cust.getPhoneNumber())
+      ){
         isDuplicate = true;
         return "redirect:/customers/newcustomer";
       }
