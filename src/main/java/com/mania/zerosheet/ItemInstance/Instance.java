@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
+
+import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Transaction.Transaction;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,7 @@ public class Instance {
     private long instanceId;
     
     @Min(value = 1, message = "Item Quantity should be atleast 1")
-    public int itemQuantity;
+    private int itemQuantity;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -38,9 +40,13 @@ public class Instance {
         ONLOAN, AVAILABLE, MAINTENANCE, DEFECTED  
     }
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
     private Item item;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "customer_id", nullable = true)
+    private Customer customer;
     
     @OneToOne(mappedBy = "instance", cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "trans_id", referencedColumnName = "transId")
@@ -50,7 +56,7 @@ public class Instance {
         this.itemQuantity = this.itemQuantity - loanQuantity;
     }
     
-    public Instance(int itemQuantity, Status status, Item item)
+    public Instance(int itemQuantity, Status status, Item item, Customer customer)
     {
         this.itemQuantity = itemQuantity;
         this.item = item;

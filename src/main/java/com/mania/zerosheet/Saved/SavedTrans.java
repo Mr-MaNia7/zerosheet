@@ -41,7 +41,7 @@ public class SavedTrans implements Serializable {
     private double unitPrice;
     private double collateral;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "savedagreement_id", nullable = true)
     SavedAgreement savedAgreement;
 

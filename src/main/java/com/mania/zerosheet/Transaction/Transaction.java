@@ -51,17 +51,25 @@ public class Transaction implements Serializable{
 
     private double collateral;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
     private Item item;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "instance_id", referencedColumnName = "instanceId")
     private Instance instance;
+
+    public void updateLoanedInstance(int old_trans_quantity){
+        Instance l_instance = this.instance;
+        l_instance.setItemQuantity(this.itemQuantity);
+        l_instance.setItem(this.item);
+        this.item.addInstance(l_instance);
+        this.item.setLoanedQuantity(this.item.getLoanedQuantity() - old_trans_quantity + this.itemQuantity);
+    }
 
     public void removeTransaction() {
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
@@ -78,6 +86,7 @@ public class Transaction implements Serializable{
             return true;
         }
         else {
+            int old_trans_quantity = this.itemQuantity;
             int new_item_quantity = this.itemQuantity - returnQuantity - maintenanceQty - defectedQty;
             double old_trans_price = this.transPrice;
             double new_trans_price = (old_trans_price  / this.itemQuantity) * new_item_quantity;
@@ -101,13 +110,10 @@ public class Transaction implements Serializable{
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
             
-            this.item.updateMaintenanceInstance(maintenanceQty);
-            this.item.updateDefectedInstance(defectedQty);
+            this.item.updateMaintenanceInstance(maintenanceQty, this.customer);
+            this.item.updateDefectedInstance(defectedQty, this.customer);
             this.item.updateAvailableInstance();
-            Instance instance = this.instance;
-            instance.setItemQuantity(this.itemQuantity);
-            instance.setItem(this.item);
-            this.item.addInstance(instance);
+            this.updateLoanedInstance(old_trans_quantity);
             
             return false;
         }
@@ -143,11 +149,7 @@ public class Transaction implements Serializable{
         Instance available_instance = old_item.findAvailableInstance();
         available_instance.setItemQuantity(this.item.getTotalQuantity());
         this.item.addInstance(available_instance);
-        
-        Instance instance = this.instance;
-        instance.setItemQuantity(this.itemQuantity);
-        instance.setItem(this.item);
-        this.item.addInstance(instance);
+        this.updateLoanedInstance(old_trans_quantity);
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;

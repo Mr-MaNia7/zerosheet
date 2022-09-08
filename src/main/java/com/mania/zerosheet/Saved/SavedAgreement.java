@@ -53,7 +53,7 @@ public class SavedAgreement implements Serializable {
   private double totalCollateralP;
   private double totalCollateralVATP;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = true)
+  @ManyToOne(fetch = FetchType.EAGER, optional = true)
   @JoinColumn(name = "customer_id", nullable = true)
   private Customer customer;
 

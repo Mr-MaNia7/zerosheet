@@ -91,7 +91,10 @@ public class Customer implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<SavedAgreement> savedAgreements = new ArrayList<SavedAgreement>();
 
-  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private List<Instance> instances = new ArrayList<Instance>();
+
+  @OneToOne(fetch = FetchType.EAGER, optional = true)
   @JoinColumn(name = "agreement_id", nullable = true)
   Agreement agreement;
 
@@ -114,7 +117,7 @@ public class Customer implements Serializable {
     available_instance.setItemQuantity(item.getTotalQuantity());
     item.addInstance(available_instance);
     
-    Instance new_instance = new Instance(transaction.getItemQuantity(), Status.ONLOAN, item);
+    Instance new_instance = new Instance(transaction.getItemQuantity(), Status.ONLOAN, item, transaction.getCustomer());
     transaction.setInstance(new_instance);
 
     return available_instance;

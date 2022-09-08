@@ -48,11 +48,11 @@ public class Performa implements Serializable {
 
     private double collateral;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "cust_id", nullable = true)
     Customer cust;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
     Item item;
 
