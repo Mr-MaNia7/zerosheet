@@ -34,6 +34,12 @@ public class SummaryController {
     private final TransactionRepository transactionRepository;
     private final InstanceRepository instanceRepository;
 
+    @GetMapping("/summary/byitem")
+    public String showSummaryByItem(Model model){
+        model.addAttribute("items", itemRepository.findAll());
+        return "Summary/summary-by-item";
+    }
+
     @GetMapping("/orders/summary")
     public String showSummaryPage(Model model, @Valid Customer customer) {
         model.addAttribute("customer", customer);
@@ -47,6 +53,7 @@ public class SummaryController {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
             performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         
@@ -85,7 +92,8 @@ public class SummaryController {
         for (Performa performa : customer.getPerformas()) {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
-                    performa.getItemQuantity(), 0));
+                performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         customer.copyPerforma2Transaction();
@@ -149,6 +157,7 @@ public class SummaryController {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
                 performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         customer.copyPerforma2Transaction();

@@ -63,7 +63,7 @@ public class Transaction implements Serializable{
     @JoinColumn(name = "instance_id", referencedColumnName = "instanceId")
     private Instance instance;
 
-    public void updateLoanedInstance(int old_trans_quantity){
+    public void addLoanedInstance(int old_trans_quantity){
         Instance l_instance = this.instance;
         l_instance.setItemQuantity(this.itemQuantity);
         l_instance.setItem(this.item);
@@ -110,10 +110,10 @@ public class Transaction implements Serializable{
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
             
-            this.item.updateMaintenanceInstance(maintenanceQty, this.customer);
-            this.item.updateDefectedInstance(defectedQty, this.customer);
+            this.item.addMaintenanceInstance(maintenanceQty, this.customer);
+            this.item.addDefectedInstance(defectedQty, this.customer);
             this.item.updateAvailableInstance();
-            this.updateLoanedInstance(old_trans_quantity);
+            this.addLoanedInstance(old_trans_quantity);
             
             return false;
         }
@@ -149,7 +149,7 @@ public class Transaction implements Serializable{
         Instance available_instance = old_item.findAvailableInstance();
         available_instance.setItemQuantity(this.item.getTotalQuantity());
         this.item.addInstance(available_instance);
-        this.updateLoanedInstance(old_trans_quantity);
+        this.addLoanedInstance(old_trans_quantity);
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;

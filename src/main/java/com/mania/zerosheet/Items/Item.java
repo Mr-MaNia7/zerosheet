@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+
+import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.ItemInstance.Instance;
 import com.mania.zerosheet.ItemInstance.Instance.Status;
 import com.mania.zerosheet.Performa.Performa;
@@ -44,6 +46,10 @@ public class Item implements Serializable{
 
     @PositiveOrZero(message = "Total Quantity can not be Negative")
     private int totalQuantity;
+
+    private int loanedQuantity;
+    private int maintenanceQuantity;
+    private int defectedQuantity;
 
     @Positive(message = "Area Coverage can not be Negative or Zero!")
     private double areaCoverage;
@@ -85,40 +91,17 @@ public class Item implements Serializable{
     public void updateAvailableInstance(){
         Instance av_instance = this.findAvailableInstance();
         av_instance.setItemQuantity(this.totalQuantity);
-        // this.updateInstance(0L, av_instance);
         this.addInstance(av_instance);
     }
-    public Instance findMaintenanceInstance(){
-        for (Instance instance : this.instances){
-            if (instance.getStatus() == Status.MAINTENANCE) {
-                return instance;
-            }
-        }
-        Instance defaultInstance = new Instance();
-        defaultInstance.setStatus(Status.MAINTENANCE);
-        defaultInstance.setItem(this);
-        return defaultInstance;
-    }
-    public void updateMaintenanceInstance(int maintenanceQty){
-        Instance m_instance = this.findMaintenanceInstance();
-        m_instance.setItemQuantity(maintenanceQty + m_instance.getItemQuantity());
+    public void addMaintenanceInstance(int maintenanceQty, Customer cust){
+        Instance m_instance = new Instance(maintenanceQty, Status.MAINTENANCE, this, cust);
         this.addInstance(m_instance);
+        this.maintenanceQuantity += maintenanceQty;
     }
-    public Instance findDefectedInstance(){
-        for (Instance instance : this.instances){
-            if (instance.getStatus() == Status.DEFECTED) {
-                return instance;
-            }
-        }
-        Instance defaultInstance = new Instance();
-        defaultInstance.setStatus(Status.DEFECTED);
-        defaultInstance.setItem(this);
-        return defaultInstance;
-    }
-    public void updateDefectedInstance(int defectedQty){
-        Instance d_instance = this.findDefectedInstance();
-        d_instance.setItemQuantity(defectedQty + d_instance.getItemQuantity());
+    public void addDefectedInstance(int defectedQty, Customer cust){
+        Instance d_instance = new Instance(defectedQty, Status.DEFECTED, this, cust);
         this.addInstance(d_instance);
+        this.defectedQuantity += defectedQty;
     }
 
     public int calculateItemQuantity(int old_item_quantity, int trans_item_quantity, int old_trans_quantity){
