@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
-
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Transaction.Transaction;
@@ -61,5 +60,6 @@ public class Instance {
         this.itemQuantity = itemQuantity;
         this.item = item;
         this.status = status;
+        this.customer = customer;
     }
 }

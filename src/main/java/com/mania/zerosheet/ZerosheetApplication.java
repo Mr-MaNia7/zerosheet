@@ -67,9 +67,6 @@ public class ZerosheetApplication {
 					item14, item15)));
 
 			itemrepo.saveAll(items);
-			for (Item item : items) {
-				instanceRepo.save(item.defaultInstance());
-			}
 			compRepo.save(new Company(
 					"ሒያ ጠቅላላ ስራ ተቋራጭ", "0911216060", "5", "ቦሌ", "141", "አዲስ አበባ", "ኢትዮጵያ"));
 

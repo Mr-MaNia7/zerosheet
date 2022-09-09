@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
-import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.Performa;
@@ -32,12 +31,17 @@ public class SummaryController {
     private final PerformaRepository performaRepository;
     private final SavedAgreementRepository savedAgreementRepo;
     private final TransactionRepository transactionRepository;
-    private final InstanceRepository instanceRepository;
 
     @GetMapping("/summary/byitem")
     public String showSummaryByItem(Model model){
         model.addAttribute("items", itemRepository.findAll());
         return "Summary/summary-by-item";
+    }
+
+    @GetMapping("/summary/bycustomer")
+    public String showSummaryByCustomer(Model model){
+        model.addAttribute("customers", customerRepository.findAll());
+        return "Summary/summary-by-customer";
     }
 
     @GetMapping("/orders/summary")
@@ -57,7 +61,7 @@ public class SummaryController {
             this.itemRepository.save(new_item);
         }
         
-        instanceRepository.saveAll(customer.copyPerforma2Transaction());
+        customer.copyPerforma2Transaction();
         List<Performa> performas = new ArrayList<Performa>(customer.getPerformas());
         customer.removePerformas(customer.getPerformas());
 

@@ -116,7 +116,6 @@ public class CustomerController {
       Item item = transaction.getItem();
       int oldQty = item.getTotalQuantity();
       item.setTotalQuantity(oldQty +  transaction.getItemQuantity());
-      item.updateAvailableInstance();
       
       Instance instance = transaction.getInstance();
       transaction.setInstance(null);

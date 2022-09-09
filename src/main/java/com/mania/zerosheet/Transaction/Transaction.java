@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.ItemInstance.Instance;
+import com.mania.zerosheet.ItemInstance.Instance.Status;
 import com.mania.zerosheet.Items.Item;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
@@ -78,7 +79,6 @@ public class Transaction implements Serializable{
         this.customer.setDebtBalance(newDebt);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
-        this.item.updateAvailableInstance();
     }
     public boolean partialReturn(int returnQuantity, int maintenanceQty, int defectedQty) {
         if (returnQuantity == this.itemQuantity) {
@@ -110,9 +110,10 @@ public class Transaction implements Serializable{
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
             
-            this.item.addMaintenanceInstance(maintenanceQty, this.customer);
-            this.item.addDefectedInstance(defectedQty, this.customer);
-            this.item.updateAvailableInstance();
+            this.item.updateMaintenanceQuantity(maintenanceQty, this.customer); //?
+            this.item.updateDefectedQuantity(defectedQty, this.customer); //?
+            this.customer.updateInstance(Status.MAINTENANCE, maintenanceQty, this.item);
+            this.customer.updateInstance(Status.DEFECTED, defectedQty, this.item);
             this.addLoanedInstance(old_trans_quantity);
             
             return false;
@@ -146,9 +147,6 @@ public class Transaction implements Serializable{
         double old_collateral_price = this.collateral;
         this.setCollateral();
 
-        Instance available_instance = old_item.findAvailableInstance();
-        available_instance.setItemQuantity(this.item.getTotalQuantity());
-        this.item.addInstance(available_instance);
         this.addLoanedInstance(old_trans_quantity);
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);

@@ -13,10 +13,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.ItemInstance.Instance;
-import com.mania.zerosheet.ItemInstance.Instance.Status;
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Transaction.Transaction;
 import lombok.AllArgsConstructor;
@@ -72,35 +70,10 @@ public class Item implements Serializable{
     public void removeInstance(Instance instance){
         this.instances.remove(instance);
     }
-    public Instance defaultInstance(){
-        Instance av_instance = this.findAvailableInstance();
-        av_instance.setItemQuantity(this.totalQuantity);
-        return av_instance;
-    }
-    public Instance findAvailableInstance(){
-        for (Instance instance : this.instances){
-            if (instance.getStatus() == Status.AVAILABLE) {
-                return instance;
-            }
-        }
-        Instance defaultInstance = new Instance();
-        defaultInstance.setStatus(Status.AVAILABLE);
-        defaultInstance.setItem(this);
-        return defaultInstance;
-    }
-    public void updateAvailableInstance(){
-        Instance av_instance = this.findAvailableInstance();
-        av_instance.setItemQuantity(this.totalQuantity);
-        this.addInstance(av_instance);
-    }
-    public void addMaintenanceInstance(int maintenanceQty, Customer cust){
-        Instance m_instance = new Instance(maintenanceQty, Status.MAINTENANCE, this, cust);
-        this.addInstance(m_instance);
+    public void updateMaintenanceQuantity(int maintenanceQty, Customer cust){
         this.maintenanceQuantity += maintenanceQty;
     }
-    public void addDefectedInstance(int defectedQty, Customer cust){
-        Instance d_instance = new Instance(defectedQty, Status.DEFECTED, this, cust);
-        this.addInstance(d_instance);
+    public void updateDefectedQuantity(int defectedQty, Customer cust){
         this.defectedQuantity += defectedQty;
     }
 
