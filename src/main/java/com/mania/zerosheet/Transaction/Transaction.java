@@ -110,10 +110,14 @@ public class Transaction implements Serializable{
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
             
-            this.item.updateMaintenanceQuantity(maintenanceQty, this.customer); //?
-            this.item.updateDefectedQuantity(defectedQty, this.customer); //?
-            this.customer.updateInstance(Status.MAINTENANCE, maintenanceQty, this.item);
-            this.customer.updateInstance(Status.DEFECTED, defectedQty, this.item);
+            this.item.updateMaintenanceQuantity(maintenanceQty, this.customer);
+            this.item.updateDefectedQuantity(defectedQty, this.customer);
+            if (maintenanceQty != 0){
+                this.customer.updateInstance(Status.MAINTENANCE, maintenanceQty, this.item);
+            }
+            if (defectedQty != 0){
+                this.customer.updateInstance(Status.DEFECTED, defectedQty, this.item);
+            }
             this.addLoanedInstance(old_trans_quantity);
             
             return false;
