@@ -21,6 +21,12 @@
 
 <body>
   <div th:fragment="form">
+    <div th:if="${isDuplicate == true}">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        The information you entered already exists either as a <strong>completed transaction</strong> or an <strong>incompleted performa!</strong> Try adding a different one.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
     <div class="mb-3">
       <label class="form-label" for="itemP">Choose an Item <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>

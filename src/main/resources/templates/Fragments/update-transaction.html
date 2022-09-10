@@ -5,7 +5,7 @@
 
 <body>
   <div th:fragment="form">
-    <div th:if="${isDuplicate == true}">
+    <div th:if="${isEdited == false}">
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
         The <strong>information</strong> you entered is not <strong>edited at all!</strong> Please change some information to continue.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
