@@ -18,28 +18,28 @@
           <h2 class="mt-2 mb-3" style="text-align: center;">Summary Catagorised Based On Items</h2>
 
           <div th:each="item : ${items}">
-            <div th:text="${item.itemName}"></div>
+            <div class="p-3 bg-light bg-opacity-10 rounded-end"><strong th:text="${item.itemName}"></strong></div>            
             <div class="row">
-              <div class="card col-md-3 col-6">
-                <div class="card-body">
+              <div class="card col-md-3 col-6 border-success">
+                <div class="card-body text-success">
                   <h5 class="card-title"><span th:text="${item.totalQuantity}"></span></h5>
                   <p class="card-text">AVAILABLE</p>
                 </div>
               </div>
-              <div class="card col-md-3 col-6">
-                <div class="card-body">
+              <div class="card col-md-3 col-6 border-primary">
+                <div class="card-body text-primary">
                   <h5 class="card-title"><span th:text='${item.loanedQuantity}'></span></h5>
                   <p class="card-text">LOANED</p>
                 </div>
               </div>
-              <div class="card col-md-3 col-6">
-                <div class="card-body">
+              <div class="card col-md-3 col-6 border-warning">
+                <div class="card-body text-warning">
                   <h5 class="card-title"><span th:text="${item.maintenanceQuantity}"></span></h5>
                   <p class="card-text">MAINTENANCE</p>
                 </div>
               </div>
-              <div class="card col-md-3 col-6">
-                <div class="card-body">
+              <div class="card col-md-3 col-6 border-danger">
+                <div class="card-body text-danger">
                   <h5 class="card-title"><span th:text="${item.defectedQuantity}"></span></h5>
                   <p class="card-text">DEFECTED</p>
                 </div>

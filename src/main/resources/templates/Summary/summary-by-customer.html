@@ -16,15 +16,45 @@
         </div>
         <div th:unless="${#lists.isEmpty(customers)}">
           <h2 class="mt-2 mb-3" style="text-align: center;">Summary Catagorised By Customers</h2>
-          <div th:each="customer : ${customers}">
-            <div th:text="${customer.name}"></div>
-            <div class="row">
-              <div class="col-md-3 col-6" th:each="instance : ${customer.instances}">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
-                    <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
-                    <div th:text="${instance.itemQuantity}"></div>
+          <div th:each="customer : ${customers}" class="accordion" id="customerSummary">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#instances"
+                  aria-expanded="true" aria-controls="instances" th:text="${customer.name}"></button>
+              </h2>
+              <div id="instances" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                data-bs-parent="#customerSummary">
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-3 col-6" th:each="instance : ${customer.instances}">
+                      <div th:if="${instance.Status == instance.Status.ONLOAN}">
+                        <div class="card border-primary">
+                          <div class="card-body text-primary">
+                            <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
+                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <div th:text="${instance.itemQuantity}"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div th:if="${instance.Status == instance.Status.MAINTENANCE}">
+                        <div class="card border-warning">
+                          <div class="card-body text-warning">
+                            <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
+                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <div th:text="${instance.itemQuantity}"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div th:if="${instance.Status == instance.Status.DEFECTED}">
+                        <div class="card border-danger">
+                          <div class="card-body text-danger">
+                            <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
+                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <div th:text="${instance.itemQuantity}"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -32,7 +62,6 @@
           </div>
         </div>
       </div>
-    </div>
   </main>
   <div th:replace="general.html :: footer"></div>
 </body>
