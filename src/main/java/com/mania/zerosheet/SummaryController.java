@@ -71,7 +71,7 @@ public class SummaryController {
         status.setComplete();
         return "redirect:/customers";
     }
-    @PostMapping("/orders/saveperforma")
+    @GetMapping("/orders/saveperforma")
     public String savePerforma(Model model, SessionStatus status, @Valid Customer customer) {
         this.customerRepository.save(customer);
         status.setComplete();

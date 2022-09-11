@@ -1,37 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <div th:fragment="head">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <script src="https://kit.fontawesome.com/d660833754.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-      integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
-      integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
-      crossorigin="anonymous"></script>
-  </div>
-</head>
-
 <body>
   <div th:fragment="form">
     <div th:if="${isDuplicate == true}">
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        The information you entered already exists either as a <strong>completed transaction</strong> or an <strong>incompleted performa!</strong> Try adding a different one.
+        The information you entered already exists either as a <strong>completed transaction</strong> or an
+        <strong>incompleted performa!</strong> Try adding a different one.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
     <div class="mb-3">
       <label class="form-label" for="itemP">Choose an Item <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
-      <select id="itemSel" th:field="*{item}" class="form-select" aria-label="Select an item"
-        th:errorclass="is-invalid" onchange="changeHandler()">
+      <select id="itemSel" th:field="*{item}" class="form-select" aria-label="Select an item" th:errorclass="is-invalid"
+        onchange="changeHandler()">
         <div th:each="item : ${items}">
           <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}"
             th:data-bs-totalquantity="${item.totalQuantity}"
@@ -44,8 +27,7 @@
       <div class="mb-3">
         <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs"
             style="color:crimson;"></i></label>
-        <input type="text" class="form-control" id="itemPrice" name="itemPrice" th:errorclass="is-invalid"
-          value="12">
+        <input type="text" class="form-control" id="itemPrice" name="itemPrice" th:errorclass="is-invalid" value="12">
         <span class="invalid-feedback" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></span>
       </div>
       <div class="mb-3">
@@ -53,8 +35,7 @@
             style="color:crimson;"></i></label>
         <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity"
           th:errorclass="is-invalid" value="10">
-        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}"
-          th:errors="*{itemQuantity}"></span>
+        <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
       </div>
       <div class="mb-3">
         <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs"
@@ -65,10 +46,8 @@
       <div class="mb-3">
         <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs"
             style="color:crimson;"></i></label>
-        <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate"
-          th:errorclass="is-invalid">
-        <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}"
-          th:errors="*{dueBackDate}"></span>
+        <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid">
+        <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
       </div>
     </div>
     <div class="row justify-content-evenly">
@@ -76,12 +55,12 @@
         data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard changes">
         Cancel
       </a>
-      <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
-        data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Reset to defaults">
+      <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip" title="Reset to defaults">
         Reset
       </button>
-      <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
-        data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Add and continue">
+      <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+        data-bs-custom-class="custom-tooltip" title="Add and continue">
         Submit
       </button>
     </div>

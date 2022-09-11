@@ -1,35 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
 <body>
   <div th:fragment="form">
     <div th:if="${isDuplicate == true}">
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        The <strong>customer information</strong> you entered already exists! or some information is duplicated! Try adding a different one.
+        The <strong>customer information</strong> you entered already exists! or some information is duplicated! Try
+        adding a different one.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
     <div class="mb-3">
       <label for="name" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
-      <input type="text" class="form-control" name="name" id="name" th:errorclass="is-invalid"
-        placeholder="Advent">
+      <input type="text" class="form-control" name="name" id="name" th:errorclass="is-invalid" placeholder="Advent">
       <span class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
     </div>
     <div class="mb-3">
       <label for="middleName" class="form-label">Middle name <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
-      <input type="text" class="form-control" name="middleName" id="middleName"
-        th:errorclass="is-invalid" placeholder="Corporation">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}"
-        th:errors="*{middleName}"></span>
+      <input type="text" class="form-control" name="middleName" id="middleName" th:errorclass="is-invalid"
+        placeholder="Corporation">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></span>
     </div>
     <div class="mb-3">
       <label for="lastName" class="form-label">Last name <i class="fa-solid fa-asterisk fa-xs"
@@ -49,17 +41,15 @@
         style="color:crimson;"></i></label>
     <div class="input-group mb-3">
       <span class="input-group-text" id="basic-addon3">+251</span>
-      <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"
-        th:errorclass="is-invalid" placeholder="953-0458-59">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}"
-        th:errors="*{phoneNumber}"></span>
+      <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" th:errorclass="is-invalid"
+        placeholder="953-0458-59">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
     </div>
     <div class="mb-3">
       <label for="houseNumber" class="form-label">House number</label>
-      <input type="text" class="form-control" name="houseNumber" id="houseNumber"
-        th:errorclass="is-invalid" placeholder="333">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('houseNumber')}"
-        th:errors="*{houseNumber}"></span>
+      <input type="text" class="form-control" name="houseNumber" id="houseNumber" th:errorclass="is-invalid"
+        placeholder="333">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></span>
     </div>
     <div class="mb-3">
       <label for="city" class="form-label">City or Town <i class="fa-solid fa-asterisk fa-xs"
@@ -70,8 +60,8 @@
     </div>
     <div class="mb-3">
       <label for="woreda" class="form-label">Woreda</label>
-      <input type="text" class="form-control" name="woreda" id="woreda" th:errorclass="is-invalid"
-        placeholder="05" value="0">
+      <input type="text" class="form-control" name="woreda" id="woreda" th:errorclass="is-invalid" placeholder="05"
+        value="0">
       <span class="invalid-feedback" th:if="${#fields.hasErrors('woreda')}" th:errors="*{woreda}"></span>
     </div>
     <div class="mb-3">
