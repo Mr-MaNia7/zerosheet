@@ -33,10 +33,10 @@
           th:action="@{/orders/editedsummary/{id}/{transId}(id = ${customer.id}, transId = ${transaction.transId})}"
           th:object="${customer}" method="get">
           <div class="row justify-content-evenly">
-            <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+            <!-- <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
               data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard changes">
               Cancel
-            </a>
+            </a> -->
             <a th:href="@{/orders/editedsummary/{id}/{transId}(id = ${customer.id}, transId = ${transaction.transId})}"
               class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip" data-bs-placement="top"
               data-bs-custom-class="custom-tooltip" title="Accept and Continue">
