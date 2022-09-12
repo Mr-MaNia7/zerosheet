@@ -99,6 +99,7 @@ public class TransactionController {
     @Valid Transaction new_trans, BindingResult result, Model model){
         if (result.hasErrors()) {
             new_trans.setTransId(transId);
+            model.addAttribute("items", itemRepository.findAll());
             return "Transactions/update-transaction";
         }
         Item new_item =
@@ -152,6 +153,7 @@ public class TransactionController {
     public String addCustomerTransaction(@PathVariable("id") long id,
     @Valid Performa performa, BindingResult result, Model model){
         if (result.hasErrors()) {
+            model.addAttribute("items", itemRepository.findAll());
             return "Forms/customer-transaction";
         }
         Customer customer =

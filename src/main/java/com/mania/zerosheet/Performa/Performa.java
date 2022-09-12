@@ -40,6 +40,7 @@ public class Performa implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
 
+    @Min(value = 1, message = "Item Price should be atleast 1")
     private double itemPrice;
 
     private double transPrice;

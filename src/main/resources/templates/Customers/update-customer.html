@@ -20,70 +20,7 @@
       <div class="row align-self-center justify-content-center">
         <div class="col-md-6 col-10">
           <form action="#" th:action="@{/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
-            <div class="mb-3">
-              <label for="name" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
-              <input type="text" class="form-control" th:field="*{name}" id="name" th:errorclass="is-invalid"
-                placeholder="Advent">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="middleName" class="form-label">Middle name <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
-              <input type="text" class="form-control" th:field="*{middleName}" id="middleName"
-                th:errorclass="is-invalid" placeholder="Corporation">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}"
-                th:errors="*{middleName}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last name <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
-              <input type="text" class="form-control" th:field="*{lastName}" id="lastName" th:errorclass="is-invalid"
-                placeholder="PLC">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
-              <input type="text" class="form-control" th:field="*{email}" id="email" th:errorclass="is-invalid"
-                placeholder="name@example.com">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-            </div>
-            <label for="phoneNumber" class="form-label">Phone number <i class="fa-solid fa-asterisk fa-xs"
-                style="color:crimson;"></i></label>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon3">+251</span>
-              <input type="text" class="form-control" th:field="*{phoneNumber}" id="phoneNumber"
-                th:errorclass="is-invalid" placeholder="953-0458-59">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('phoneNumber')}"
-                th:errors="*{phoneNumber}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="houseNumber" class="form-label">House number</label>
-              <input type="text" class="form-control" th:field="*{houseNumber}" id="houseNumber"
-                th:errorclass="is-invalid" placeholder="333">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('houseNumber')}"
-                th:errors="*{houseNumber}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="city" class="form-label">City or Town <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
-              <input type="text" class="form-control" th:field="*{city}" id="city" th:errorclass="is-invalid"
-                placeholder="Addis Ababa">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="woreda" class="form-label">Woreda</label>
-              <input type="text" class="form-control" th:field="*{woreda}" id="woreda" th:errorclass="is-invalid"
-                placeholder="05">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('woreda')}" th:errors="*{woreda}"></span>
-            </div>
-            <div class="mb-3">
-              <label for="subcity" class="form-label">Sub-City</label>
-              <input type="text" class="form-control" th:field="*{subcity}" id="subcity" th:errorclass="is-invalid"
-                placeholder="Arada">
-              <span class="invalid-feedback" th:if="${#fields.hasErrors('subcity')}" th:errors="*{subcity}"></span>
-            </div>
+            <div th:replace="Fragments/edit-customer.html :: form"></div>
             <div class="row justify-content-evenly">
               <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
                 data-bs-placement="top" data-bs-custom-class="custom-tooltip"
