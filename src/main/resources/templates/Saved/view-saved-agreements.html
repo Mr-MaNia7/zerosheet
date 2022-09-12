@@ -3,50 +3,55 @@
 
 <head>
   <div th:replace="general.html :: head"></div>
-  <title>Agreements List · ZeroSheet</title>
+  <title>List of Agreements · ZeroSheet </title>
 </head>
 
 <body>
   <header th:replace="general.html :: header"></header>
-
-  <main class="mx-2">
+  <main>
     <div class="container">
-      <div th:if="${#lists.isEmpty(agreements)}">
-        <h2 class="mt-2 mb-3" style="text-align: center;">No agreements available at the moment!</h2>
+      <div th:if="${#lists.isEmpty(customers)}">
+        <h2 class="mt-2 mb-3" style="text-align: center;">No customers available at the moment!</h2>
       </div>
-      <div th:unless="${#lists.isEmpty(agreements)}">
+      <div th:unless="${#lists.isEmpty(customers)}">
         <h2 class="mt-2 mb-3" style="text-align: center;">List of Agreements</h2>
-        <ul class="list-group">
-          <li class="list-group-item" th:each="agreement, status : ${agreements}">
-            <div>Agreement Time Stamp: <span th:text='${agreement.agreementDate}' style="font-weight: bold;"></span>
-            </div>
-            <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
-              <ul class="list-group">
-                <div>Items: </div>
-                <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
-                  <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
-                </div>
-              </ul>
-            </div>
-            <div>TotalPrice: <span
-                th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                style="font-weight: bold;"></span></div>
-            <div>Total Collateral = <span
-                th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                style="font-weight: bold;"></span></div>
-            <div class="my-3">
-              <a class="btn btn-primary btn-sm" th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}"
-                role="button">
-                <i class="fa-solid fa-eye"></i><span> View Agreement</span>
-              </a>
-            </div>
-          </li>
-        </ul>
+        <div th:each="customer : ${customers}">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <h6 th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></h6>
+            </li>
+            <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
+              <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}' style="font-weight: bold;"></span>
+              </div>
+              <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                <ul class="list-group">
+                  <div>Items: </div>
+                  <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                    <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                  </div>
+                </ul>
+              </div>
+              <div>TotalPrice: <span
+                  th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                  style="font-weight: bold;"></span></div>
+              <div>Total Collateral = <span
+                  th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                  style="font-weight: bold;"></span></div>
+              <div class="my-3">
+                <a class="btn btn-primary btn-sm" th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}"
+                  role="button">
+                  <i class="fa-solid fa-eye"></i><span> View Agreement</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+    </div>
   </main>
-
-  <footer th:replace="general.html :: footer"></footer>
+  <header th:replace="general.html :: footer"></header>
+  <script th:src="@{/js/convert-date.js}"></script>
 
 </body>
 

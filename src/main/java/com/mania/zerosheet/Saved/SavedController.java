@@ -4,9 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import com.mania.zerosheet.Company.CompanyRepository;
-
+import com.mania.zerosheet.Customers.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class SavedController {
     private final SavedAgreementRepository savedAgreementRepo;
     private final CompanyRepository companyRepository;
+    private final CustomerRepository customerRepository;
 
     @GetMapping("/agreements/{agtId}")
     public String showSavedAgreement(@PathVariable("agtId") long agtId, Model model){
@@ -28,7 +28,7 @@ public class SavedController {
     }
     @GetMapping("/agreements/saved")
     public String showSavedAgreements(Model model) {
-        model.addAttribute("agreements", savedAgreementRepo.findAll());
+        model.addAttribute("customers", customerRepository.findAll());
         return "Saved/view-saved-agreements";
     }
 }

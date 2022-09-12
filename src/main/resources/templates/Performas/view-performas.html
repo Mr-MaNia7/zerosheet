@@ -40,8 +40,8 @@
                   <td
                     th:text="${transaction.cust.name + ' ' + transaction.cust.middleName + ' ' + transaction.cust.lastName}">
                   </td>
-                  <td th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
-                  <td th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
+                  <td class="date" th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
+                  <td class="date" th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
                   <td>
                     <a class="me-3" th:href="@{transactions/performas/remove/{transId}(transId=${performa.transId})}">
                       <i class="fa-solid fa-pen"></i></a>
@@ -114,6 +114,7 @@
       deleteCustName.textContent = `${custName}`
     })
   </script>
+  <script th:src="@{/js/convert-date.js}"></script>
 
 </body>
 

@@ -242,7 +242,7 @@
                           <div th:unless="${#lists.isEmpty(customer.savedAgreements)}">
                             <ul class="list-group">
                               <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
-                                <div>Agreement Time Stamp: <span th:text='${agreement.agreementDate}'
+                                <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
                                     style="font-weight: bold;"></span></div>
                                 <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
                                   <ul class="list-group">
@@ -380,6 +380,8 @@
       deleteCustName.textContent = `${custName}`
     })
   </script>
+  <script th:src="@{/js/convert-date.js}"></script>
+
 </body>
 
 </html>
