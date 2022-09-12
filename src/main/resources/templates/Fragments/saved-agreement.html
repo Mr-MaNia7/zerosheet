@@ -6,15 +6,17 @@
     <div class="my-5" style="border:solid grey ;">
       <div class="container">
         <div>
-          <div id="date" class="row justify-content-end">
-            <p class="col-6 col-md-3" th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም
+          <div class="row justify-content-end">
+            <p class="col-6 col-md-3"><span class="date" th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም</span>
             </p>
           </div>
 
           <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
             <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4) + '/14'}">0055/12</span></p>
-          </div>
+                th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                class="year">/15</span>
+            </p>
+        </div>
         </div>
 
         <h3 class="mt-3 mb-3" style="text-align: center;"><u>የእስካፎልዲንግ ኪራይ ውል ስምምነት</u></h3>
@@ -280,7 +282,8 @@
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
               <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4) + '/14'}">0055/12</span></p>
+                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                  class="year">/15</span></p>
             </div>
           </div>
 

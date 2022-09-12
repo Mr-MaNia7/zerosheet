@@ -24,6 +24,26 @@
       </div>
       <div class="dontprint">
         <h2 class="mt-2 mb-3" style="text-align: center;">Updated Agreement Page</h2>
+        <form class="mt-5" action="#"
+          th:action="@{/orders/editedsummary/{id}/{transId}(id = ${customer.id}, transId = ${transaction.transId})}"
+          th:object="${customer}" method="get">
+          <div class="row justify-content-evenly">
+            <!-- <a href="/cancel" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+              data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard changes">
+              Cancel
+            </a> -->
+            <a th:href="@{/orders/editedsummary/{id}/{transId}(id = ${customer.id}, transId = ${transaction.transId})}"
+              class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-custom-class="custom-tooltip" title="Accept and Continue">
+              Continue
+            </a>
+            <button class="col-2 col-sm-3 btn btn-primary" onclick="window.print(); return false;"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+              title="Print this agreement and continue">
+              <i class="fa-solid fa-print"></i> Print
+            </button>
+          </div>
+        </form>
       </div>
 
       <div th:replace="Fragments/agreement.html :: main"></div>
@@ -43,7 +63,7 @@
               Continue
             </a>
             <button class="col-2 col-sm-3 btn btn-primary" onclick="window.print(); return false;"
-              data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
               title="Print this agreement and continue">
               <i class="fa-solid fa-print"></i> Print
             </button>
