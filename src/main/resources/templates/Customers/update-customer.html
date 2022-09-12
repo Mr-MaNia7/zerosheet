@@ -14,11 +14,11 @@
 <body>
   <header th:replace="general.html :: header"></header>
 
-  <main class="mx-2">
-    <div>
+  <main>
+    <div class="container">
       <h2 class="mt-2 mb-3" style="text-align: center;">Edit Customer Information</h2>
-      <div>
-        <div class="container">
+      <div class="row align-self-center justify-content-center">
+        <div class="col-md-6 col-10">
           <form action="#" th:action="@{/update/{id}(id=${customer.id})}" th:object="${customer}" method="post">
             <div class="mb-3">
               <label for="name" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs"

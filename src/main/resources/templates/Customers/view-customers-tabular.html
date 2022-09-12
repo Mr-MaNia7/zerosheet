@@ -8,7 +8,7 @@
 
 <body>
   <header th:replace="general.html :: header"></header>
-  <main class="mx-2">
+  <main>
     <div class="container">
       <div>
         <div th:if="${#lists.isEmpty(customers)}">
@@ -27,6 +27,7 @@
                   <th>HouseNumber</th>
                   <th>City</th>
                   <th>Transactions</th>
+                  <th>Performas</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -53,12 +54,25 @@
                       </ul>
                     </div>
                   </td>
-
                   <td>
-                    <a th:href="@{customers/editcustomer/{id}(id=${customer.id})}">EDIT</a>
+                    <div th:if="${#lists.isEmpty(customer.performas)}">
+                      <p>No Performas for this customer</p>
+                    </div>
+                    <div th:unless="${#lists.isEmpty(customer.transactions)}">
+                      <ul th:each="performa : ${customer.performas}">
+                        <li th:text="${performa.item.itemName}"></li>
+                      </ul>
+                    </div>
                   </td>
                   <td>
-                    <a th:href="@{customers/deletecustomer/{id}(id=${customer.id})}">DELETE</a>
+                    <a th:href="@{customers/editcustomer/{id}(id=${customer.id})}">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                  </td>
+                  <td>
+                    <a th:href="@{customers/deletecustomer/{id}(id=${customer.id})}">
+                      <i class="fa-solid fa-trash" style="color:rgb(223, 77, 52) ;"></i>
+                    </a>
                   </td>
                 </tr>
               </tbody>

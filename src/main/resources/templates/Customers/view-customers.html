@@ -99,7 +99,7 @@
                                     <div>Item Quantity: <span th:text='${transaction.itemQuantity}'
                                         style="font-weight: bold;"></span></div>
                                     <div class="row g-4">
-                                      <div class="col-md col-6">
+                                      <div class="col-md">
                                         <div class="form-floating">
                                           <input class="form-control border-success" id="returnQuantity"
                                             name="returnQuantity" type="number" min="1"
@@ -107,7 +107,7 @@
                                           <label for="returnQuantity" class="text-success">AVAILABLE</label>
                                         </div>
                                       </div>
-                                      <div class="col-md col-6">
+                                      <div class="col-md">
                                         <div class="form-floating">
                                           <input class="form-control border-warning" id="maintenanceQty"
                                             name="maintenanceQty" type="number" min="0"
@@ -115,26 +115,19 @@
                                           <label for="maintenanceQty" class="text-warning">MAINTENANCE</label>
                                         </div>
                                       </div>
-                                      <div class="col-md col-6">
+                                      <div class="col-md">
                                         <div class="form-floating">
                                           <input class="form-control border-danger" id="defectedQty" name="defectedQty"
                                             type="number" min="0" th:max="${transaction.itemQuantity}" value="0">
                                           <label for="defectedQty" class="text-danger">DEFECTED</label>
                                         </div>
                                       </div>
-                                      <div class="col-md col-6">
-                                        <div class="container">
-                                          <button class="btn btn-danger btn-sm ms-3" type="submit"><i
-                                              class="fa-solid fa-right-to-bracket"></i><span> Return</span></button>
-                                        </div>
+                                      <div class="col-md align-self-center">
+                                        <button class="btn btn-danger btn-sm" type="submit">
+                                          <i class="fa-solid fa-right-to-bracket"></i><span> Return</span>
+                                        </button>
                                       </div>
                                     </div>
-                                    <!-- <div class="input-group">
-                                        <label for="returnQuantity" class="col-4 align-self-center form-label" style="padding-bottom: 0em; margin-bottom: 0em;">Item Quantity: <span th:text='${transaction.itemQuantity}' style="font-weight: bold;"></span></label>
-                                          <input class="col-2 form-control form-control-sm me-1" id="returnQuantity" name="returnQuantity" type="number" min="1" th:max="${transaction.itemQuantity}" value="1">
-                                          <input class="col-2 form-control form-control-sm me-1" id="maintenanceQty" name="maintenanceQty" type="number" min="0" th:max="${transaction.itemQuantity}" value="0">
-                                          <input class="col-2 form-control form-control-sm" id="defectedQty" name="defectedQty" type="number" min="0" th:max="${transaction.itemQuantity}" value="0">
-                                      </div> -->
                                   </form>
                                 </div>
                                 <div>Each Transaction Price: <span
@@ -345,7 +338,9 @@
         <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
           <i class="fas fa-plus fa-lg"></i> Add New Customer
         </a>
+        <a class="col-6 col-md-3" href="/customerstabular">Go To Tabular View</a>
       </div>
+
     </div>
   </main>
 
