@@ -216,22 +216,37 @@ Array.from(document.querySelectorAll('.datewclock')).forEach(function (dateEl) {
 
 function defaultDate() {
   var dueDate = document.getElementById("dueDate")
-  var dateArray = dueDate.getAttribute("value").split("-")
-  var dateNumArray = dateArray.map(str => { return Number(str) })
-  var etDate = toEC([dateNumArray[2], dateNumArray[1], dateNumArray[0]])
+  var dueDateArray = dueDate.getAttribute("value").split("-")
+  var dueDateNumArray = dueDateArray.map(str => { return Number(str) })
+  var dueDateET = toEC([dueDateNumArray[2], dueDateNumArray[1], dueDateNumArray[0]])
   var dueDateEC = document.getElementById("dueDateEC")
-  dueDateEC.textContent = `= ${formatDate(etDate)}`
+  dueDateEC.textContent = `= ${formatDate(dueDateET)}`
+
+  var dueBackDate = document.getElementById("dueBackDate")
+  var dueBackDateArray = dueBackDate.getAttribute("value").split("-")
+  var dueBackDateNumArray = dueBackDateArray.map(str => { return Number(str) })
+  var dueBackDateET = toEC([dueBackDateNumArray[2], dueBackDateNumArray[1], dueBackDateNumArray[0]])
+  var dueBackDateEC = document.getElementById("dueBackDateEC")
+  dueBackDateEC.textContent = `= ${formatDate(dueBackDateET)}`
 }
 
-function changeDate() {
-  var dueDate = document.querySelector("#dueDate")
-  var dateArray = dueDate.getAttribute("value").split("-")
-  alert(dateArray)
+var due_date = document.getElementById("dueDate")
+due_date.addEventListener('change', function(){
+  var dateArray = this.value.split("-")
   var dateNumArray = dateArray.map(str => { return Number(str) })
   var etDate = toEC([dateNumArray[2], dateNumArray[1], dateNumArray[0]])
   var dueDateEC = document.getElementById("dueDateEC")
   dueDateEC.textContent = `= ${formatDate(etDate)}`
-}
+})
+
+var due_back_date = document.getElementById("dueBackDate")
+due_back_date.addEventListener('change', function(){
+  var dateArray = this.value.split("-")
+  var dateNumArray = dateArray.map(str => { return Number(str) })
+  var etDate = toEC([dateNumArray[2], dateNumArray[1], dateNumArray[0]])
+  var dueDateEC = document.getElementById("dueBackDateEC")
+  dueDateEC.textContent = `= ${formatDate(etDate)}`
+})
 
 function defaultValue() {
   var selectedElement = document.getElementById('itemSel')

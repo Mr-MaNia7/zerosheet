@@ -42,6 +42,7 @@ public class TransactionController {
 
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Performa performa, Model model) {
+        model.addAttribute("performa", performa);
         model.addAttribute("items", itemRepository.findAll());
         return "Forms/item-transaction";
     }
