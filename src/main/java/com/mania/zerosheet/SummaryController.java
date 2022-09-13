@@ -41,6 +41,7 @@ public class SummaryController {
     @GetMapping("/summary/bycustomer")
     public String showSummaryByCustomer(Model model){
         model.addAttribute("customers", customerRepository.findAll());
+        model.addAttribute("items", itemRepository.findAll());
         return "Summary/summary-by-customer";
     }
 

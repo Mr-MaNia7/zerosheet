@@ -20,7 +20,8 @@
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#instances"
-                  aria-expanded="true" aria-controls="instances" th:text="${customer.name}"></button>
+                  aria-expanded="true" aria-controls="instances" th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                </button>
               </h2>
               <div id="instances" class="accordion-collapse collapse" aria-labelledby="headingOne"
                 data-bs-parent="#customerSummary">

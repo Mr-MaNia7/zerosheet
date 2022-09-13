@@ -67,7 +67,7 @@ public class CustomerController {
       return "Customers/add-customer";
     }
     isDuplicate = false;
-    customer.setFullName(customer.getName() + customer.getMiddleName() + customer.getLastName());
+    customer.setFullName(customer.getName().strip() + customer.getMiddleName().strip() + customer.getLastName().strip());
     for (Customer cust : customerRepository.findAll()){
       if (
         customer.getFullName().equals(cust.getFullName()) || 
