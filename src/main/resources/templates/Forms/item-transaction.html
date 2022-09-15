@@ -41,7 +41,7 @@
         </div>
 
         <div th:unless="${#lists.isEmpty(items)}" class="col-8 col-md-6">
-          <form action="#" th:action="@{/addtransaction}" th:object="${performa}" method="post">
+          <form action="#" th:action="@{/addtransaction}" th:object="${performa}" method="post" onreset="defaultValue()">
             <div th:replace="Fragments/add-transaction.html :: form"></div>
           </form>
         </div>
