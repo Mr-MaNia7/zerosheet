@@ -241,31 +241,37 @@
                           </div>
                           <div th:unless="${#lists.isEmpty(customer.savedAgreements)}">
                             <ul class="list-group">
-                              <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
-                                <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
-                                    style="font-weight: bold;"></span></div>
-                                <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
-                                  <ul class="list-group">
-                                    <div>Item Names: </div>
-                                    <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
-                                      <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
-                                    </div>
-                                  </ul>
-                                </div>
-                                <div>TotalPrice: <span
-                                    th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                                    style="font-weight: bold;"></span></div>
-                                <div>Total Collateral = <span
-                                    th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                                    style="font-weight: bold;"></span></div>
-                                <div class="my-3">
-                                  <a class="btn btn-primary btn-sm"
-                                    th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
-                                    <i class="fa-solid fa-eye"></i><span> View Agreement</span>
-                                  </a>
+                              <li class="list-group-item">
+                                <div th:if="${status.index <= 1}" th:each="agreement, status : ${customer.savedAgreements}">
+                                  <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
+                                      style="font-weight: bold;"></span></div>
+                                  <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                                    <ul class="list-group">
+                                      <div>Item Names: </div>
+                                      <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                                        <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                                      </div>
+                                    </ul>
+                                  </div>
+                                  <div>TotalPrice: <span
+                                      th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                                      style="font-weight: bold;"></span></div>
+                                  <div>Total Collateral = <span
+                                      th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                                      style="font-weight: bold;"></span></div>
+                                  <div class="my-3">
+                                    <a class="btn btn-primary btn-sm"
+                                      th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
+                                      <i class="fa-solid fa-eye"></i><span> View Agreement</span>
+                                    </a>
+                                  </div>
                                 </div>
                               </li>
                             </ul>
+                            <div th:each="agreement, status : ${customer.savedAgreements}" th:if="${status.size > 1 && status.first}">
+                              <a th:href="@{agreements/bycustomer/{id}(id=${customer.id})}"><span> View More Agreements</span>
+                              </a>
+                            </div>
                           </div>
                         </li>
 

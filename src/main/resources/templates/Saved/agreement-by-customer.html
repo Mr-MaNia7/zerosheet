@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <div th:replace="general.html :: head"></div>
+  <title th:text="${'Agreements for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName} + ' · ZeroSheet '"></title>
+</head>
+
+<body>
+  <header th:replace="general.html :: header"></header>
+  <main>
+    <div class="container">
+      <div>
+        <h2 class="mt-2 mb-5" style="text-align: center;" th:text="${'List of Agreements for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></h2>
+        <div>
+          <ul class="list-group">
+            <li class="list-group-item" th:each="agreement, status : ${agreements.page}">
+              <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
+                  style="font-weight: bold;"></span>
+              </div>
+              <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                <ul class="list-group">
+                  <div>Items: </div>
+                  <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                    <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                  </div>
+                </ul>
+              </div>
+              <div>TotalPrice: <span
+                  th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                  style="font-weight: bold;"></span></div>
+              <div>Total Collateral = <span
+                  th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                  style="font-weight: bold;"></span></div>
+              <div class="my-3">
+                <a class="btn btn-primary btn-sm" th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}"
+                  role="button">
+                  <i class="fa-solid fa-eye"></i><span> View Agreement</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+          <nav aria-label="Page navigation" class="paging my-3">
+            <ul class="pagination" th:if="${agreements.page.totalPages > 1}">
+              <li class="page-item" th:classappend="${!agreements.paging.isPrevEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/agreements/bycustomer/{id}?pageNumber=' + ${agreements.paging.pageNumber - 1}(id=${customer.id})}"
+                  tabindex="-1">Previous</a>
+              </li>
+              <th:block th:each="item : ${agreements.paging.getItems()}">
+                <li class="page-item" th:classappend="${item.index == agreements.paging.pageNumber? 'active' : ''}"
+                  th:if="${item.pageItemType.name() == 'PAGE'}">
+                  <a class="page-link" th:href="@{'/agreements/bycustomer/{id}?pageNumber=' + ${item.index}(id=${customer.id})}" th:text="${item.index}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                  <a class="page-link" href="#">...</a>
+                </li>
+              </th:block>
+              <li class="page-item" th:classappend="${!agreements.paging.isNextEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/agreements/bycustomer/{id}?pageNumber=' + ${agreements.paging.pageNumber + 1}(id=${customer.id})}">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <header th:replace="general.html :: footer"></header>
+  <script th:src="@{/js/convert-date.js}"></script>
+
+</body>
+
+</html>

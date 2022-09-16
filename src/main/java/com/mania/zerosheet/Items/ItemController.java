@@ -17,8 +17,8 @@ public class ItemController {
     private final ItemService itemService;
         
     @GetMapping("/items")
-    public String showItemsPage(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-    @RequestParam(value = "size", required = false, defaultValue = "15") int size, Model model){
+    public String showItemsPage(Item item, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+    @RequestParam(value = "size", required = false, defaultValue = "10") int size, Model model){
         model.addAttribute("items", itemService.getPage(pageNumber, size));
         return "Items/view-items";
     }
