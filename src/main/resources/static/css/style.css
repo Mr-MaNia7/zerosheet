@@ -3,13 +3,28 @@ body {
     flex-direction: column;
     height: 100vh;
 }
-
 main {
     flex: auto;
 }
-
 footer {
     flex-shrink: 0;
+}
+
+.price {
+    font-weight: bold;
+    color: saddlebrown;
+    padding: 0em .5em;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+@media print {
+    .dontprint {
+        display: none;
+    }
+    html {
+      font-size: 11px;
+    }
 }
 
 #heart,

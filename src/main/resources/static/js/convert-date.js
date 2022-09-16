@@ -187,20 +187,93 @@ Array.from(document.querySelectorAll('.date')).forEach(function (dateEl) {
   var dateArray = dateEl.textContent.split('-')
   var dateNumArray = dateArray.map(str => { return Number(str) })
   var etDate = toEC(dateNumArray)
-  // dateEl.textContent = `${etDate[0]}-${etDate[1]}-${etDate[2]}`
   dateEl.textContent = formatDate(etDate)
   Array.from(document.querySelectorAll('.year')).forEach(function (agreementNum) {
     agreementNum.textContent = `/${etDate[2]%1000}`
   })
 })
 
-// Array.from(document.querySelectorAll('.date')).forEach(function (dateEl) {
-//   var dateArray = dateEl.textContent.split('-')
-//   var dateNumArray = dateArray.map(str => { return Number(str) })
-//   var etDate = toEC(dateNumArray)
-//   // dateEl.textContent = `${etDate[0]}-${etDate[1]}-${etDate[2]}`
-//   dateEl.textContent = formatDate(etDate)
-//   Array.from(document.querySelectorAll('.year')).forEach(function (agreementNum) {
-//     agreementNum.textContent = `/${etDate[2]%1000}`
-//   })
-// })
+Array.from(document.querySelectorAll('.datewclock')).forEach(function (dateEl) {
+  var dateArray = dateEl.textContent.split('-')
+  var day = dateArray[2].split(" ")[0]
+  var clock = dateArray[2].split(" ")[1].split(":")
+
+  var hour = Number(clock[0]) % 12
+  if (Number(clock[0]) >= 12) {
+    var suffix = 'PM'
+  }
+  else {
+    var suffix = 'AM'
+  }
+  var min = Number(clock[1])
+  var sec = Number(clock[2].split(".")[0])
+  var millisec = Number(clock[2].split(".")[1])
+
+  var etDate = toEC([Number(day), Number(dateArray[1]), Number(dateArray[0])])
+  dateEl.textContent = `${formatDate(etDate)} ${hour}:${min} ${suffix} EAT`
+})
+
+
+function defaultDate() {
+  var dueDate = document.getElementById("dueDate")
+  var dueDateArray = dueDate.getAttribute("value").split("-")
+  var dueDateNumArray = dueDateArray.map(str => { return Number(str) })
+  var dueDateET = toEC([dueDateNumArray[2], dueDateNumArray[1], dueDateNumArray[0]])
+  var dueDateEC = document.getElementById("dueDateEC")
+  dueDateEC.textContent = `= ${formatDate(dueDateET)}`
+
+  var dueBackDate = document.getElementById("dueBackDate")
+  var dueBackDateArray = dueBackDate.getAttribute("value").split("-")
+  var dueBackDateNumArray = dueBackDateArray.map(str => { return Number(str) })
+  var dueBackDateET = toEC([dueBackDateNumArray[2], dueBackDateNumArray[1], dueBackDateNumArray[0]])
+  var dueBackDateEC = document.getElementById("dueBackDateEC")
+  dueBackDateEC.textContent = `= ${formatDate(dueBackDateET)}`
+}
+
+var due_date = document.getElementById("dueDate")
+due_date.addEventListener('change', function(){
+  var dateArray = this.value.split("-")
+  var dateNumArray = dateArray.map(str => { return Number(str) })
+  var etDate = toEC([dateNumArray[2], dateNumArray[1], dateNumArray[0]])
+  var dueDateEC = document.getElementById("dueDateEC")
+  dueDateEC.textContent = `= ${formatDate(etDate)}`
+})
+
+var due_back_date = document.getElementById("dueBackDate")
+due_back_date.addEventListener('change', function(){
+  var dateArray = this.value.split("-")
+  var dateNumArray = dateArray.map(str => { return Number(str) })
+  var etDate = toEC([dateNumArray[2], dateNumArray[1], dateNumArray[0]])
+  var dueDateEC = document.getElementById("dueBackDateEC")
+  dueDateEC.textContent = `= ${formatDate(etDate)}`
+})
+
+function defaultValue() {
+  var selectedElement = document.getElementById('itemSel')
+  var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+  var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+
+  var priceElement = document.getElementById('itemPrice')
+  priceElement.setAttribute('value', `${loanprice}`)
+
+  var quantityElement = document.getElementById('itemQuantity')
+  quantityElement.setAttribute('max', `${totalquantity}`)
+
+  defaultDate()
+  
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  
+}
+
+function changeHandler() {
+  var selectedElement = document.getElementById('itemSel')
+  var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
+  var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+
+  var priceElement = document.getElementById('itemPrice')
+  priceElement.setAttribute('value', `${loanprice}`)
+
+  var quantityElement = document.getElementById('itemQuantity')
+  quantityElement.setAttribute('max', `${totalquantity}`)
+}

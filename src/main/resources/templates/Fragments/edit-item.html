@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+  <div th:fragment="form">
+    <div class="mb-3">
+      <label for="itemName" class="form-label">Item name <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" th:field="*{itemName}"
+        th:errorclass="${#fields.hasErrors('itemName')}? 'is-invalid' : 'is-valid'" placeholder="Brand X">
+      <!-- <div class="valid-feedback">Looks good!</div> -->
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></span>
+    </div>
+    <div class="mb-3">
+      <label for="unit" class="form-label">Unit measurement <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" th:field="*{unit}" id="unit" th:errorclass="is-invalid" placeholder="PCS">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('unit')}" th:errors="*{unit}"></span>
+    </div>
+    <div class="mb-3">
+      <label for="unitLoanPrice" class="form-label">Unit Loan Price per day <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" th:field="*{unitLoanPrice}" id="unitLoanPrice" th:errorclass="is-invalid"
+        placeholder="5.0">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('unitLoanPrice')}"
+        th:text='${"Unit Loan Price must be a number!"}'></span>
+    </div>
+    <div class="mb-3">
+      <label for="unitPrice" class="form-label">Unit Price <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" th:field="*{unitPrice}" id="unitPrice" th:errorclass="is-invalid"
+        placeholder="25.0">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('unitPrice')}"
+        th:text='${"Unit Price must be a number!"}'></span>
+    </div>
+    <div class="mb-3">
+      <label for="totalQuantity" class="form-label">Total Quantity <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="number" min="1" class="form-control" th:field="*{totalQuantity}" id="totalQuantity" th:errorclass="is-invalid"
+        placeholder="100">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('totalQuantity')}"
+        th:text='${"Total Quantity must be a number!"}'></span>
+    </div>
+    <div class="mb-3">
+      <label for="areaCoverage" class="form-label">Expected Area Coverage <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" th:field="*{areaCoverage}" id="areaCoverage" th:errorclass="is-invalid"
+        placeholder="100">
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('areaCoverage')}"
+        th:text='${"Area Coverage must be a number!"}'></span>
+    </div>
+  </div>
+</body>
+
+</html>

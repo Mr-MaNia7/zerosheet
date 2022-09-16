@@ -4,6 +4,7 @@ import com.mania.zerosheet.Customers.CustomerRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.PerformaRepository;
+import com.mania.zerosheet.Saved.SavedAgreementRepository;
 import com.mania.zerosheet.Transaction.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ public class HomeController {
     private final CustomerRepository customerRepository;
     private final TransactionRepository transactionRepository;
     private final PerformaRepository performaRepository;
+    private final SavedAgreementRepository savedAgreementRepository;
     
     @GetMapping("/")
     public String showHomePage(Item item, Model model){
@@ -24,6 +26,7 @@ public class HomeController {
         model.addAttribute("customers", customerRepository.findAll());
         model.addAttribute("transactions", transactionRepository.findAll());
         model.addAttribute("performas", performaRepository.findAll());
+        model.addAttribute("agreements", savedAgreementRepository.findAll());
         return "index";
     }
 }

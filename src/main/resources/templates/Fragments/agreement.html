@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="general.html :: head"></head>
-
 <body>
   <div th:fragment="main">
     <div class="my-5" style="border:solid grey ;">
       <div class="container">
         <div>
           <div class="row justify-content-end">
-            <p class="col-6 col-md-3"><span class="date" th:text="${#dates.format(today, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012 ዓ.ም</span></p>
+            <p class="col-6 col-md-3"><span class="date" th:text="${#dates.format(today, 'dd-MM-yyyy')}">ሰኔ 13 ቀን 2012
+                ዓ.ም</span></p>
           </div>
 
           <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
             <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-              th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span class="year">/15</span>
+                th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                class="year">/15</span>
             </p>
           </div>
         </div>
@@ -179,7 +179,8 @@
                   <tr>
                     <td colspan="6" style="border-bottom: hidden; border-left:hidden;"></td>
                     <td>ጠቅላላ ዋጋ</td>
-                    <td><span th:text="${#numbers.formatDecimal(customer.totalPriceAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
+                    <td><span
+                        th:text="${#numbers.formatDecimal(customer.totalPriceAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                     </td>
                   </tr>
                   <tr>
@@ -282,7 +283,8 @@
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
               <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span class="year">/15</span></p>
+                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                  class="year">/15</span></p>
             </div>
           </div>
 

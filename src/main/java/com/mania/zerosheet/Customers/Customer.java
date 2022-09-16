@@ -91,11 +91,37 @@ public class Customer implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<SavedAgreement> savedAgreements = new ArrayList<SavedAgreement>();
 
-  @OneToOne(fetch = FetchType.LAZY, optional = true)
+  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  private List<Instance> instances = new ArrayList<Instance>();
+
+  @OneToOne(fetch = FetchType.EAGER, optional = true)
   @JoinColumn(name = "agreement_id", nullable = true)
   Agreement agreement;
 
-  public Instance addTransaction(Transaction transaction) {
+  public void addInstance(Instance instance){
+    this.instances.add(instance);
+  }
+  public Instance findInstance(Status status, Item item){
+    for (Instance instance : this.instances){
+      if (instance.getStatus().equals(status) &&
+          instance.getItem().getItemId() == item.getItemId()){
+        return instance;
+      }
+    }
+    Instance defaultInstance = new Instance();
+    defaultInstance.setStatus(status);
+    defaultInstance.setItem(item);
+    defaultInstance.setCustomer(this);
+    return defaultInstance;
+  }
+
+  public void updateInstance(Status status, int quantity, Item item){
+    Instance f_instance = this.findInstance(status, item);
+    f_instance.setItemQuantity(f_instance.getItemQuantity() + quantity);
+    this.addInstance(f_instance);
+  }
+
+  public void addTransaction(Transaction transaction) {
     boolean flag = false;
     for (Transaction eachtrans : this.transactions) {
       if (eachtrans.getItem().getItemId() == transaction.getItem().getItemId() &&
@@ -110,14 +136,10 @@ public class Customer implements Serializable {
       this.transactions.add(transaction);
     }
     Item item  = transaction.getItem();
-    Instance available_instance = item.findAvailableInstance();
-    available_instance.setItemQuantity(item.getTotalQuantity());
-    item.addInstance(available_instance);
     
-    Instance new_instance = new Instance(transaction.getItemQuantity(), Status.ONLOAN, item);
-    transaction.setInstance(new_instance);
-
-    return available_instance;
+    Instance l_instance = new Instance(transaction.getItemQuantity(), Status.ONLOAN, item, this);
+    this.addInstance(l_instance);
+    transaction.setInstance(l_instance);
   }
 
   public void addPerforma(Performa performa) {
@@ -230,15 +252,14 @@ public class Customer implements Serializable {
     savedAgreement.addSavedTrans(savedTrans);
     return savedAgreement;
   }
-  public List<Instance> copyPerforma2Transaction() {
-    List<Instance> instances = new ArrayList<Instance>();
+  public void copyPerforma2Transaction() {
     for (Performa performa : this.performas) {
       performa.reverseDayDifference(performa.getDayDifference());
       Transaction transaction = new Transaction(
           performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(), performa.getDayDifference(),
           performa.getCollateral(), performa.getTransPrice(), performa.getItemPrice(), performa.getCust(), performa.getItem()
           );
-      instances.add(this.addTransaction(transaction));
+      this.addTransaction(transaction);
     }
 
     this.totalPrice += this.totalPriceP;
@@ -258,7 +279,6 @@ public class Customer implements Serializable {
     this.setDebtBalanceP(0);
     this.setTotalCollateralP(0);
     this.setTotalCollateralVATP(0);
-    return instances;
   }
 
   public void updateTransaction(Transaction transaction, long id) {

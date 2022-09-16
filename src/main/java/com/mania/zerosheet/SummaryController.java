@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Customers.CustomerRepository;
-import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.Performa;
@@ -32,7 +31,19 @@ public class SummaryController {
     private final PerformaRepository performaRepository;
     private final SavedAgreementRepository savedAgreementRepo;
     private final TransactionRepository transactionRepository;
-    private final InstanceRepository instanceRepository;
+
+    @GetMapping("/summary/byitem")
+    public String showSummaryByItem(Model model){
+        model.addAttribute("items", itemRepository.findAll());
+        return "Summary/summary-by-item";
+    }
+
+    @GetMapping("/summary/bycustomer")
+    public String showSummaryByCustomer(Model model){
+        model.addAttribute("customers", customerRepository.findAll());
+        model.addAttribute("items", itemRepository.findAll());
+        return "Summary/summary-by-customer";
+    }
 
     @GetMapping("/orders/summary")
     public String showSummaryPage(Model model, @Valid Customer customer) {
@@ -47,10 +58,11 @@ public class SummaryController {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
             performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         
-        instanceRepository.saveAll(customer.copyPerforma2Transaction());
+        customer.copyPerforma2Transaction();
         List<Performa> performas = new ArrayList<Performa>(customer.getPerformas());
         customer.removePerformas(customer.getPerformas());
 
@@ -60,7 +72,7 @@ public class SummaryController {
         status.setComplete();
         return "redirect:/customers";
     }
-    @PostMapping("/orders/saveperforma")
+    @GetMapping("/orders/saveperforma")
     public String savePerforma(Model model, SessionStatus status, @Valid Customer customer) {
         this.customerRepository.save(customer);
         status.setComplete();
@@ -85,7 +97,8 @@ public class SummaryController {
         for (Performa performa : customer.getPerformas()) {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
-                    performa.getItemQuantity(), 0));
+                performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         customer.copyPerforma2Transaction();
@@ -149,6 +162,7 @@ public class SummaryController {
             Item new_item = performa.getItem();
             new_item.setTotalQuantity(new_item.calculateItemQuantity(performa.getItem().getTotalQuantity(),
                 performa.getItemQuantity(), 0));
+            new_item.setLoanedQuantity(new_item.getLoanedQuantity() + performa.getItemQuantity());
             this.itemRepository.save(new_item);
         }
         customer.copyPerforma2Transaction();

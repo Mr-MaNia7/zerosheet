@@ -28,7 +28,7 @@ public class Agreement {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "agmnt")
     private List<Article> articles = new ArrayList<Article>();
  
-    @OneToOne(mappedBy = "agreement", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "agreement", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Customer customer;
 
     public void addArticle(Article article){

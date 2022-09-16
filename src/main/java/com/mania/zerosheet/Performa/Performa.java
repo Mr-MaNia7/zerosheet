@@ -2,8 +2,8 @@ package com.mania.zerosheet.Performa;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
+import com.mania.zerosheet.Transaction.Transaction;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,7 +32,6 @@ public class Performa implements Serializable {
     private long transId;
     
     @Min(value = 1, message = "Item Quantity should be atleast 1")
-    // @Digits(10)
     private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
@@ -40,6 +40,7 @@ public class Performa implements Serializable {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
 
+    @Min(value = 1, message = "Item Price should be atleast 1")
     private double itemPrice;
 
     private double transPrice;
@@ -48,14 +49,39 @@ public class Performa implements Serializable {
 
     private double collateral;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "cust_id", nullable = true)
     Customer cust;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
     Item item;
 
+    public boolean isDuplicate(List<Transaction> transactions, List<Performa> performas){
+        for (Transaction trans : transactions){
+            if (
+                trans.getItem().getItemId() == this.item.getItemId() &&
+                trans.getItemPrice() == this.itemPrice &&
+                this.calculateDayDifference(this.dueDate, trans.getDueDate()) == 0 &&
+                this.calculateDayDifference(this.dueBackDate, trans.getDueBackDate()) == 0
+            ){
+                return true;
+            }
+        }
+        for (Performa perf : performas){
+            if (
+                perf.getItem().getItemId() == this.getItem().getItemId() &&
+                perf.getItemPrice() == this.getItemPrice() &&
+                perf.getItemQuantity() == this.getItemQuantity() &&
+                this.calculateDayDifference(this.dueDate, perf.getDueDate()) == 0 &&
+                this.calculateDayDifference(this.dueBackDate, perf.getDueBackDate()) == 0
+            ){
+                return true;
+            }
+        }
+
+        return false;
+    }
     public void addNewTransaction(){
         this.setDayDifference();
         this.setTransPrice();
@@ -91,6 +117,15 @@ public class Performa implements Serializable {
         //       .MILLISECONDS
         //       .toDays(difference_In_Time)
         //   / 365l;
+        return difference_In_Days;
+    }
+    public long calculateDayDifference(Date first, Date second){
+        long difference_In_Time = first.getTime() - second.getTime();
+        long difference_In_Days = 
+        TimeUnit
+              .MILLISECONDS
+              .toDays(difference_In_Time);
+
         return difference_In_Days;
     }
     public void editPerforma(Performa new_performa, Item new_item) {

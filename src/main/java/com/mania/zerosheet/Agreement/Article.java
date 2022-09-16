@@ -24,7 +24,7 @@ public class Article {
 
     // private List<String> statements = new ArrayList<String>();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "agreement_id", nullable = true)
     private Agreement agmnt;
 

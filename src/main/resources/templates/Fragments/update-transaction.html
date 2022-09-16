@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head th:replace="general.html :: head"></head>
-
 <body>
   <div th:fragment="form">
-    <div th:if="${isDuplicate == true}">
+    <div th:if="${isEdited == false}">
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        The <strong>information</strong> you entered is not <strong>edited at all!</strong> Please change some information to continue.
+        The <strong>information</strong> you entered is not <strong>edited at all!</strong> Please change some
+        information to continue.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     </div>
@@ -28,16 +27,15 @@
     <div class="row justify-content-evenly mb-3">
       <div class="row justify-content-evenly">
         <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
-          data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-          title="Cancel editing and discard changes">
+          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel editing and discard changes">
           Cancel
         </a>
-        <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
-          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Reset to defaults">
+        <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip" title="Reset to defaults">
           Reset
         </button>
-        <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
-          data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Update and continue">
+        <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-custom-class="custom-tooltip" title="Update and continue">
           Submit
         </button>
       </div>

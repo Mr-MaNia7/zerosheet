@@ -32,6 +32,7 @@ public class TransactionController {
     private final CompanyRepository companyRepository;
     private final PerformaRepository performaRepository;
     private boolean isDuplicate = false;
+    private boolean isEdited = true;
 
     @GetMapping("/transactions")
     public String showTransactions(Transaction transaction, Model model) {
@@ -41,6 +42,7 @@ public class TransactionController {
 
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Performa performa, Model model) {
+        model.addAttribute("performa", performa);
         model.addAttribute("items", itemRepository.findAll());
         return "Forms/item-transaction";
     }
@@ -90,7 +92,7 @@ public class TransactionController {
 
         model.addAttribute("transaction", transaction);
         model.addAttribute("items", itemRepository.findAll());
-        model.addAttribute("isDuplicate", isDuplicate);
+        model.addAttribute("isEdited", isEdited);
         return "Transactions/update-transaction";
     }
     @PostMapping("transactions/updatetransaction/{transId}")
@@ -98,6 +100,7 @@ public class TransactionController {
     @Valid Transaction new_trans, BindingResult result, Model model){
         if (result.hasErrors()) {
             new_trans.setTransId(transId);
+            model.addAttribute("items", itemRepository.findAll());
             return "Transactions/update-transaction";
         }
         Item new_item =
@@ -109,16 +112,16 @@ public class TransactionController {
                 .findById(transId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
                 
-        isDuplicate = false;
+        isEdited = true;
         if (
             new_trans.getItem().getItemId() == old_trans.getItem().getItemId() &&
             new_trans.getItemPrice() == old_trans.getItemPrice() &&
             new_trans.getItemQuantity() == old_trans.getItemQuantity() &&
-            new_trans.getDueDate().equals(old_trans.getDueDate()) &&
-            new_trans.getDueBackDate().equals(old_trans.getDueBackDate())
+            new_trans.calculateDayDifference(new_trans.getDueDate(), old_trans.getDueDate()) == 0 &&
+            new_trans.calculateDayDifference(new_trans.getDueBackDate(), old_trans.getDueBackDate()) == 0
             )
         {
-            isDuplicate = true;
+            isEdited = false;
             return "redirect:/transactions/edittransaction/{transId}";
         }
 
@@ -135,7 +138,7 @@ public class TransactionController {
     }
     
     @GetMapping("transactions/addtransaction/{id}")
-    public String showAddTransactionForm(@PathVariable("id") long id , Model model, Transaction transaction){
+    public String showAddTransactionForm(Performa performa, @PathVariable("id") long id , Model model){
         Customer customer =
             customerRepository
             .findById(id)
@@ -143,6 +146,7 @@ public class TransactionController {
 
         model.addAttribute("customer", customer);
         model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("isDuplicate", isDuplicate);
         return "Forms/customer-transaction";
     }
 
@@ -150,12 +154,18 @@ public class TransactionController {
     public String addCustomerTransaction(@PathVariable("id") long id,
     @Valid Performa performa, BindingResult result, Model model){
         if (result.hasErrors()) {
+            model.addAttribute("items", itemRepository.findAll());
             return "Forms/customer-transaction";
         }
         Customer customer =
             customerRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
+        isDuplicate = performa.isDuplicate(customer.getTransactions(), customer.getPerformas());
+        if (isDuplicate == true){
+            return "redirect:/transactions/addtransaction/{id}";
+        }
+
         performa.addTrans2ExistinCust(customer);        
         performaRepository.save(performa);
 

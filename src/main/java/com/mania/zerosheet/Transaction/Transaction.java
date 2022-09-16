@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.ItemInstance.Instance;
+import com.mania.zerosheet.ItemInstance.Instance.Status;
 import com.mania.zerosheet.Items.Item;
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,7 @@ public class Transaction implements Serializable{
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
 
+    @Min(value = 1, message = "Item Price should be atleast 1")
     private double itemPrice;
 
     private double transPrice;
@@ -51,17 +53,25 @@ public class Transaction implements Serializable{
 
     private double collateral;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "item_id", nullable = true)
     private Item item;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "instance_id", referencedColumnName = "instanceId")
     private Instance instance;
+
+    public void addLoanedInstance(int old_trans_quantity){
+        Instance l_instance = this.instance;
+        l_instance.setItemQuantity(this.itemQuantity);
+        l_instance.setItem(this.item);
+        this.item.addInstance(l_instance);
+        this.item.setLoanedQuantity(this.item.getLoanedQuantity() - old_trans_quantity + this.itemQuantity);
+    }
 
     public void removeTransaction() {
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
@@ -70,7 +80,6 @@ public class Transaction implements Serializable{
         this.customer.setDebtBalance(newDebt);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
-        this.item.updateAvailableInstance();
     }
     public boolean partialReturn(int returnQuantity, int maintenanceQty, int defectedQty) {
         if (returnQuantity == this.itemQuantity) {
@@ -78,6 +87,7 @@ public class Transaction implements Serializable{
             return true;
         }
         else {
+            int old_trans_quantity = this.itemQuantity;
             int new_item_quantity = this.itemQuantity - returnQuantity - maintenanceQty - defectedQty;
             double old_trans_price = this.transPrice;
             double new_trans_price = (old_trans_price  / this.itemQuantity) * new_item_quantity;
@@ -101,13 +111,15 @@ public class Transaction implements Serializable{
             this.transPrice = new_trans_price;
             this.item.setTotalQuantity(total_quantity + returnQuantity);
             
-            this.item.updateMaintenanceInstance(maintenanceQty);
-            this.item.updateDefectedInstance(defectedQty);
-            this.item.updateAvailableInstance();
-            Instance instance = this.instance;
-            instance.setItemQuantity(this.itemQuantity);
-            instance.setItem(this.item);
-            this.item.addInstance(instance);
+            this.item.updateMaintenanceQuantity(maintenanceQty, this.customer);
+            this.item.updateDefectedQuantity(defectedQty, this.customer);
+            if (maintenanceQty != 0){
+                this.customer.updateInstance(Status.MAINTENANCE, maintenanceQty, this.item);
+            }
+            if (defectedQty != 0){
+                this.customer.updateInstance(Status.DEFECTED, defectedQty, this.item);
+            }
+            this.addLoanedInstance(old_trans_quantity);
             
             return false;
         }
@@ -140,14 +152,7 @@ public class Transaction implements Serializable{
         double old_collateral_price = this.collateral;
         this.setCollateral();
 
-        Instance available_instance = old_item.findAvailableInstance();
-        available_instance.setItemQuantity(this.item.getTotalQuantity());
-        this.item.addInstance(available_instance);
-        
-        Instance instance = this.instance;
-        instance.setItemQuantity(this.itemQuantity);
-        instance.setItem(this.item);
-        this.item.addInstance(instance);
+        this.addLoanedInstance(old_trans_quantity);
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;
