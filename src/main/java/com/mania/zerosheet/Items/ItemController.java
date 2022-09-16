@@ -8,26 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.mania.zerosheet.ItemInstance.Instance;
-import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Controller
 public class ItemController {
     private final ItemRepository itemRepository;
-    private final InstanceRepository instanceRepository;
     private final ItemService itemService;
-    
-    // @GetMapping("/items")
-    // public String showItemsPage(Item item, Model model){
-    //     model.addAttribute("items", itemRepository.findAll());
-    //     return "Items/view-items";
-    // }
-    
+        
     @GetMapping("/items")
     public String showItemsPage(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-    @RequestParam(value = "size", required = false, defaultValue = "5") int size, Model model){
+    @RequestParam(value = "size", required = false, defaultValue = "15") int size, Model model){
         model.addAttribute("items", itemService.getPage(pageNumber, size));
         return "Items/view-items";
     }
@@ -42,7 +33,6 @@ public class ItemController {
             return "Items/add-item";
         }
         itemRepository.save(item);
-        // instanceRepository.save(item.defaultInstance());
         return "redirect:/items";
     }
     
