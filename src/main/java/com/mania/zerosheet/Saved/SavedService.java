@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SavedService {
-    private SavedAgreementRepository savedAgreementRepository;
+    private final SavedAgreementRepository savedAgreementRepository;
 
     public SavedService(SavedAgreementRepository savedAgreementRepository){
         this.savedAgreementRepository = savedAgreementRepository;
