@@ -23,7 +23,37 @@
       </select>
       <span class="invalid-feedback" th:if="${#fields.hasErrors('item.itemId')}" th:errors="*{item}"></span>
     </div>
-    <div th:replace="Fragments/add-transaction.html :: update"></div>
+    <!-- <div th:replace="Fragments/add-transaction.html :: update"></div> -->
+    <div class="mb-3">
+      <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="text" class="form-control" id="itemPrice" name="itemPrice" th:errorclass="is-invalid" th:value="${transaction.itemPrice}"
+        required>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></span>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="itemQuantity">Item Quantity <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity"
+        th:errorclass="is-invalid" th:value="${transaction.itemQuantity}" required>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="date" class="form-control" th:field="*{dueDate}" id="dueDate"
+        th:errorclass="is-invalid" required>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+      <span class="ms-2" id="dueDateEC"></span>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="dueBackDate">End Date <i class="fa-solid fa-asterisk fa-xs"
+          style="color:crimson;"></i></label>
+      <input type="date" class="form-control" th:field="*{dueBackDate}" id="dueBackDate" th:errorclass="is-invalid"
+        required>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('dueBackDate')}" th:errors="*{dueBackDate}"></span>
+      <span class="ms-2" id="dueBackDateEC"></span>
+    </div>
     <div class="row justify-content-evenly mb-3">
       <div class="row justify-content-evenly">
         <a href="/customers" class="col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
