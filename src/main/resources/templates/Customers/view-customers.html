@@ -76,7 +76,6 @@
                             </a>
                           </div>
                         </li>
-
                         <li class="list-group-item">
                           <h6>Transactions by this customer</h6>
                           <div th:if="${#lists.isEmpty(customer.transactions)}">
@@ -84,13 +83,15 @@
                             <div class="my-3">
                               <a class="btn btn-primary btn-sm"
                                 th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                                <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
+                                <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
                               </a>
                             </div>
                           </div>
                           <div th:unless="${#lists.isEmpty(customer.transactions)}">
                             <ul class="list-group">
-                              <li class="list-group-item" th:each="transaction, status : ${customer.transactions}">
+                              <li class="list-group-item"
+                                th:each="transaction, status : ${customer.transactions}"
+                                th:if="${status.index <= 1}">
                                 <div><span th:text="${transaction.item.itemName}" style="font-weight: bold;"></span>
                                 </div>
                                 <div>
@@ -131,14 +132,16 @@
                                   </form>
                                 </div>
                                 <div>Each Transaction Price: <span
-                                    th:text='${#numbers.formatDecimal(transaction.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}'
-                                    style="font-weight: bold;"></span></div>
+                                  th:text='${#numbers.formatDecimal(transaction.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}'
+                                  style="font-weight: bold;"></span>
+                                </div>
                                 <div>Loan days: <span th:text='${transaction.dayDifference + "  days"}'
-                                    style="font-weight: bold;"></span></div>
+                                  style="font-weight: bold;"></span>
+                                </div>
                                 <div th:each="remainingDay, rstat : ${remainingDaysList}">
                                   <span th:if="${rstat.index == status.index}">Remaining days: </span>
                                   <span th:if="${rstat.index == status.index}" th:text='${remainingDay + " days"}'
-                                    style="font-weight: bold;"></span>
+                                  style="font-weight: bold;"></span>
                                 </div>
                                 <div class="my-3">
                                   <a class="col-sm-4 btn btn-primary btn-sm"
@@ -180,16 +183,19 @@
                                   </div>
                                 </div>
                               </li>
-                              <div class="my-3">
-                                <a class="btn btn-primary btn-sm"
-                                  th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
-                                  <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
-                                </a>
-                              </div>
                             </ul>
+                            <div class="my-3">
+                              <a class="btn btn-primary btn-sm col-4"
+                                th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                                <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
+                              </a>
+                              <a class="col-md-3 col-4 ms-3" th:each="transaction, status : ${customer.transactions}"
+                                th:if="${status.size > 2 && status.first}" th:href="@{transactions/bycustomer/{id}(id=${customer.id})}">
+                                <span> View More Transactions</span>
+                              </a>
+                            </div>
                           </div>
                         </li>
-
                         <li class="list-group-item">
                           <h6>Incompleted-Transactions (Performas) by this customer</h6>
                           <div th:if="${#lists.isEmpty(customer.performas)}">
@@ -233,7 +239,6 @@
                             </ul>
                           </div>
                         </li>
-
                         <li class="list-group-item">
                           <h6>Agreements by this customer</h6>
                           <div th:if="${#lists.isEmpty(customer.savedAgreements)}">
@@ -241,40 +246,40 @@
                           </div>
                           <div th:unless="${#lists.isEmpty(customer.savedAgreements)}">
                             <ul class="list-group">
-                              <li class="list-group-item">
-                                <div th:if="${status.index <= 1}" th:each="agreement, status : ${customer.savedAgreements}">
-                                  <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
-                                      style="font-weight: bold;"></span></div>
-                                  <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
-                                    <ul class="list-group">
-                                      <div>Item Names: </div>
-                                      <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
-                                        <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
-                                      </div>
-                                    </ul>
-                                  </div>
-                                  <div>TotalPrice: <span
-                                      th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                                      style="font-weight: bold;"></span></div>
-                                  <div>Total Collateral = <span
-                                      th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                                      style="font-weight: bold;"></span></div>
-                                  <div class="my-3">
-                                    <a class="btn btn-primary btn-sm"
-                                      th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
-                                      <i class="fa-solid fa-eye"></i><span> View Agreement</span>
-                                    </a>
-                                  </div>
+                              <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}"
+                                th:if="${status.index <= 1}">
+                                <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}'
+                                    style="font-weight: bold;"></span></div>
+                                <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                                  <ul class="list-group">
+                                    <div>Item Names: </div>
+                                    <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                                      <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                                    </div>
+                                  </ul>
+                                </div>
+                                <div>TotalPrice: <span
+                                    th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                                    style="font-weight: bold;"></span></div>
+                                <div>Total Collateral = <span
+                                    th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                                    style="font-weight: bold;"></span></div>
+                                <div class="my-3">
+                                  <a class="btn btn-primary btn-sm"
+                                    th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
+                                    <i class="fa-solid fa-eye"></i><span> View Agreement</span>
+                                  </a>
                                 </div>
                               </li>
                             </ul>
-                            <div th:each="agreement, status : ${customer.savedAgreements}" th:if="${status.size > 1 && status.first}">
-                              <a th:href="@{agreements/bycustomer/{id}(id=${customer.id})}"><span> View More Agreements</span>
+                            <div th:each="agreement, status : ${customer.savedAgreements}"
+                              th:if="${status.size > 1 && status.first}">
+                              <a th:href="@{agreements/bycustomer/{id}(id=${customer.id})}"><span> View More
+                                  Agreements</span>
                               </a>
                             </div>
                           </div>
                         </li>
-
                         <li class="list-group-item">
                           <h6>Total Cost</h6>
                           <div>
@@ -290,43 +295,41 @@
                           </div>
                         </li>
                       </ul>
-                    </div>
-
-                    <div class="my-3 ms-4">
-                      <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal"
-                        data-bs-target="#confirm-delete" th:data-bs-customerId="${customer.id}"
-                        th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
-                        <!-- <a class="btn btn-danger btn-sm" th:href="@{customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
-                        <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
-                      </a>
-
-                      <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="container">
-                                <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
-                                  associated informations permanently?</p>
-                                <p>Deleting will also delete the following:</p>
-                                <ul class="list-group list-group-flush list-group-numbered">
-                                  <li class="list-group-item">Customer's Personal Data</li>
-                                  <li class="list-group-item">All Transactions of the customer</li>
-                                  <li class="list-group-item">Any kind of monetary information related to this customer
-                                  </li>
-                                </ul>
+                      <div class="my-3 ms-4">
+                        <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal"
+                          data-bs-target="#confirm-delete" th:data-bs-customerId="${customer.id}"
+                          th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                          <!-- <a class="btn btn-danger btn-sm" th:href="@{customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
+                          <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
+                        </a>
+    
+                        <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
+                          aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-                              <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                <a id="deletelink" class="link-light text-decoration-none">Delete</a>
-                              </button>
+                              <div class="modal-body">
+                                <div class="container">
+                                  <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
+                                    associated informations permanently?</p>
+                                  <p>Deleting will also delete the following:</p>
+                                  <ul class="list-group list-group-flush list-group-numbered">
+                                    <li class="list-group-item">Customer's Personal Data</li>
+                                    <li class="list-group-item">All Transactions of the customer</li>
+                                    <li class="list-group-item">Any kind of monetary information related to this customer
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+                                <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                  <a id="deletelink" class="link-light text-decoration-none">Delete</a>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -338,15 +341,13 @@
             </div>
           </div>
         </div>
+        <div class="row justify-content-center my-5">
+          <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
+            <i class="fas fa-plus fa-lg"></i> Add New Customer
+          </a>
+          <a class="col-6 col-md-3" href="/customerstabular">Go To Tabular View</a>
+        </div>
       </div>
-
-      <div class="row justify-content-center my-5">
-        <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
-          <i class="fas fa-plus fa-lg"></i> Add New Customer
-        </a>
-        <a class="col-6 col-md-3" href="/customerstabular">Go To Tabular View</a>
-      </div>
-
     </div>
   </main>
 

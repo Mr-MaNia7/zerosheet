@@ -31,6 +31,7 @@ public class TransactionController {
     private final ItemRepository itemRepository;
     private final CompanyRepository companyRepository;
     private final PerformaRepository performaRepository;
+    private final TransactionService transactionService;
     private boolean isDuplicate = false;
     private boolean isEdited = true;
 
@@ -38,6 +39,18 @@ public class TransactionController {
     public String showTransactions(Transaction transaction, Model model) {
         model.addAttribute("transactions", transactionRepository.findAll());
         return "Transactions/view-transactions";
+    }
+
+    @GetMapping("/transactions/bycustomer/{id}")
+    public String showTransactionsByCustomer(@PathVariable("id") long id, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+    @RequestParam(value = "size", required = false, defaultValue = "5") int size, Model model) {
+        Customer customer = 
+            customerRepository
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Customer Id: " + id));
+        model.addAttribute("customer", customer);
+        model.addAttribute("transactions", transactionService.getPage(pageNumber, size, customer));
+        return "Transactions/transaction-by-customer";
     }
 
     @GetMapping("/transactions/newtransaction")

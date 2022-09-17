@@ -1,10 +1,13 @@
 package com.mania.zerosheet.Transaction;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.mania.zerosheet.Customers.Customer;
 
 @Repository
 public interface TransactionRepository extends 
-    CrudRepository<Transaction, Long>{
-        
+    JpaRepository<Transaction, Long>{
+        Page<Transaction> findAllByCustomer(Customer customer, Pageable pageable);
 }
