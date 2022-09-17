@@ -75,34 +75,34 @@
                 </tr>
               </tbody>
             </table>
-            <nav aria-label="Page navigation" class="paging">
-              <ul class="pagination" th:if="${items.page.totalPages > 1}">
-                <li class="page-item" th:classappend="${!items.paging.isPrevEnabled()? 'disabled' : ''}">
-                  <a class="page-link" th:href="@{'/items/?pageNumber=' + ${items.paging.pageNumber - 1}}"
-                    tabindex="-1">Previous</a>
-                </li>
-                <th:block th:each="item : ${items.paging.getItems()}">
-                  <li class="page-item" th:classappend="${item.index == items.paging.pageNumber? 'active' : ''}"
-                    th:if="${item.pageItemType.name() == 'PAGE'}">
-                    <a class="page-link" th:href="@{'/items/?pageNumber=' + ${item.index}}" th:text="${item.index}"></a>
-                  </li>
-                  <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
-                    <a class="page-link" href="#">...</a>
-                  </li>
-                </th:block>
-                <li class="page-item" th:classappend="${!items.paging.isNextEnabled()? 'disabled' : ''}">
-                  <a class="page-link" th:href="@{'/items/?pageNumber=' + ${items.paging.pageNumber + 1}}">Next</a>
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
       </div>
-      <div class="row justify-content-center my-5">
+      <div class="row justify-content-center">
         <a name="" id="" class="btn btn-primary col-6 col-md-3" href="/items/newitem" role="button">
           <i class="fas fa-plus fa-lg"></i> Add New Item
         </a>
       </div>
+      <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${items.page.totalPages > 1}">
+          <li class="page-item" th:classappend="${!items.paging.isPrevEnabled()? 'disabled' : ''}">
+            <a class="page-link" th:href="@{'/items/?pageNumber=' + ${items.paging.pageNumber - 1}}"
+              tabindex="-1">Previous</a>
+          </li>
+          <th:block th:each="item : ${items.paging.getItems()}">
+            <li class="page-item" th:classappend="${item.index == items.paging.pageNumber? 'active' : ''}"
+              th:if="${item.pageItemType.name() == 'PAGE'}">
+              <a class="page-link" th:href="@{'/items/?pageNumber=' + ${item.index}}" th:text="${item.index}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+              <a class="page-link" href="#">...</a>
+            </li>
+          </th:block>
+          <li class="page-item" th:classappend="${!items.paging.isNextEnabled()? 'disabled' : ''}">
+            <a class="page-link" th:href="@{'/items/?pageNumber=' + ${items.paging.pageNumber + 1}}">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </main>
 

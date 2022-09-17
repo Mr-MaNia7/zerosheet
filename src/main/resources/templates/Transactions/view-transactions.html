@@ -24,6 +24,7 @@
                   <th>#</th>
                   <th>Item Name</th>
                   <th>Item Quantity</th>
+                  <th>Price Per Item</th>
                   <th>Transaction Price</th>
                   <th>Customer Name</th>
                   <th>Agreement Date</th>
@@ -36,6 +37,7 @@
                   <td th:text="${status.count}"></td>
                   <td th:text="${transaction.item.itemName}"></td>
                   <td th:text="${transaction.itemQuantity}"></td>
+                  <td th:text="${transaction.itemPrice}"></td>
                   <td th:text="${#numbers.formatDecimal(transaction.transPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
                   <td
                     th:text="${transaction.customer.name + ' ' + transaction.customer.middleName + ' ' + transaction.customer.lastName}">
