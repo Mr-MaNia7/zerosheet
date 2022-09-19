@@ -151,7 +151,7 @@
       const deleteButtonLink = returnModal.querySelector('.modal-footer button a')
 
       deleteButtonLink.href = `transactions/remove/${id}`
-      // th:href="@{transactions/remove/{transId}(transId=${transaction.transId})}"
+      // th:href="@{/transactions/remove/{transId}(transId=${transaction.transId})}"
       deleteItemName.textContent = `${itemName}`
       deleteCustName.textContent = `${custName}`
     })

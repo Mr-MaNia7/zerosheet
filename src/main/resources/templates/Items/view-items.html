@@ -41,7 +41,7 @@
                   <td th:text="${item.totalQuantity}"></td>
                   <td th:text="${item.areaCoverage}"></td>
                   <td>
-                    <a class="me-3" th:href="@{items/edititem/{itemId}(itemId=${item.itemId})}">
+                    <a class="me-3" th:href="@{/items/edititem/{itemId}(itemId=${item.itemId})}">
                       <i class="fa-solid fa-pen"></i></a>
                     <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                       th:data-bs-itemId="${item.itemId}" th:data-bs-itemName="${item.itemName}">

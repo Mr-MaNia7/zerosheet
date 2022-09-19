@@ -71,7 +71,7 @@
                           </div>
                           <div class="my-3">
                             <a class="btn btn-primary btn-sm"
-                              th:href="@{customers/editcustomer/{id}(id=${customer.id})}" role="button">
+                              th:href="@{/customers/editcustomer/{id}(id=${customer.id})}" role="button">
                               <i class="fa-solid fa-pen"></i><span> Edit Personal Info</span>
                             </a>
                           </div>
@@ -82,7 +82,7 @@
                             <p>No Transactions for this customer!</p>
                             <div class="my-3">
                               <a class="btn btn-primary btn-sm"
-                                th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                                th:href="@{/transactions/addtransaction/{id}(id=${customer.id})}" role="button">
                                 <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
                               </a>
                             </div>
@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="my-3">
                                   <a class="col-sm-4 btn btn-primary btn-sm"
-                                    th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}"
+                                    th:href="@{/transactions/edittransaction/{transId}(transId=${transaction.transId})}"
                                     role="button">
                                     <i class="fa-solid fa-pen"></i><span> Edit Transaction</span>
                                   </a>
@@ -186,7 +186,7 @@
                             </ul>
                             <div class="my-3">
                               <a class="btn btn-primary btn-sm col-4"
-                                th:href="@{transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                                th:href="@{/transactions/addtransaction/{id}(id=${customer.id})}" role="button">
                                 <i class="fa-solid fa-plus"></i><span> Add Transaction</span>
                               </a>
                               <a class="col-md-3 col-4 ms-3" th:each="transaction, status : ${customer.transactions}"
@@ -219,19 +219,19 @@
                                 </div>
                                 <div class="row justify-content-evenly my-3">
                                   <a class="col-sm-4 btn btn-primary btn-sm"
-                                    th:href="@{performas/editperforma/{transId}(transId=${performa.transId})}"
+                                    th:href="@{/performas/editperforma/{transId}(transId=${performa.transId})}"
                                     role="button">
                                     <i class="fa-solid fa-pen"></i><span> Edit Performa</span>
                                   </a>
                                   <a class="col-sm-4 btn btn-danger btn-sm"
-                                    th:href="@{transactions/performas/remove/{transId}(transId=${performa.transId})}"
+                                    th:href="@{/transactions/performas/remove/{transId}(transId=${performa.transId})}"
                                     role="button">
                                     <i class="fa-solid fa-minus"></i><span> Delete Performa</span>
                                   </a>
                                 </div>
                               </li>
                               <div class="my-3">
-                                <a class="btn btn-primary btn-sm" th:href="@{orders/performas/{id}(id=${customer.id})}"
+                                <a class="btn btn-primary btn-sm" th:href="@{/orders/performas/{id}(id=${customer.id})}"
                                   role="button">
                                   <i class="fa-solid fa-play"></i><span> Continue Transactions</span>
                                 </a>
@@ -266,7 +266,7 @@
                                     style="font-weight: bold;"></span></div>
                                 <div class="my-3">
                                   <a class="btn btn-primary btn-sm"
-                                    th:href="@{agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
+                                    th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}" role="button">
                                     <i class="fa-solid fa-eye"></i><span> View Agreement</span>
                                   </a>
                                 </div>
@@ -274,7 +274,7 @@
                             </ul>
                             <div th:each="agreement, status : ${customer.savedAgreements}"
                               th:if="${status.size > 1 && status.first}">
-                              <a th:href="@{agreements/bycustomer/{id}(id=${customer.id})}"><span> View More
+                              <a th:href="@{/agreements/bycustomer/{id}(id=${customer.id})}"><span> View More
                                   Agreements</span>
                               </a>
                             </div>
@@ -299,7 +299,7 @@
                         <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal"
                           data-bs-target="#confirm-delete" th:data-bs-customerId="${customer.id}"
                           th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
-                          <!-- <a class="btn btn-danger btn-sm" th:href="@{customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
+                          <!-- <a class="btn btn-danger btn-sm" th:href="@{/customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
                           <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
                         </a>
     
@@ -382,7 +382,7 @@
       const deleteButtonLink = returnModal.querySelector('.modal-footer button a')
 
       deleteButtonLink.href = `transactions/remove/${id}`
-      // th:href="@{transactions/remove/{transId}(transId=${transaction.transId})}"
+      // th:href="@{/transactions/remove/{transId}(transId=${transaction.transId})}"
       deleteItemName.textContent = `${itemName}`
       deleteCustName.textContent = `${custName}`
     })

@@ -45,7 +45,7 @@
                   <td class="date" th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
                   <td class="date" th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
                   <td>
-                    <a class="me-3" th:href="@{transactions/edittransaction/{transId}(transId=${transaction.transId})}">
+                    <a class="me-3" th:href="@{/transactions/edittransaction/{transId}(transId=${transaction.transId})}">
                       <i class="fa-solid fa-pen"></i></a>
                     <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                       th:data-bs-transId="${transaction.transId}" th:data-bs-itemName="${transaction.item.itemName}"
