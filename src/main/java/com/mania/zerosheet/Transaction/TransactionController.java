@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.CustomerRepository;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Sort;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,8 +37,10 @@ public class TransactionController {
     private boolean isEdited = true;
 
     @GetMapping("/transactions")
-    public String showTransactions(Transaction transaction, Model model) {
-        model.addAttribute("transactions", transactionRepository.findAll());
+    public String showTransactions(Transaction transaction, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+    @RequestParam(value = "size", required = false, defaultValue = "10") int size, Model model) {
+        model.addAttribute("transactions", transactionService.getPage(pageNumber, size, Sort.by("dueDate").descending()));
+        model.addAttribute("remainingDaysList", transactionService.calculateRemainingDays());
         return "Transactions/view-transactions";
     }
 
@@ -48,8 +51,9 @@ public class TransactionController {
             customerRepository
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Customer Id: " + id));
+        model.addAttribute("remainingDaysList", transactionService.calculateRemainingDays(customer));
         model.addAttribute("customer", customer);
-        model.addAttribute("transactions", transactionService.getPage(pageNumber, size, customer));
+        model.addAttribute("transactions", transactionService.getPageByCustomer(pageNumber, size, customer));
         return "Transactions/transaction-by-customer";
     }
 

@@ -17,6 +17,7 @@ import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Transaction.Transaction;
 import com.mania.zerosheet.Transaction.TransactionRepository;
+import com.mania.zerosheet.Transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -26,18 +27,12 @@ public class CustomerController {
   private final TransactionRepository transactionRepository;
   private final ItemRepository itemRepository;
   private final InstanceRepository instanceRepository;
+  private final TransactionService transactionService;
   private boolean isDuplicate = false;
 
   @GetMapping("/customers")
-  public String showCustomers(Customer customer, Model model){
-    List<Long> remainingDaysList = new ArrayList<Long>();
-    Date today = new Date();
-    for (Transaction transaction : transactionRepository.findAll()) {
-      long remainingDays = transaction.calculateDayDifference(transaction.getDueBackDate(), today);
-      remainingDaysList.add(remainingDays);
-    }
-    
-    model.addAttribute("remainingDaysList", remainingDaysList);
+  public String showCustomers(Customer customer, Model model){ 
+    model.addAttribute("remainingDaysList", transactionService.calculateRemainingDays());
     model.addAttribute("customers", customerRepository.findAll());
     return "Customers/view-customers";
   }

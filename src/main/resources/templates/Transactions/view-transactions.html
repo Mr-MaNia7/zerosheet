@@ -12,10 +12,10 @@
   <main class="mx-2">
     <div class="container">
       <div>
-        <div th:if="${#lists.isEmpty(transactions)}">
+        <div th:if="${transactions.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">No transactions available at the moment!</h2>
         </div>
-        <div th:unless="${#lists.isEmpty(transactions)}">
+        <div th:unless="${transactions.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">List of Transactions</h2>
           <div class="table-responsive">
             <table class="table table-hover">
@@ -29,11 +29,12 @@
                   <th>Customer Name</th>
                   <th>Agreement Date</th>
                   <th>Returning Date</th>
+                  <th>Remaining Days</th>
                   <th>Edit/Return</th>
                 </tr>
               </thead>
               <tbody>
-                <tr th:each="transaction, status : ${transactions}">
+                <tr th:each="transaction, status : ${transactions.page}">
                   <td th:text="${status.count}"></td>
                   <td th:text="${transaction.item.itemName}"></td>
                   <td th:text="${transaction.itemQuantity}"></td>
@@ -44,6 +45,11 @@
                   </td>
                   <td class="date" th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
                   <td class="date" th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
+                  <td>
+                    <span th:each="remainingDay, rstat : ${remainingDaysList}">
+                      <span th:if="${rstat.index == status.index}" th:text='${remainingDay}'></span>
+                    </span>
+                  </td>
                   <td>
                     <a class="me-3" th:href="@{/transactions/edittransaction/{transId}(transId=${transaction.transId})}">
                       <i class="fa-solid fa-pen"></i></a>
@@ -85,11 +91,31 @@
         </div>
       </div>
 
-      <div class="row justify-content-center my-5">
+      <div class="row justify-content-center my-2">
         <a name="" id="" class="btn btn-primary col-6 col-md-3" href="/transactions/newtransaction" role="button">
           <i class="fas fa-plus fa-lg"></i> Add New Transaction
         </a>
       </div>
+      <nav aria-label="Page navigation" class="paging mt-2">
+        <ul class="pagination justify-content-center" th:if="${transactions.page.totalPages > 1}">
+          <li class="page-item" th:classappend="${!transactions.paging.isPrevEnabled()? 'disabled' : ''}">
+            <a class="page-link" th:href="@{'/transactions/?pageNumber=' + ${transactions.paging.pageNumber - 1}}"
+              tabindex="-1">Previous</a>
+          </li>
+          <th:block th:each="item : ${transactions.paging.getItems()}">
+            <li class="page-item" th:classappend="${item.index == transactions.paging.pageNumber? 'active' : ''}"
+              th:if="${item.pageItemType.name() == 'PAGE'}">
+              <a class="page-link" th:href="@{'/transactions/?pageNumber=' + ${item.index}}" th:text="${item.index}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+              <a class="page-link" href="#">...</a>
+            </li>
+          </th:block>
+          <li class="page-item" th:classappend="${!transactions.paging.isNextEnabled()? 'disabled' : ''}">
+            <a class="page-link" th:href="@{'/transactions/?pageNumber=' + ${transactions.paging.pageNumber + 1}}">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </main>
 

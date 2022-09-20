@@ -12,10 +12,10 @@
   <main class="mx-2">
     <div class="container">
       <div>
-        <div th:if="${#lists.isEmpty(items)}">
+        <div th:if="${items.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">No items available at the moment!</h2>
         </div>
-        <div th:unless="${#lists.isEmpty(items)}">
+        <div th:unless="${items.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">List of Items</h2>
           <div class="table-responsive">
             <table class="table table-hover">
@@ -78,13 +78,13 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center my-2">
         <a name="" id="" class="btn btn-primary col-6 col-md-3" href="/items/newitem" role="button">
           <i class="fas fa-plus fa-lg"></i> Add New Item
         </a>
       </div>
-      <nav aria-label="Page navigation" class="paging">
-        <ul class="pagination" th:if="${items.page.totalPages > 1}">
+      <nav aria-label="Page navigation" class="paging mt-2">
+        <ul class="pagination justify-content-center" th:if="${items.page.totalPages > 1}">
           <li class="page-item" th:classappend="${!items.paging.isPrevEnabled()? 'disabled' : ''}">
             <a class="page-link" th:href="@{'/items/?pageNumber=' + ${items.paging.pageNumber - 1}}"
               tabindex="-1">Previous</a>

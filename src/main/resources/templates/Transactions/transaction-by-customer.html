@@ -40,7 +40,7 @@
               </div>
               <div>Total Loan days of <span th:text='${transaction.dayDifference + "  days"}' style="font-weight: bold;"></span>
               <div th:each="remainingDay, rstat : ${remainingDaysList}">
-                <span th:if="${rstat.index == status.index}">Remaining days: </span>
+                <span th:if="${rstat.index == status.index}">Remaining days of </span>
                 <span th:if="${rstat.index == status.index}" th:text='${remainingDay + " days"}'
                 style="font-weight: bold;"></span>
               </div>
