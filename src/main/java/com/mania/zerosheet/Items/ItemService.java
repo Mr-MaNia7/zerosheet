@@ -16,7 +16,7 @@ public class ItemService {
     }
 
     public Paged<Item> getPage(int pageNumber, int size) {
-        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.Direction.ASC, "itemId");
+        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by("itemId").ascending());
         Page<Item> postPage = itemRepository.findAll(request);
         return new Paged<>(postPage, Paging.of(postPage.getTotalPages(), pageNumber, size));
     }

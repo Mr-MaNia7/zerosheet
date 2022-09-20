@@ -12,13 +12,13 @@
   <main class="mx-2">
     <div class="container">
       <div>
-        <div th:if="${#lists.isEmpty(customers)}">
+        <div th:if="${customers.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">No customers available at the moment!</h2>
         </div>
-        <div th:unless="${#lists.isEmpty(customers)}">
+        <div th:unless="${customers.page.isEmpty()}">
           <h2 class="mt-2 mb-3" style="text-align: center;">List of Customers</h2>
           <div class="row">
-            <div class="col-sm-6 mb-2" th:each="customer : ${customers}">
+            <div class="col-sm-6 mb-2" th:each="customer : ${customers.page}">
               <div class="accordion" id="customerReport">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="customerName">
@@ -341,12 +341,32 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-center my-5">
+        <div class="row justify-content-center my-2">
           <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
             <i class="fas fa-plus fa-lg"></i> Add New Customer
           </a>
           <a class="col-6 col-md-3" href="/customerstabular">Go To Tabular View</a>
         </div>
+        <nav aria-label="Page navigation" class="paging mt-2">
+          <ul class="pagination justify-content-center" th:if="${customers.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!customers.paging.isPrevEnabled()? 'disabled' : ''}">
+              <a class="page-link" th:href="@{'/customers/?pageNumber=' + ${customers.paging.pageNumber - 1}}"
+                tabindex="-1">Previous</a>
+            </li>
+            <th:block th:each="item : ${customers.paging.getItems()}">
+              <li class="page-item" th:classappend="${item.index == customers.paging.pageNumber? 'active' : ''}"
+                th:if="${item.pageItemType.name() == 'PAGE'}">
+                <a class="page-link" th:href="@{'/customers/?pageNumber=' + ${item.index}}" th:text="${item.index}"></a>
+              </li>
+              <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                <a class="page-link" href="#">...</a>
+              </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!customers.paging.isNextEnabled()? 'disabled' : ''}">
+              <a class="page-link" th:href="@{'/customers/?pageNumber=' + ${customers.paging.pageNumber + 1}}">Next</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </main>

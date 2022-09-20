@@ -1,8 +1,5 @@
 package com.mania.zerosheet.Customers;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +7,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.mania.zerosheet.ItemInstance.Instance;
 import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Transaction.Transaction;
-import com.mania.zerosheet.Transaction.TransactionRepository;
 import com.mania.zerosheet.Transaction.TransactionService;
 import lombok.RequiredArgsConstructor;
 
@@ -24,29 +21,24 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class CustomerController {
   private final CustomerRepository customerRepository;
-  private final TransactionRepository transactionRepository;
+  private final CustomerService customerService;
   private final ItemRepository itemRepository;
   private final InstanceRepository instanceRepository;
   private final TransactionService transactionService;
   private boolean isDuplicate = false;
 
   @GetMapping("/customers")
-  public String showCustomers(Customer customer, Model model){ 
+  public String showCustomers(Customer customer, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+  @RequestParam(value = "size", required = false, defaultValue = "10") int size, Model model){ 
     model.addAttribute("remainingDaysList", transactionService.calculateRemainingDays());
-    model.addAttribute("customers", customerRepository.findAll());
+    model.addAttribute("customers", customerService.getPage(pageNumber, size));
     return "Customers/view-customers";
   }
   @GetMapping("/customerstabular")
-  public String showCustomersTabular(Customer customer, Model model){
-    List<Long> remainingDaysList = new ArrayList<Long>();
-    Date today = new Date();
-    for (Transaction transaction : transactionRepository.findAll()) {
-      long remainingDays = transaction.calculateDayDifference(transaction.getDueBackDate(), today);
-      remainingDaysList.add(remainingDays);
-    }
-    
-    model.addAttribute("remainingDaysList", remainingDaysList);
-    model.addAttribute("customers", customerRepository.findAll());
+  public String showCustomersTabular(Customer customer, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+  @RequestParam(value = "size", required = false, defaultValue = "10") int size, Model model){    
+    model.addAttribute("remainingDaysList", transactionService.calculateRemainingDays());
+    model.addAttribute("customers",customerService.getPage(pageNumber, size));
     return "Customers/view-customers-tabular";
   }
 
