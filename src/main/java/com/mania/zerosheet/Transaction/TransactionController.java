@@ -185,7 +185,14 @@ public class TransactionController {
 
         performa.addTrans2ExistinCust(customer);        
         performaRepository.save(performa);
-
+        return "redirect:/transactions/addtransaction/{id}";
+    }
+    @GetMapping("/customer/{id}/agreement")
+    public String showAgreement(@PathVariable("id") long id, Model model) {
+        Customer customer =
+            customerRepository
+                .findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
         model.addAttribute("customer", customer);
         model.addAttribute("transactions", customer.getPerformas());
         model.addAttribute("company", companyRepository.findAll());

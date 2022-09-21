@@ -22,7 +22,7 @@
           aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">33%</div>
       </div>
       <h2 class="mt-2 mb-3" style="text-align: center;">Add Transaction</h2>
-      <div class="row align-self-center justify-content-center">
+      <div class="row align-items-center justify-content-center">
         <div th:if="${#lists.isEmpty(items)}" class="col-8 col-md-6">
           <div class="card border-warning mb-3">
             <h6 class="card-header bg-warning text-light">Warning</h6>
@@ -40,7 +40,51 @@
             </div>
           </div>
         </div>
-
+        <div th:unless="${#lists.isEmpty(customer.performas)}" class="row justify-content-center my-3">
+          <div class="accordion col-md-6 col-8" id="cart">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cart-content"
+                  aria-expanded="true" aria-controls="cart-content">
+                  <i class="fa-solid fa-cart-shopping fa-xl"></i><b>Cart</b>
+                  <span th:each="performa, status : ${customer.performas}" class="badge bg-primary rounded-pill ms-2"
+                  th:text='${status.first}? ${"# " + status.size}'>14</span>
+                </button>
+              </h2>
+              <div id="cart-content" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                data-bs-parent="#cart">
+                <div class="accordion-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="table-light align-middle">
+                        <tr>
+                          <th>#</th>
+                          <th>Item Name</th>
+                          <th>Quantity</th>
+                          <th>Loan Days</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="performa, status : ${customer.performas}">
+                          <td th:text="${status.count}"></td>
+                          <td th:text="${performa.item.itemName}"></td>
+                          <td th:text="${performa.itemQuantity}"></td>
+                          <td th:text="${performa.dayDifference}"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <a th:href="@{/customer/{id}/agreement(id=${customer.id})}" class="mx-3 my-3 col-2 col-sm-3 btn btn-primary" role="button" data-bs-toggle="tooltip"
+                  data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Finish adding and continue">
+                  Finish Adding
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
         <div th:unless="${#lists.isEmpty(items)}" class="col-8 col-md-6">
           <form action="#" th:action="@{/customer/{id}/addtransaction(id=${customer.id})}" th:object="${performa}"
             method="post" onreset="defaultValue()">
