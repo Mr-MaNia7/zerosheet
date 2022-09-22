@@ -27,6 +27,14 @@ footer {
     }
 }
 
+#logo:hover {
+    -webkit-transform: rotate(-60deg) scale(1.2);
+    -moz-transform: rotate(-60deg) scale(1.2);
+    -ms-transform: rotate(-60deg) scale(1.2);
+    -o-transform: rotate(-60deg) scale(1.2);
+    transform: rotate(-60deg) scale(1.2);
+}
+
 #heart,
 #copyright {
     color: dimgray;
