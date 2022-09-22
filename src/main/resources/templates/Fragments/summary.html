@@ -10,9 +10,9 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        <h6>Completed transactions</h6>
-        <ol class="list-group list-group-numbered row align-items-start justify-content-between">
-          <li th:each="trans, status : ${transactions}" class="list-group-item col-md-4 col-6">
+        <h6>Transactions to be completed</h6>
+        <ol class="list-group list-group-numbered list-group-flush">
+          <li th:each="trans, status : ${transactions}" class="list-group-item col-12 col-md-6">
             <span class="badge bg-primary rounded-pill me-1"
               style="background-color:rgb(176, 72, 228);">Item</span><span th:text="${trans.item.itemName}"></span>
             <div class="ms-3">
@@ -33,7 +33,7 @@
         </ol>
       </li>
       <li class="list-group-item">
-        <h6>Items loaned</h6>
+        <h6>Items to be loaned</h6>
         <ol class="list-group list-group-numbered">
           <li th:each="trans, status : ${transactions}"
             class="list-group-item d-flex justify-content-between align-items-start">
@@ -47,7 +47,7 @@
         </ol>
       </li>
       <li class="list-group-item">
-        <h6>Total cost</h6>
+        <h6>Total cost to be</h6>
         <div class="row align-items-start">
           <div class="card col-4">
             <div class="card-body">
@@ -84,15 +84,15 @@
   </div>
   <div th:fragment="form">
     <div class="row justify-content-evenly my-5">
-      <a href="/cancel" class="col-2 align-self-center btn btn-primary" role="button" data-bs-toggle="tooltip"
+      <a href="/cancel" class="col-3 col-md-4 align-self-center btn btn-primary" role="button" data-bs-toggle="tooltip"
         data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard all changes">
         Cancel
       </a>
-      <a href="/orders/saveperforma" class="col-2 align-self-center btn btn-success" role="button" data-bs-toggle="tooltip"
+      <a href="/orders/saveperforma" class="col-3 col-md-3 align-self-center btn btn-success" role="button" data-bs-toggle="tooltip"
         data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Save as performa and continue later">
         Save as performa
       </a>
-      <button type="submit" class="col-2 align-self-center btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+      <button type="submit" class="col-3 col-md-4 align-self-center btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
         data-bs-custom-class="custom-tooltip" title="Finish and save all changes">
         Finish
       </button>

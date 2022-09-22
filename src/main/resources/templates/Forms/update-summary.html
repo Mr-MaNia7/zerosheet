@@ -15,21 +15,23 @@
 
   <header th:replace="general.html :: header"></header>
 
-  <main>
-    <div class="container">
-      <div class="progress my-2" style="height: 25px;">
-        <div class="progress-bar progress-bar-striped progress-bar-animated w-100" role="progressbar"
-          aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+  <main class="container">
+    <div class="progress my-2" style="height: 25px;">
+      <div class="progress-bar progress-bar-striped progress-bar-animated w-100" role="progressbar"
+        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+    </div>
+    <div class="row align-self-center justify-content-center">
+      <div class="col-10 col-md-8">
+        <div>
+          <h2 style="text-align:center;" class="my-3">Summary</h2>
+        </div>
+  
+        <div th:replace="Fragments/summary.html :: card"></div>
+        <form action="#" th:action="@{/orders/updatefinish/{id}(id = ${customer.id})}" th:object="${customer}"
+          method="post">
+          <div th:replace="Fragments/summary.html :: form"></div>
+        </form>
       </div>
-      <div>
-        <h2 style="text-align:center;" class="my-3">Summary</h2>
-      </div>
-
-      <div th:replace="Fragments/summary.html :: card"></div>
-      <form action="#" th:action="@{/orders/updatefinish/{id}(id = ${customer.id})}" th:object="${customer}"
-        method="post">
-        <div th:replace="Fragments/summary.html :: form"></div>
-      </form>
     </div>
   </main>
 

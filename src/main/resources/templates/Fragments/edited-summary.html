@@ -10,9 +10,9 @@
     </div>
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
-        <h6>Completed transactions</h6>
-        <ol class="list-group list-group-numbered row align-items-start justify-content-between">
-          <li th:each="trans, status : ${transactions}" class="list-group-item col-md-4 col-6">
+        <h6>Transactions to be completed</h6>
+        <ol class="list-group list-group-numbered list-group-flush">
+          <li th:each="trans, status : ${transactions}" class="list-group-item col-12 col-md-6">
             <span class="badge bg-primary rounded-pill me-1"
               style="background-color:rgb(176, 72, 228);">Item</span><span th:text="${trans.item.itemName}"></span>
             <div class="ms-3">
@@ -33,7 +33,7 @@
         </ol>
       </li>
       <li class="list-group-item">
-        <h6>Items loaned</h6>
+        <h6>Items to be loaned</h6>
         <ol class="list-group list-group-numbered">
           <li th:each="trans, status : ${transactions}"
             class="list-group-item d-flex justify-content-between align-items-start">
@@ -47,7 +47,7 @@
         </ol>
       </li>
       <li class="list-group-item">
-        <h6>Total cost</h6>
+        <h6>Total cost to be</h6>
         <div class="row align-items-start">
           <div class="card col-4">
             <div class="card-body">

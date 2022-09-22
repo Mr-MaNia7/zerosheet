@@ -43,6 +43,7 @@ footer {
 #heart:hover,
 #copyright:hover {
     color: rgb(176, 72, 228);
+    transform: scale(1.1)
 }
 
 #copyright {

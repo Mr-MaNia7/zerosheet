@@ -22,10 +22,11 @@
               <div class="accordion" id="customerReport">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="customerName">
+                    <!-- <span class="badge bg-primary rounded-pill me-2" th:text="${customer.id}">14</span> -->
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                       th:data-bs-target="${'#' + customer.name + customer.id}" aria-expanded="true"
                       th:aria-controls="${customer.name + customer.id}"
-                      th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                      th:text="${customer.id + '. ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
                     </button>
                   </h2>
                   <div th:id="${customer.name + customer.id}" class="accordion-collapse collapse"
@@ -341,11 +342,11 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-center my-2">
+        <div class="row justify-content-center align-items-center my-2">
           <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
             <i class="fas fa-plus fa-lg"></i> Add New Customer
           </a>
-          <a class="col-6 col-md-3" href="/customerstabular">Go To Tabular View</a>
+          <a class="col-5 col-md-3" href="/customerstabular">Go To Tabular View</a>
         </div>
         <nav aria-label="Page navigation" class="paging mt-2">
           <ul class="pagination justify-content-center" th:if="${customers.page.totalPages > 1}">
