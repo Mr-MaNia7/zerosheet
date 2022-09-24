@@ -140,10 +140,10 @@
               <li>
                 የኪራይ ዋጋ ለአንድ ቀን <span class="price"
                   th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
-                ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን <span
-                  class="price"
-                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}"></span>
-                <!-- (<span ></span>) -->
+                ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን
+                <span id="totalprice" th:data-bs-totalprice="${#numbers.formatDecimal(customer.totalPriceVATAt, 1, 'NONE', 2, 'DEFAULT')}" 
+                  class="price" th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}">
+                </span>(<span id="numeralprice" class="price"></span>)
                 ቫትን ጨምሮ ይሆናል፡፡
               </li>
             </div>
