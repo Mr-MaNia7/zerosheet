@@ -86,6 +86,9 @@ public class Transaction implements Serializable{
             this.removeTransaction();
             return true;
         }
+        else if (returnQuantity + maintenanceQty + defectedQty > this.itemQuantity) {
+            return true;
+        }
         else {
             int old_trans_quantity = this.itemQuantity;
             int new_item_quantity = this.itemQuantity - returnQuantity - maintenanceQty - defectedQty;
