@@ -208,7 +208,7 @@ public class TransactionController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id:" + transId));
         
         transaction.removeTransaction();
-        transactionRepository.delete(transaction);
+        transactionService.deleteTransaction(transaction);
         return "redirect:/customers";
     }
 
@@ -222,7 +222,7 @@ public class TransactionController {
         
         boolean isDel = transaction.partialReturn(returnQuantity, maintenanceQty, defectedQty);
         if (isDel == true) {
-            transactionRepository.delete(transaction);
+            transactionService.deleteTransaction(transaction);
         }
         else {
             transactionRepository.save(transaction);

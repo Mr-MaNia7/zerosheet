@@ -43,4 +43,11 @@ public class TransactionService {
             } 
         return remainingDaysList;
     }
+    public void deleteTransaction(Transaction trans){
+        List<Transaction> transs = trans.getCustomer().getTransactions();
+        transs.remove(trans);
+        trans.getCustomer().setTransactions(transs);
+        trans.setCustomer(null);
+        this.transactionRepository.delete(trans);
+    }
 }
