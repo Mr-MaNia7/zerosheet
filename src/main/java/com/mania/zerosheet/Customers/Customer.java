@@ -46,9 +46,8 @@ public class Customer implements Serializable {
   @NotBlank(message = "Customer Last Name is required")
   private String lastName;
   @Email(message = "Please enter a valid e-mail address")
-  @NotBlank(message = "Customer Email Address is required")
   private String email;
-  @Pattern(regexp = "^[0][9][0-9]{8}$|^[9][0-9]{8}$", message = "Should be 9/10 characters long, beginning with 9/09")
+  @Pattern(regexp = "^[0][9][0-9]{8}$|^[9][0-9]{8}$|[0][7][0-9]{8}$|^[7][0-9]{8}$", message = "Should be 9/10 characters long, beginning with 9/09 or 7/07")
   @NotBlank(message = "Customer Phone Number is required")
   private String phoneNumber;
   private String houseNumber;

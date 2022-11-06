@@ -31,8 +31,7 @@
       <span class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address <i class="fa-solid fa-asterisk fa-xs"
-          style="color:crimson;"></i></label>
+      <label for="email" class="form-label">Email address</label>
       <input type="text" class="form-control" name="email" id="email" th:errorclass="is-invalid"
         placeholder="name@example.com">
       <span class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
