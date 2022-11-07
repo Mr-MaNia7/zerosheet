@@ -11,10 +11,9 @@
                 ዓ.ም</span></p>
           </div>
 
-          <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
-            <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
-                class="year">/15</span>
+          <div th:each="trans, status : ${transactions}" id="agreementNumber" class="row justify-content-end">
+            <p class="col-6 col-md-3"
+              th:text='${status.first}? ${"የውል ቁጥር ሂ/ጠ/ሥ " + #numbers.formatInteger(trans.transId, 4) + "/15"}'>
             </p>
           </div>
         </div>
@@ -137,12 +136,14 @@
           <h6><b>አንቀጽ ሶስት:- የኪራይ ዋጋ</b></h6>
           <ol>
             <div th:each="trans,status : ${transactions}">
-              <li>
+              <li th:if="${status.first}">
                 የኪራይ ዋጋ ለአንድ ቀን <span class="price"
                   th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን
-                <span id="totalprice" th:data-bs-totalprice="${#numbers.formatDecimal(customer.totalPriceVATAt, 1, 'NONE', 2, 'DEFAULT')}" 
-                  class="price" th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}">
+                <span id="totalprice"
+                  th:data-bs-totalprice="${#numbers.formatDecimal(customer.totalPriceVATAt, 1, 'NONE', 2, 'DEFAULT')}"
+                  class="price"
+                  th:text="${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATAt, 1, 'COMMA', 2, 'DEFAULT')}">
                 </span>(<span id="numeralprice" class="price"></span>)
                 ቫትን ጨምሮ ይሆናል፡፡
               </li>
@@ -282,9 +283,9 @@
         <div class="container">
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
-              <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
-                  class="year">/15</span></p>
+              <p class="col-6 col-md-3"
+                th:text='${status.first}? ${"የውል ቁጥር ሂ/ጠ/ሥ " + #numbers.formatInteger(trans.transId, 4) + "/15"}'>
+              </p>
             </div>
           </div>
 

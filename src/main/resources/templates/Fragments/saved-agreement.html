@@ -12,7 +12,7 @@
           </div>
 
           <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
-            <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
+            <p th:if="${status.first}" class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
                 th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
                 class="year">/15</span>
             </p>
@@ -136,7 +136,7 @@
           <h6><b>አንቀጽ ሶስት:- የኪራይ ዋጋ</b></h6>
           <ol>
             <div th:each="trans,status : ${transactions}">
-              <li>
+              <li th:if="${status.first}">
                 የኪራይ ዋጋ ለአንድ ቀን <span class="price"
                   th:text="${status.first}? ${'ብር ' + #numbers.formatDecimal(customer.totalPriceVATP / trans.dayDifference, 1, 'COMMA', 2, 'DEFAULT')}"></span>
                 ቫትን ጨምሮ ሲሆን ጠቅላላ ዋጋ ለ <span th:text="${status.first}? ${trans.dayDifference}"></span> ቀን
@@ -281,7 +281,7 @@
         <div class="container">
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
-              <p class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
+              <p th:if="${status.first}" class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
                   th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
                   class="year">/15</span></p>
             </div>
