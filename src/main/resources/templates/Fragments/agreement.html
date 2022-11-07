@@ -3,7 +3,7 @@
 
 <body>
   <div th:fragment="main">
-    <div class="my-5" style="border:solid grey ;">
+    <div class="my-3" style="border:solid grey ;">
       <div class="container">
         <div>
           <div class="row justify-content-end">
@@ -280,7 +280,7 @@
     </div>
 
     <div class="pagebreak">
-      <div class="my-5" style="border:solid grey ;">
+      <div class="my-3" style="border:solid grey ;">
         <div class="container">
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
@@ -289,54 +289,53 @@
               </p>
             </div>
           </div>
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <td><h5 style="text-align: center;"><b>አከራይ</b></h5></td>
+                    <td><h5 style="text-align: center;"><b>ተከራይ</b></h5></td>
+                  </tr>
+                  <tr>
+                    <td>ሙሉ ስም <span>____________________________________________</span></td>
+                    <td>ሙሉ ስም <span>____________________________________________</span></td>
+                  </tr>
+                  <tr>
+                    <td>ፊርማ <span>____________________________________________</span></td>
+                    <td>ፊርማ <span>____________________________________________</span></td>
+                  </tr>
+                  <tr>
+                    <td>የስራ ድርሻ <span>____________________________________________</span></td>
+                    <td>የስራ ድርሻ <span>____________________________________________</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-          <div class="row align-items-center justify-content-center">
-            <div class="col-10 col-md-6">
-              <h5 style="text-align: center;"><b>አከራይ</b></h5>
-              <ul class="list-unstyled ms-3">
-                <div>
-                  <li>ሙሉ ስም <span>____________________________________________</span> </li>
-                  <li>ፊርማ <span>____________________________________________</span></li>
-                  <li>የስራ ድርሻ <span>____________________________________________</span></li>
-                </div>
-              </ul>
-            </div>
-            <div class="col-10 col-md-6">
-              <h5 style="text-align: center;"><b>ተከራይ</b></h5>
-              <ul class="list-unstyled ms-3">
-                <li>ሙሉ ስም <span>____________________________________________</span></li>
-                <li>ፊርማ <span>____________________________________________</span></li>
-                <li>የስራ ድርሻ <span>____________________________________________</span></li>
-              </ul>
-            </div>
-            <div class="col-12 mt-3">
-              <h5 style="text-align: center;"><b>ምስክር</b></h5>
-              <div class="table-responsive">
-                <table class="table table-borderless">
-                  <tbody>
-                    <tr>
-                      <td>ተቁ</td>
-                      <td>ሙሉ ስም</td>
-                      <td>ፊርማ</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>____________________________________________</td>
-                      <td>____________________________________________</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>____________________________________________</td>
-                      <td>____________________________________________</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>____________________________________________</td>
-                      <td>____________________________________________</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <div class="col-12">
+            <h5 style="text-align: center;"><b>ምስክር</b></h5>
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <td>ተቁ</td>
+                    <td>ሙሉ ስም</td>
+                    <td>ፊርማ</td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>____________________________________________</td>
+                    <td>____________________________________________</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>____________________________________________</td>
+                    <td>____________________________________________</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
