@@ -189,9 +189,9 @@
                           </div>
                         </li>
                         <li class="list-group-item">
-                          <h6>Incompleted-Transactions (Performas) by this customer</h6>
+                          <h6>Incompleted-Transactions (Proformas) by this customer</h6>
                           <div th:if="${#lists.isEmpty(customer.performas)}">
-                            <p>No Performas for this customer!</p>
+                            <p>No Proformas for this customer!</p>
                           </div>
                           <div th:unless="${#lists.isEmpty(customer.performas)}">
                             <ul class="list-group">
@@ -199,7 +199,7 @@
                                 <div><span th:text="${performa.item.itemName}" style="font-weight: bold;"></span></div>
                                 <div>Item Quantity: <span th:text='${performa.itemQuantity}'
                                     style="font-weight: bold;"></span></div>
-                                <div>Each performa Price: <span
+                                <div>Each proforma Price: <span
                                     th:text='${#numbers.formatDecimal(performa.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}'
                                     style="font-weight: bold;"></span></div>
                                 <div>Loan days: <span th:text='${performa.dayDifference + "  days"}'
@@ -213,12 +213,12 @@
                                   <a class="col-sm-4 btn btn-primary btn-sm"
                                     th:href="@{/performas/editperforma/{transId}(transId=${performa.transId})}"
                                     role="button">
-                                    <i class="fa-solid fa-pen"></i><span> Edit Performa</span>
+                                    <i class="fa-solid fa-pen"></i><span> Edit Proforma</span>
                                   </a>
                                   <a class="col-sm-4 btn btn-danger btn-sm"
                                     th:href="@{/transactions/performas/remove/{transId}(transId=${performa.transId})}"
                                     role="button">
-                                    <i class="fa-solid fa-minus"></i><span> Delete Performa</span>
+                                    <i class="fa-solid fa-minus"></i><span> Delete Proforma</span>
                                   </a>
                                 </div>
                               </li>

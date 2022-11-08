@@ -27,7 +27,7 @@
                   <th>HouseNumber</th>
                   <th>City</th>
                   <th>Transactions</th>
-                  <th>Performas</th>
+                  <th>Proformas</th>
                   <th>Edit</th>
                   <th>Delete</th>
                 </tr>
@@ -56,7 +56,7 @@
                   </td>
                   <td>
                     <div th:if="${#lists.isEmpty(customer.performas)}">
-                      <p>No Performas for this customer</p>
+                      <p>No Proformas for this customer</p>
                     </div>
                     <div th:unless="${#lists.isEmpty(customer.transactions)}">
                       <ul th:each="performa : ${customer.performas}">

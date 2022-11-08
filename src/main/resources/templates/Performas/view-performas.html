@@ -3,7 +3,7 @@
 
 <head>
   <div th:replace="general.html :: head"></div>
-  <title>Performas List · ZeroSheet</title>
+  <title>Proformas List · ZeroSheet</title>
 </head>
 
 <body>
@@ -13,10 +13,10 @@
     <div class="container">
       <div>
         <div th:if="${#lists.isEmpty(performas)}">
-          <h2 class="mt-2 mb-3" style="text-align: center;">No performas available at the moment!</h2>
+          <h2 class="mt-2 mb-3" style="text-align: center;">No proformas available at the moment!</h2>
         </div>
         <div th:unless="${#lists.isEmpty(performas)}">
-          <h2 class="mt-2 mb-3" style="text-align: center;">List of Performas (Incompleted-Transactions)</h2>
+          <h2 class="mt-2 mb-3" style="text-align: center;">List of Proformas (Incompleted-Transactions)</h2>
           <div class="table-responsive">
             <table class="table table-hover">
               <thead class="table-light align-middle">
