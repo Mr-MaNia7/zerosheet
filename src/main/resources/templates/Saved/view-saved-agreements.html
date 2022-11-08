@@ -18,7 +18,7 @@
         <div th:each="customer : ${customers}">
           <ul class="list-group">
             <li class="list-group-item">
-              <h6 th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></h6>
+              <h6 th:text="${customer.fullName}"></h6>
             </li>
             <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
               <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}' style="font-weight: bold;"></span>

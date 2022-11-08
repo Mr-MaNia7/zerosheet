@@ -37,14 +37,8 @@ public class Customer implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  @NotBlank(message = "Customer Full Name is required")
   private String fullName;
-  
-  @NotBlank(message = "Customer First Name is required")
-  private String name;
-  @NotBlank(message = "Customer Middle Name is required")
-  private String middleName;
-  @NotBlank(message = "Customer Last Name is required")
-  private String lastName;
   @Email(message = "Please enter a valid e-mail address")
   private String email;
   @Pattern(regexp = "^[0][9][0-9]{8}$|^[9][0-9]{8}$|[0][7][0-9]{8}$|^[7][0-9]{8}$", message = "Should be 9/10 characters long, beginning with 9/09 or 7/07")
@@ -211,8 +205,7 @@ public class Customer implements Serializable {
   }
   public SavedAgreement saveAgreement(List<Performa> performas) {
     SavedAgreement savedAgreement = new SavedAgreement(
-        this.name, this.middleName, this.lastName,
-        this.phoneNumber, this.houseNumber, this.city,
+        this.fullName, this.phoneNumber, this.houseNumber, this.city,
         this.totalPriceAt, this.debtBalanceAt, this.totalCollateralAt,
         this.totalPriceVATAt, this.totalCollateralVATAt, this.woreda, this.subcity,
         new Date(), this
@@ -233,8 +226,7 @@ public class Customer implements Serializable {
   }
   public SavedAgreement saveEditedAgreement(Transaction transaction) {
     SavedAgreement savedAgreement = new SavedAgreement(
-        this.name, this.middleName, this.lastName,
-        this.phoneNumber, this.houseNumber, this.city,
+        this.fullName, this.phoneNumber, this.houseNumber, this.city,
         this.totalPriceAt, this.debtBalanceAt, this.totalCollateralAt,
         this.totalPriceVATAt, this.totalCollateralVATAt, this.woreda, this.subcity,
         new Date(), this
@@ -284,14 +276,12 @@ public class Customer implements Serializable {
     this.transactions.set((int) (id - 1), transaction);
   }
 
-  public Customer(String name, String middleName, String lastName, String email,
+  public Customer(String fullName, String email,
     String phoneNumber, String houseNumber, String city, double totalPrice,
     double debtBalance, double totalCollateral, double totalPriceVAT,
     double totalCollateralVAT, double totalPriceP, double debtBalanceP, double totalCollateralP,
     double totalPriceVATP, double totalCollateralVATP, int woreda, String subcity) {
-    this.name = name;
-    this.middleName = middleName;
-    this.lastName = lastName;
+    this.fullName = fullName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.houseNumber = houseNumber;

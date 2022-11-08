@@ -4,25 +4,11 @@
 <body>
   <div th:fragment="form">
     <div class="mb-3">
-      <label for="name" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs"
+      <label for="fullName" class="form-label">First name <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
-      <input type="text" class="form-control" th:field="*{name}" id="name" th:errorclass="is-invalid"
+      <input type="text" class="form-control" th:field="*{fullName}" id="fullName" th:errorclass="is-invalid"
         placeholder="Advent">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-    </div>
-    <div class="mb-3">
-      <label for="middleName" class="form-label">Middle name <i class="fa-solid fa-asterisk fa-xs"
-          style="color:crimson;"></i></label>
-      <input type="text" class="form-control" th:field="*{middleName}" id="middleName" th:errorclass="is-invalid"
-        placeholder="Corporation">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('middleName')}" th:errors="*{middleName}"></span>
-    </div>
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Last name <i class="fa-solid fa-asterisk fa-xs"
-          style="color:crimson;"></i></label>
-      <input type="text" class="form-control" th:field="*{lastName}" id="lastName" th:errorclass="is-invalid"
-        placeholder="PLC">
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+      <span class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
     </div>
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>

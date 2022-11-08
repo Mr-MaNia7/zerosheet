@@ -5,7 +5,7 @@
   <div th:fragment="card" class="card">
     <div class="card-body">
       <h5 class="card-title"><span
-          th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></span></h5>
+          th:text="${customer.fullName}"></span></h5>
       <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
     </div>
     <ul class="list-group list-group-flush">

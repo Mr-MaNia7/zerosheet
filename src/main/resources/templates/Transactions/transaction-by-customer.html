@@ -4,7 +4,7 @@
 <head>
   <div th:replace="general.html :: head"></div>
   <title
-    th:text="${'Transactions for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName} + ' · ZeroSheet '">
+    th:text="${'Transactions for ' + customer.fullName} + ' · ZeroSheet '">
   </title>
 </head>
 
@@ -14,7 +14,7 @@
     <div class="row align-self-center justify-content-center">
       <div class="col-md-8 col-10">
         <h2 class="mt-2 mb-5" style="text-align: center;"
-          th:text="${'List of Transactions for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+          th:text="${'List of Transactions for ' + customer.fullName}">
         </h2>
         <div>
           <ul class="list-group">
@@ -83,7 +83,7 @@
                 <a class="col-4 col-md-3 btn btn-danger btn-sm ms-3" data-bs-toggle="modal"
                   data-bs-target="#confirm-return" th:data-bs-transId="${transaction.transId}"
                   th:data-bs-itemName="${transaction.item.itemName}"
-                  th:data-bs-custName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                  th:data-bs-custName="${customer.fullName}">
                   <i class="fa-solid fa-right-to-bracket"></i><span> Return All</span>
                 </a>
                 <div class="modal fade" id="confirm-return" tabindex="-1" aria-labelledby="deleteItem"

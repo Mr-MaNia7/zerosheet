@@ -34,7 +34,7 @@ public class OrderController {
         if (result.hasErrors()) {
             return "Forms/customer-info";
         }
-        customer.setFullName(customer.getName().strip() + customer.getMiddleName().strip() + customer.getLastName().strip());
+        customer.setFullName(customer.getFullName().strip());
         isDuplicate = false;
         for (Customer cust : customerRepository.findAll()){
             if (

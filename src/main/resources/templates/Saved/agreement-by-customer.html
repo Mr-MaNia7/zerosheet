@@ -3,7 +3,7 @@
 
 <head>
   <div th:replace="general.html :: head"></div>
-  <title th:text="${'Agreements for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName} + ' · ZeroSheet '"></title>
+  <title th:text="${'Agreements for ' + customer.fullName} + ' · ZeroSheet '"></title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
   <main>
     <div class="container">
       <div>
-        <h2 class="mt-2 mb-5" style="text-align: center;" th:text="${'List of Agreements for ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></h2>
+        <h2 class="mt-2 mb-5" style="text-align: center;" th:text="${'List of Agreements for ' + customer.fullName}"></h2>
         <div>
           <ul class="list-group">
             <li class="list-group-item" th:each="agreement, status : ${agreements.page}">

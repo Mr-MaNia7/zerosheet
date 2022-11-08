@@ -41,7 +41,7 @@
                   <td th:text="${transaction.itemPrice}"></td>
                   <td th:text="${#numbers.formatDecimal(transaction.transPrice, 1, 'COMMA', 2, 'DEFAULT')}"></td>
                   <td
-                    th:text="${transaction.customer.name + ' ' + transaction.customer.middleName + ' ' + transaction.customer.lastName}">
+                    th:text="${transaction.customer.fullName}">
                   </td>
                   <td class="date" th:text="${#dates.format(transaction.dueDate, 'dd-MM-yyyy')}"></td>
                   <td class="date" th:text="${#dates.format(transaction.dueBackDate, 'dd-MM-yyyy')}"></td>
@@ -55,7 +55,7 @@
                       <i class="fa-solid fa-pen"></i></a>
                     <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                       th:data-bs-transId="${transaction.transId}" th:data-bs-itemName="${transaction.item.itemName}"
-                      th:data-bs-custName="${transaction.customer.name + ' ' + transaction.customer.middleName + ' ' + transaction.customer.lastName}">
+                      th:data-bs-custName="${transaction.customer.fullName}">
                       <!-- <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i> -->
                       <i class="fa-solid fa-right-to-bracket" style="color:rgb(223, 77, 52) ;"></i>
                     </a>

@@ -31,13 +31,9 @@ public class SavedAgreement implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long agtId;
-  @NotBlank(message = "Customer First Name is required")
-  private String name;
-  @NotBlank(message = "Customer Middle Name is required")
-  private String middleName;
-  @NotBlank(message = "Customer Last Name is required")
-  private String lastName;
-  @Pattern(regexp = "^[0][9][0-9]{8}$|^[9][0-9]{8}$", message = "Should be 9/10 characters long, beginning with 9/09")
+  @NotBlank(message = "Customer Full Name is required")
+  private String fullName;
+  @Pattern(regexp = "^[0][9][0-9]{8}$|^[9][0-9]{8}$|[0][7][0-9]{8}$|^[7][0-9]{8}$", message = "Should be 9/10 characters long, beginning with 9/09 or 7/07")
   @NotBlank(message = "Customer Phone Number is required")
   private String phoneNumber;
   private String houseNumber;
@@ -64,14 +60,11 @@ public class SavedAgreement implements Serializable {
     this.savedTransactions.add(savedTrans);
   }
 
-  public SavedAgreement(String name, String middleName, String lastName,
-      String phoneNumber, String houseNumber, String city,
+  public SavedAgreement(String fullName, String phoneNumber, String houseNumber, String city,
       double totalPrice, double debtBalance, double totalCollateral,
       double totalPriceVAT, double totalCollateralVAT, int woreda, String subcity,
       Date agreementDate, Customer customer) {
-    this.name = name;
-    this.middleName = middleName;
-    this.lastName = lastName;
+    this.fullName = fullName;
     this.phoneNumber = phoneNumber;
     this.houseNumber = houseNumber;
     this.city = city;

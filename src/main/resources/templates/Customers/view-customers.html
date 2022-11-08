@@ -22,23 +22,14 @@
               <div class="accordion" id="customerReport">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="customerName">
-                    <!-- <span class="badge bg-primary rounded-pill me-2" th:text="${customer.id}">14</span> -->
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                      th:data-bs-target="${'#' + customer.name + customer.id}" aria-expanded="true"
-                      th:aria-controls="${customer.name + customer.id}"
-                      th:text="${customer.id + '. ' + customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                      th:data-bs-target='${"#id" + customer.id}' aria-expanded="true"
+                      th:aria-controls='${"id" + customer.id}'
+                      th:text="${customer.id + '. ' + customer.fullName}">
                     </button>
                   </h2>
-                  <div th:id="${customer.name + customer.id}" class="accordion-collapse collapse"
+                  <div th:id='${"id" + customer.id}' class="accordion-collapse collapse"
                     aria-labelledby="customerName" data-bs-parent="#customerReport">
-                    <!-- <span>
-                                            <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete" 
-                                                th:data-bs-customerId="${customer.id}"
-                                                th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"
-                                            >
-                                                <i class="fa-solid fa-delete-left fa-lg" style="color:rgb(223, 77, 52) ;"></i>
-                                            </a>
-                                        </span> -->
                     <div class="accordion-body">
                       <ul class="list-group list-group-flush">
                         <li class="list-group-item">
@@ -153,7 +144,7 @@
                                   <a class="col-4 col-md-3 btn btn-danger btn-sm ms-3" data-bs-toggle="modal"
                                     data-bs-target="#confirm-return" th:data-bs-transId="${transaction.transId}"
                                     th:data-bs-itemName="${transaction.item.itemName}"
-                                    th:data-bs-custName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                                    th:data-bs-custName="${customer.fullName}">
                                     <i class="fa-solid fa-right-to-bracket"></i><span> Return All</span>
                                   </a>
                                   <div class="modal fade" id="confirm-return" tabindex="-1" aria-labelledby="deleteItem"
@@ -299,7 +290,7 @@
                       <div class="my-3 ms-4">
                         <a class="btn btn-danger btn-sm" role="button" data-bs-toggle="modal"
                           data-bs-target="#confirm-delete" th:data-bs-customerId="${customer.id}"
-                          th:data-bs-customerFullName="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}">
+                          th:data-bs-customerFullName="${customer.fullName}">
                           <!-- <a class="btn btn-danger btn-sm" th:href="@{/customers/deletecustomer/{id}(id=${customer.id})}" role="button"> -->
                           <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
                         </a>

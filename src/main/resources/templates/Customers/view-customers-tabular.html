@@ -35,7 +35,7 @@
               <tbody>
                 <tr th:each="customer, status : ${customers.page}">
                   <td th:text="${status.count}"></td>
-                  <td th:text="${customer.name + ' ' + customer.middleName + ' ' + customer.lastName}"></td>
+                  <td th:text="${customer.fullName}"></td>
                   <td th:text="${customer.email}"></td>
                   <td th:text="${customer.phoneNumber}"></td>
                   <td th:text="${customer.houseNumber}"></td>
