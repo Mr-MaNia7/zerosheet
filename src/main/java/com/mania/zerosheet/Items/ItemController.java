@@ -63,7 +63,9 @@ public class ItemController {
             itemRepository
                 .findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
-    
+    item.getInstances().clear();
+    item.getTransactions().clear();
+    item.getPerformas().clear();
     itemRepository.delete(item);
     model.addAttribute("items", itemRepository.findAll());
     return "redirect:/items";
