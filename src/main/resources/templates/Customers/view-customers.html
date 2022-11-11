@@ -295,37 +295,6 @@
                           <i class="fa-solid fa-minus fa-lg"></i><span> Delete Customer</span>
                         </a>
     
-                        <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
-                          aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class="container">
-                                  <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
-                                    associated informations permanently?</p>
-                                  <p>Deleting will also delete the following:</p>
-                                  <ul class="list-group list-group-flush list-group-numbered">
-                                    <li class="list-group-item">Customer's Personal Data</li>
-                                    <li class="list-group-item">All Transactions of the customer</li>
-                                    <li class="list-group-item">All Agreements associated to this customer</li>
-                                    <li class="list-group-item">Any kind of monetary information related to this customer
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
-                                <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                                  <a id="deletelink" class="link-light text-decoration-none">Delete</a>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -361,9 +330,40 @@
           </ul>
         </nav>
       </div>
+      <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <p>Delete customer <span style="font-weight: bold;">customer name</span> with all its
+                  associated informations permanently?</p>
+                <p>Deleting will also delete the following:</p>
+                <ul class="list-group list-group-flush list-group-numbered">
+                  <li class="list-group-item">Customer's Personal Data</li>
+                  <li class="list-group-item">All Transactions of the customer</li>
+                  <li class="list-group-item">All Agreements associated to this customer</li>
+                  <li class="list-group-item">Any kind of monetary information related to this customer
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+              <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                <a id="deletelink" class="link-light text-decoration-none">Delete</a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
-
+  
   <footer th:replace="general.html :: footer"></footer>
 
   <script>
