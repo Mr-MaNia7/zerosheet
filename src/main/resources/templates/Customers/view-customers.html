@@ -278,8 +278,8 @@
                             <div>Total Price = <span
                                 th:text="${#numbers.formatDecimal(customer.totalPriceVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                                 style="font-weight: bold;"></span></div>
-                            <div>Debt Balance = <span
-                                th:text="${#numbers.formatDecimal(customer.debtBalance, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                            <div>Remaining Balance = <span
+                                th:text="${#numbers.formatDecimal(customer.remainingPrice, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                                 style="font-weight: bold;"></span></div>
                             <div>Total Collateral = <span
                                 th:text="${#numbers.formatDecimal(customer.totalCollateralVAT, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"

@@ -52,25 +52,25 @@ public class Customer implements Serializable {
 
   private double totalPrice;
   private double totalPriceVAT;
-  private double debtBalance;
+  private double remainingPrice;
   private double totalCollateral;
   private double totalCollateralVAT;
 
   private double totalPriceP;
   private double totalPriceVATP;
-  private double debtBalanceP;
+  private double remainingPriceP;
   private double totalCollateralP;
   private double totalCollateralVATP;
 
   private double totalPriceA;
   private double totalPriceVATA;
-  private double debtBalanceA;
+  private double remainingPriceA;
   private double totalCollateralA;
   private double totalCollateralVATA;
 
   private double totalPriceAt;
   private double totalPriceVATAt;
-  private double debtBalanceAt;
+  private double remainingPriceAt;
   private double totalCollateralAt;
   private double totalCollateralVATAt;
 
@@ -167,7 +167,7 @@ public class Customer implements Serializable {
     this.totalPriceVAT = this.totalPrice * 1.15;
     this.totalCollateral = this.totalCollateral - old_collateral_price + collateral;
     this.totalCollateralVAT = this.totalCollateral * 1.15;
-    this.debtBalance = ((this.debtBalance / 1.15) - old_trans_price + transPrice) * 1.15;
+    this.remainingPrice = ((this.remainingPrice / 1.15) - old_trans_price + transPrice) * 1.15;
     
     this.setAgreementCost(transPrice, collateral);
   }
@@ -176,7 +176,7 @@ public class Customer implements Serializable {
     this.totalPriceVATP = (this.totalPriceP) * 1.15;
     this.totalCollateralP += collateral;
     this.totalCollateralVATP = (this.totalCollateralP) * 1.15;
-    this.debtBalanceP = (this.totalPriceP) * 1.15;
+    this.remainingPriceP = (this.totalPriceP) * 1.15;
 
     this.setAgreementCost(transPrice, collateral);
   }
@@ -185,7 +185,7 @@ public class Customer implements Serializable {
     this.totalPriceVATP = this.totalPriceP * 1.15;
     this.totalCollateralP = this.totalCollateralP - old_collateral_price + collateral;
     this.totalCollateralVATP = this.totalCollateralP * 1.15;
-    this.debtBalanceP = ((this.debtBalanceP / 1.15) - old_trans_price + transPrice) * 1.15;
+    this.remainingPriceP = ((this.remainingPriceP / 1.15) - old_trans_price + transPrice) * 1.15;
   }
   public void setOrderCost() {
     this.performas.forEach(performa -> performa.setCust(this));
@@ -197,7 +197,7 @@ public class Customer implements Serializable {
     }
     this.totalPriceP += totalPrice;
     this.totalPriceVATP = this.totalPriceP * 1.15;
-    this.debtBalanceP = this.totalPriceP * 1.15;
+    this.remainingPriceP = this.totalPriceP * 1.15;
     this.totalCollateralP += totalCollateral;
     this.totalCollateralVATP = this.totalCollateralP * 1.15;
 
@@ -206,7 +206,7 @@ public class Customer implements Serializable {
   public SavedAgreement saveAgreement(List<Performa> performas) {
     SavedAgreement savedAgreement = new SavedAgreement(
         this.fullName, this.phoneNumber, this.houseNumber, this.city,
-        this.totalPriceAt, this.debtBalanceAt, this.totalCollateralAt,
+        this.totalPriceAt, this.remainingPriceAt, this.totalCollateralAt,
         this.totalPriceVATAt, this.totalCollateralVATAt, this.woreda, this.subcity,
         new Date(), this
       );
@@ -227,7 +227,7 @@ public class Customer implements Serializable {
   public SavedAgreement saveEditedAgreement(Transaction transaction) {
     SavedAgreement savedAgreement = new SavedAgreement(
         this.fullName, this.phoneNumber, this.houseNumber, this.city,
-        this.totalPriceAt, this.debtBalanceAt, this.totalCollateralAt,
+        this.totalPriceAt, this.remainingPriceAt, this.totalCollateralAt,
         this.totalPriceVATAt, this.totalCollateralVATAt, this.woreda, this.subcity,
         new Date(), this
       );
@@ -255,19 +255,19 @@ public class Customer implements Serializable {
 
     this.totalPrice += this.totalPriceP;
     this.totalPriceVAT += this.totalPriceVATP;
-    this.debtBalance += this.totalPriceVATP;
+    this.remainingPrice += this.totalPriceVATP;
     this.totalCollateral += this.totalCollateralP;
     this.totalCollateralVAT += this.totalCollateralVATP;
 
     this.totalPriceA = this.totalPriceP;
     this.totalPriceVATA = this.totalPriceVATP;
-    this.debtBalanceA = this.totalPriceVATP;
+    this.remainingPriceA = this.totalPriceVATP;
     this.totalCollateralA = this.totalCollateralP;
     this.totalCollateralVATA = this.totalCollateralVATP;
 
     this.setTotalPriceP(0);
     this.setTotalPriceVATP(0);
-    this.setDebtBalanceP(0);
+    this.setRemainingPriceP(0);
     this.setTotalCollateralP(0);
     this.setTotalCollateralVATP(0);
   }
@@ -278,8 +278,8 @@ public class Customer implements Serializable {
 
   public Customer(String fullName, String email,
     String phoneNumber, String houseNumber, String city, double totalPrice,
-    double debtBalance, double totalCollateral, double totalPriceVAT,
-    double totalCollateralVAT, double totalPriceP, double debtBalanceP, double totalCollateralP,
+    double remainingPrice, double totalCollateral, double totalPriceVAT,
+    double totalCollateralVAT, double totalPriceP, double remainingPriceP, double totalCollateralP,
     double totalPriceVATP, double totalCollateralVATP, int woreda, String subcity) {
     this.fullName = fullName;
     this.email = email;
@@ -289,12 +289,12 @@ public class Customer implements Serializable {
     this.subcity = subcity;
     this.woreda = woreda;
     this.totalPrice = totalPrice;
-    this.debtBalance = debtBalance;
+    this.remainingPrice = remainingPrice;
     this.totalCollateral = totalCollateral;
     this.totalPriceVAT = totalPriceVAT;
     this.totalCollateralVAT = totalCollateralVAT;
     this.totalPriceP = totalPriceP;
-    this.debtBalanceP = debtBalanceP;
+    this.remainingPriceP = remainingPriceP;
     this.totalCollateralP = totalCollateralP;
     this.totalPriceVATP = totalPriceVATP;
     this.totalCollateralVATP = totalCollateralVATP;

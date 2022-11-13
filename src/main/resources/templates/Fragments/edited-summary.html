@@ -60,10 +60,10 @@
           </div>
           <div class="card col-4">
             <div class="card-body">
-              <div class="card-title">Total Debt Balance</div>
+              <div class="card-title">Total Remaining Balance</div>
             </div>
             <div class="card-body">
-              <div><span th:text="${#numbers.formatDecimal(customer.debtBalance, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+              <div><span th:text="${#numbers.formatDecimal(customer.remainingPrice, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                   style="font-size:x-large ;"></span></div>
             </div>
           </div>

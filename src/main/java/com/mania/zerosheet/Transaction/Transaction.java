@@ -75,9 +75,9 @@ public class Transaction implements Serializable{
 
     public void removeTransaction() {
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
-        double oldDebt = this.customer.getDebtBalance() / 1.15;
+        double oldDebt = this.customer.getRemainingPrice() / 1.15;
         double newDebt = (oldDebt - this.transPrice) * 1.15;
-        this.customer.setDebtBalance(newDebt);
+        this.customer.setRemainingPrice(newDebt);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
     }
@@ -100,9 +100,9 @@ public class Transaction implements Serializable{
             double collateral_price = this.item.getUnitPrice() * new_item_quantity;
             this.collateral = collateral_price;
             
-            double oldDebt = this.customer.getDebtBalance() / 1.15;
+            double oldDebt = this.customer.getRemainingPrice() / 1.15;
             double newDebt = oldDebt - old_trans_price + new_trans_price;
-            this.customer.setDebtBalance(newDebt * 1.15);
+            this.customer.setRemainingPrice(newDebt * 1.15);
     
             double old_total_collateral = this.customer.getTotalCollateral();
             double new_total_collateral = old_total_collateral - old_collateral_price + collateral_price;

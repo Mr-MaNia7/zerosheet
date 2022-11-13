@@ -45,7 +45,7 @@ public class SavedAgreement implements Serializable {
 
   private double totalPriceP;
   private double totalPriceVATP;
-  private double debtBalanceP;
+  private double remainingPriceP;
   private double totalCollateralP;
   private double totalCollateralVATP;
 
@@ -61,7 +61,7 @@ public class SavedAgreement implements Serializable {
   }
 
   public SavedAgreement(String fullName, String phoneNumber, String houseNumber, String city,
-      double totalPrice, double debtBalance, double totalCollateral,
+      double totalPrice, double remainingPrice, double totalCollateral,
       double totalPriceVAT, double totalCollateralVAT, int woreda, String subcity,
       Date agreementDate, Customer customer) {
     this.fullName = fullName;
@@ -71,7 +71,7 @@ public class SavedAgreement implements Serializable {
     this.subcity = subcity;
     this.woreda = woreda;
     this.totalPriceP = totalPrice;
-    this.debtBalanceP = debtBalance;
+    this.remainingPriceP = remainingPrice;
     this.totalCollateralP = totalCollateral;
     this.totalPriceVATP = totalPriceVAT;
     this.totalCollateralVATP = totalCollateralVAT;
