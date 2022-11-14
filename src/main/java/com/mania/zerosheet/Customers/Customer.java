@@ -158,7 +158,7 @@ public class Customer implements Serializable {
   }
   public void setAgreementCost(double transPrice, double collateral){
     this.totalPriceAt = transPrice;
-    this.totalPriceVATAt = transPrice * 1.15;
+    this.totalPriceVATAt = this.totalPriceAt * 1.15;
     this.totalCollateralAt = collateral;
     this.totalCollateralVATAt = collateral * 1.15;
   }

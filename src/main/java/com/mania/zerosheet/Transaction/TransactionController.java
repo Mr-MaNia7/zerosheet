@@ -78,7 +78,7 @@ public class TransactionController {
             model.addAttribute("items", itemRepository.findAll());
             return "Forms/item-transaction";
         }
-        performa.addNewTransaction();
+        performa.addNewTransaction(0);
         order.addPerforma(performa);
         return "redirect:/orders/current";
     }

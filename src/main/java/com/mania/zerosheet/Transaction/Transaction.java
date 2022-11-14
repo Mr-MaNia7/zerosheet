@@ -147,11 +147,11 @@ public class Transaction implements Serializable{
         this.setDayDifference();
         this.itemPrice = new_trans.getItemPrice();
         double old_trans_price = this.transPrice;
-        this.setTransPrice();
+        this.setTransPrice(this.customer.getRemainingPrice()/1.15);
         double old_collateral_price = this.collateral;
         this.setCollateral();
 
-        this.addLoanedInstance(old_trans_quantity);
+        this.addLoanedInstance(old_trans_quantity); 
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;
@@ -159,7 +159,7 @@ public class Transaction implements Serializable{
     public void updateRemainingPrice(int totalReturnQty){
         long dayDce = this.calculateDayDifference(new Date(), this.dueDate);
         double usedPrice = this.itemPrice * dayDce * totalReturnQty;
-        double remainedPrice = (this.customer.getTotalPrice() - usedPrice) * 1.15;
+        double remainedPrice = (this.transPrice - usedPrice < 0)? 0 : (this.transPrice - usedPrice) * 1.15;
         this.customer.setRemainingPrice(this.customer.getRemainingPrice() + remainedPrice);
     }
     public void setDayDifference() {
@@ -169,8 +169,8 @@ public class Transaction implements Serializable{
               .MILLISECONDS
               .toDays(difference_In_Time);
     }
-    public void setTransPrice(){
-        this.transPrice = this.itemPrice * this.dayDifference * this.itemQuantity;
+    public void setTransPrice(double remainingPrice){
+        this.transPrice = (this.itemPrice * this.dayDifference * this.itemQuantity) - remainingPrice;
     }
     public void setCollateral(){
         this.collateral = this.item.getUnitPrice() * this.itemQuantity;

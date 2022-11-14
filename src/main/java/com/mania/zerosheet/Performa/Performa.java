@@ -82,14 +82,14 @@ public class Performa implements Serializable {
 
         return false;
     }
-    public void addNewTransaction(){
+    public void addNewTransaction(double remainingPrice){
         this.setDayDifference();
-        this.setTransPrice();
+        this.setTransPrice(remainingPrice);
         this.setCollateral();
     }
     public void addTrans2ExistinCust(Customer customer){
         this.cust = customer;
-        this.addNewTransaction();
+        this.addNewTransaction(customer.getRemainingPrice()/1.15);
         customer.updateCost(this.transPrice, this.collateral);
     }
     public void setDayDifference() {
@@ -99,8 +99,8 @@ public class Performa implements Serializable {
               .MILLISECONDS
               .toDays(difference_In_Time);
     }
-    public void setTransPrice(){
-        this.transPrice = this.itemPrice * this.dayDifference * this.itemQuantity;
+    public void setTransPrice(double remainingPrice){
+        this.transPrice = (this.itemPrice * this.dayDifference * this.itemQuantity) - remainingPrice;
     }
     public void setCollateral(){
         this.collateral = this.item.getUnitPrice() * this.itemQuantity;
@@ -136,7 +136,7 @@ public class Performa implements Serializable {
         this.setDayDifference();
         this.itemPrice = new_performa.getItemPrice();
         double old_trans_price = this.transPrice;
-        this.setTransPrice();
+        this.setTransPrice(this.cust.getRemainingPrice()/1.15);
         double old_collateral_price = this.collateral;
         this.setCollateral();
 
