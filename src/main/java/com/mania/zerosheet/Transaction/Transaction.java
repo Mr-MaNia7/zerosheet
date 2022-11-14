@@ -74,10 +74,8 @@ public class Transaction implements Serializable{
     }
 
     public void removeTransaction() {
+        this.updateRemainingPrice(this.itemQuantity);
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
-        double oldDebt = this.customer.getRemainingPrice() / 1.15;
-        double newDebt = (oldDebt - this.transPrice) * 1.15;
-        this.customer.setRemainingPrice(newDebt);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
     }
@@ -100,9 +98,7 @@ public class Transaction implements Serializable{
             double collateral_price = this.item.getUnitPrice() * new_item_quantity;
             this.collateral = collateral_price;
             
-            double oldDebt = this.customer.getRemainingPrice() / 1.15;
-            double newDebt = oldDebt - old_trans_price + new_trans_price;
-            this.customer.setRemainingPrice(newDebt * 1.15);
+            this.updateRemainingPrice(returnQuantity + maintenanceQty + defectedQty);
     
             double old_total_collateral = this.customer.getTotalCollateral();
             double new_total_collateral = old_total_collateral - old_collateral_price + collateral_price;
@@ -159,6 +155,12 @@ public class Transaction implements Serializable{
         
         this.customer.updateCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
         return saveItem;
+    }
+    public void updateRemainingPrice(int totalReturnQty){
+        long dayDce = this.calculateDayDifference(new Date(), this.dueDate);
+        double usedPrice = this.itemPrice * dayDce * totalReturnQty;
+        double remainedPrice = (this.customer.getTotalPrice() - usedPrice) * 1.15;
+        this.customer.setRemainingPrice(this.customer.getRemainingPrice() + remainedPrice);
     }
     public void setDayDifference() {
         long difference_In_Time = this.dueBackDate.getTime() - this.dueDate.getTime();

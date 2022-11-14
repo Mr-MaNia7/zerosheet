@@ -164,28 +164,30 @@ public class Customer implements Serializable {
   }
   public void updateCost(double transPrice, double old_trans_price, double collateral, double old_collateral_price){
     this.totalPrice = this.totalPrice - old_trans_price + transPrice;
+    this.remainingPrice = (this.remainingPrice - (transPrice - old_trans_price) * 1.15 < 0)? 0 : this.remainingPrice - (transPrice - old_trans_price) * 1.15;
     this.totalPriceVAT = this.totalPrice * 1.15;
     this.totalCollateral = this.totalCollateral - old_collateral_price + collateral;
     this.totalCollateralVAT = this.totalCollateral * 1.15;
-    this.remainingPrice = ((this.remainingPrice / 1.15) - old_trans_price + transPrice) * 1.15;
     
     this.setAgreementCost(transPrice, collateral);
   }
-  public void updateCost(double transPrice, double collateral) {    
+  public void updateCost(double transPrice, double collateral) {
+    this.remainingPriceP = this.remainingPrice;
     this.totalPriceP += transPrice;
+    this.remainingPriceP = (this.remainingPriceP - transPrice * 1.15 < 0)? 0 : this.remainingPriceP - transPrice * 1.15;
     this.totalPriceVATP = (this.totalPriceP) * 1.15;
     this.totalCollateralP += collateral;
     this.totalCollateralVATP = (this.totalCollateralP) * 1.15;
-    this.remainingPriceP = (this.totalPriceP) * 1.15;
-
+    
     this.setAgreementCost(transPrice, collateral);
   }
   public void editCost(double transPrice, double old_trans_price, double collateral, double old_collateral_price){
+    this.remainingPriceP = this.remainingPrice;
     this.totalPriceP = this.totalPriceP - old_trans_price + transPrice;
+    this.remainingPriceP = (this.remainingPriceP - transPrice * 1.15 < 0)? 0 : this.remainingPriceP - transPrice * 1.15;
     this.totalPriceVATP = this.totalPriceP * 1.15;
     this.totalCollateralP = this.totalCollateralP - old_collateral_price + collateral;
     this.totalCollateralVATP = this.totalCollateralP * 1.15;
-    this.remainingPriceP = ((this.remainingPriceP / 1.15) - old_trans_price + transPrice) * 1.15;
   }
   public void setOrderCost() {
     this.performas.forEach(performa -> performa.setCust(this));
@@ -197,7 +199,6 @@ public class Customer implements Serializable {
     }
     this.totalPriceP += totalPrice;
     this.totalPriceVATP = this.totalPriceP * 1.15;
-    this.remainingPriceP = this.totalPriceP * 1.15;
     this.totalCollateralP += totalCollateral;
     this.totalCollateralVATP = this.totalCollateralP * 1.15;
 
@@ -255,13 +256,13 @@ public class Customer implements Serializable {
 
     this.totalPrice += this.totalPriceP;
     this.totalPriceVAT += this.totalPriceVATP;
-    this.remainingPrice += this.totalPriceVATP;
+    this.remainingPrice = this.remainingPriceP;
     this.totalCollateral += this.totalCollateralP;
     this.totalCollateralVAT += this.totalCollateralVATP;
 
     this.totalPriceA = this.totalPriceP;
     this.totalPriceVATA = this.totalPriceVATP;
-    this.remainingPriceA = this.totalPriceVATP;
+    this.remainingPriceA = this.remainingPriceP;
     this.totalCollateralA = this.totalCollateralP;
     this.totalCollateralVATA = this.totalCollateralVATP;
 
