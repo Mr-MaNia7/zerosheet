@@ -115,7 +115,7 @@ public class CustomerController {
     for (Performa performa : customer.getPerformas()){
       performa.setCust(null);
     }
-  
+    customer.getInstances().clear();
     this.customerRepository.delete(customer);
     return "redirect:/customers";
   }

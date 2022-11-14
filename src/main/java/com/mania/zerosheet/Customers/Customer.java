@@ -75,7 +75,7 @@ public class Customer implements Serializable {
   private double totalCollateralVATAt;
 
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", orphanRemoval = true)
   private List<Transaction> transactions = new ArrayList<Transaction>();
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "cust")
@@ -84,7 +84,7 @@ public class Customer implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
   private List<SavedAgreement> savedAgreements = new ArrayList<SavedAgreement>();
 
-  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Instance> instances = new ArrayList<Instance>();
 
   @OneToOne(fetch = FetchType.EAGER, optional = true)
