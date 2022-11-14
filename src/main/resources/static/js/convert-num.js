@@ -88,6 +88,7 @@
  */
 function toCurrencyAM(num) {
   try {
+    if (num === 0) return 'ዜሮ ብር ከ ዜሮ ሳንቲም';
     var numString = num.toString();
     var dotPos = numString.indexOf('.');
     var numString = num.toPrecision(dotPos + 2).toString();
