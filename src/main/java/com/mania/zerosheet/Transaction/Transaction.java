@@ -76,6 +76,7 @@ public class Transaction implements Serializable{
     public void removeTransaction() {
         this.updateRemainingPrice(this.itemQuantity);
         this.item.setTotalQuantity(this.item.getTotalQuantity() + this.itemQuantity);
+        this.item.setLoanedQuantity(this.item.getLoanedQuantity() - this.itemQuantity);
         this.customer.setTotalCollateral(this.customer.getTotalCollateral() - this.collateral);
         this.customer.setTotalCollateralVAT(this.customer.getTotalCollateral() * 1.15);
     }

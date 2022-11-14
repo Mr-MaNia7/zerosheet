@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import lombok.RequiredArgsConstructor;
 import com.mania.zerosheet.Company.CompanyRepository;
 import com.mania.zerosheet.Customers.CustomerRepository;
+import com.mania.zerosheet.ItemInstance.Instance;
+import com.mania.zerosheet.ItemInstance.InstanceRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Sort;
 
@@ -33,6 +35,7 @@ public class TransactionController {
     private final CompanyRepository companyRepository;
     private final PerformaRepository performaRepository;
     private final TransactionService transactionService;
+    private final InstanceRepository instanceRepository;
     private boolean isDuplicate = false;
     private boolean isEdited = true;
 
@@ -206,7 +209,13 @@ public class TransactionController {
             transactionRepository
                 .findById(transId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id:" + transId));
-        
+        Instance instance = transaction.getInstance();
+        transaction.setInstance(null);
+        instance.getCustomer().getInstances().remove(instance);
+        instance.setCustomer(null);
+        instance.getItem().removeInstance(instance);
+        instance.setItem(null);
+        this.instanceRepository.delete(instance);
         transaction.removeTransaction();
         transactionService.deleteTransaction(transaction);
         return "redirect:/customers";
