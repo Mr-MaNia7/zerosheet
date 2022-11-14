@@ -123,7 +123,7 @@
             <div th:each="trans,status : ${transactions}">
               <li>
                 ይህ የኪራይ ውል ከ ዛሬ ቀን
-                <span th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}"></span>
+                <span class="date" th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}"></span>
                 ጀምሮ በአዲስ አበባ ከተማ የተደረገ ሲሆን ተከራዩ እቃውን ከወሰደበት ጊዜ ጀምሮ ለ
                 <span th:text="${status.first}? ${trans.dayDifference}"></span>
                 ቀናት ፀንቶ ይቆያል፤ ሆኖም ግን ተዋዋዮች ከተስማሙና የቀጣይ ወራት ኪራይ ከተከፈለ ማራዘም ይችላሉ ፡፡
