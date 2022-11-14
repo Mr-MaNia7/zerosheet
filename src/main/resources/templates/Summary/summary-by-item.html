@@ -17,7 +17,7 @@
         <div th:unless="${#lists.isEmpty(items)}">
           <h2 class="mt-2 mb-3" style="text-align: center;">Summary Catagorised Based On Items</h2>
 
-          <div th:each="item : ${items}">
+          <div th:each="item : ${items}" class="bg-secondary bg-opacity-10">
             <div class="p-3 bg-light bg-opacity-10 rounded-end"><strong th:text="${item.itemName}"></strong></div>            
             <div class="row">
               <div class="card col-md-3 col-6 border-success">
@@ -33,8 +33,8 @@
                 </div>
               </div>
               <div class="card col-md-3 col-6 border-warning">
-                <div class="card-body text-warning">
-                  <h5 class="card-title"><span th:text="${item.maintenanceQuantity}"></span></h5>
+                <div class="card-body" style="color:rgb(230, 174, 8);">
+                  <h5 class="card-title"><span th:text="${item.maintenanceQuantity}" ></span></h5>
                   <p class="card-text">MAINTENANCE</p>
                 </div>
               </div>
