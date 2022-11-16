@@ -91,6 +91,32 @@ public class Customer implements Serializable {
   @JoinColumn(name = "agreement_id", nullable = true)
   Agreement agreement;
 
+  public void clearMonetary(){
+    this.totalPrice = 0;
+    this.totalPriceVAT = 0;
+    this.remainingPrice = 0;
+    this.totalCollateral = 0;
+    this.totalCollateralVAT = 0;
+
+    this.totalPriceP = 0;
+    this.totalPriceVATP = 0;
+    this.remainingPriceP = 0;
+    this.totalCollateralP = 0;
+    this.totalCollateralVATP = 0;
+
+    this.totalPriceA = 0;
+    this.totalPriceVATA = 0;
+    this.remainingPriceA = 0;
+    this.totalCollateralA = 0;
+    this.totalCollateralVATA = 0;
+
+    this.totalPriceAt = 0;
+    this.totalPriceVATAt = 0;
+    this.remainingPriceAt = 0;
+    this.totalCollateralAt = 0;
+    this.totalCollateralVATAt = 0;
+  }
+
   public void addInstance(Instance instance){
     this.instances.add(instance);
   }

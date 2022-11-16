@@ -52,7 +52,7 @@ public class Item implements Serializable{
     @Positive(message = "Area Coverage can not be Negative or Zero!")
     private double areaCoverage;
 
-    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Instance> instances = new ArrayList<Instance>();
     
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

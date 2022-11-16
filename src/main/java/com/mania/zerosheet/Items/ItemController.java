@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.mania.zerosheet.ItemInstance.Instance;
+import com.mania.zerosheet.ItemInstance.InstanceRepository;
+import com.mania.zerosheet.Performa.Performa;
+import com.mania.zerosheet.Performa.PerformaRepository;
+import com.mania.zerosheet.Transaction.Transaction;
+import com.mania.zerosheet.Transaction.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 public class ItemController {
     private final ItemRepository itemRepository;
     private final ItemService itemService;
+    private final InstanceRepository instanceRepository;
+    private final TransactionRepository transactionRepository;
+    private final PerformaRepository performaRepository;
         
     @GetMapping("/items")
     public String showItemsPage(Item item, @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
@@ -63,9 +72,33 @@ public class ItemController {
             itemRepository
                 .findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId));
-    
-    itemRepository.delete(item);
-    model.addAttribute("items", itemRepository.findAll());
-    return "redirect:/items";
+
+        for (Transaction transaction : item.getTransactions()) {            
+        Instance instance = transaction.getInstance();
+        transaction.setInstance(null);
+        transaction.getCustomer().getInstances().remove(instance);
+        instance.setCustomer(null);
+        item.removeInstance(instance);
+        instance.setItem(null);
+        this.instanceRepository.delete(instance);
+        
+        transaction.getCustomer().clearMonetary();
+        transaction.setItem(null);
+        transaction.getCustomer().getTransactions().remove(transaction);
+        transaction.setCustomer(null);
+        this.transactionRepository.delete(transaction);
+        }
+        for (Performa performa : item.getPerformas()){
+            performa.setItem(null);
+            performa.getCust().getPerformas().remove(performa);
+            performa.setCust(null);
+            this.performaRepository.delete(performa);
+        }
+        item.getInstances().clear();
+        item.getTransactions().clear();
+        item.getPerformas().clear();
+        this.itemRepository.delete(item);
+        model.addAttribute("items", itemRepository.findAll());
+        return "redirect:/items";
     }   
 }
