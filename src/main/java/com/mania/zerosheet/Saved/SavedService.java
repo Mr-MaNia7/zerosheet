@@ -17,7 +17,7 @@ public class SavedService {
     }
 
     public Paged<SavedAgreement> getPage(int pageNumber, int size, Customer customer) {
-        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by("agtId").ascending());
+        PageRequest request = PageRequest.of(pageNumber - 1, size, Sort.by("agreementDate").descending());
         Page<SavedAgreement> postPage = savedAgreementRepository.findAllByCustomer(customer, request);
         return new Paged<>(postPage, Paging.of(postPage.getTotalPages(), pageNumber, size));
     }
