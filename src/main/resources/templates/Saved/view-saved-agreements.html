@@ -12,6 +12,21 @@
     <div class="container">
       <div th:if="${#lists.isEmpty(customers)}">
         <h2 class="mt-2 mb-3" style="text-align: center;">No customers available at the moment!</h2>
+        <div class="container mt-2">
+          <div class="float-md-end col-12 col-md-9">
+            <div class="row justify-content-evenly">
+              <a class="col-3 align-self-center btn btn-primary" href="/items/newitem" role="button">
+                <i class="fas fa-plus"></i> Add New Item
+              </a>
+              <a class="col-3 align-self-center btn btn-primary" href="customers/newcustomer" role="button">
+                <i class="fas fa-plus"></i> Add New Customer
+              </a>
+              <a class="col-3 align-self-center btn btn-primary" href="/transactions/newtransaction" role="button">
+                <i class="fas fa-plus"></i> Add New Transaction
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
       <div th:unless="${#lists.isEmpty(customers)}">
         <h2 class="mt-2 mb-3" style="text-align: center;">List of Agreements</h2>
