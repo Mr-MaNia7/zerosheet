@@ -35,12 +35,12 @@
         th:text='${"Unit Price must be a number!"}'></span>
     </div>
     <div class="mb-3">
-      <label for="totalQuantity" class="form-label">Total Quantity <i class="fa-solid fa-asterisk fa-xs"
+      <label for="totalQuantity" class="form-label">Stock <i class="fa-solid fa-asterisk fa-xs"
           style="color:crimson;"></i></label>
       <input type="number" min="1" class="form-control" th:name="totalQuantity" id="totalQuantity" value="100"
         placeholder="100" th:errorclass="is-invalid">
       <span class="invalid-feedback" th:if="${#fields.hasErrors('totalQuantity')}"
-        th:text='${"Total Quantity must be a number!"}'></span>
+        th:text='${"Stock must be a number!"}'></span>
     </div>
     <div class="mb-3">
       <label for="areaCoverage" class="form-label">Expected Area Coverage <i class="fa-solid fa-asterisk fa-xs"
