@@ -42,7 +42,7 @@ public class Item implements Serializable{
     @PositiveOrZero(message = "Unit Price for sale can not be Negative")
     private double unitPrice;
 
-    @PositiveOrZero(message = "Total Quantity can not be Negative")
+    @PositiveOrZero(message = "Stock can not be Negative")
     private int totalQuantity;
 
     private int loanedQuantity;
