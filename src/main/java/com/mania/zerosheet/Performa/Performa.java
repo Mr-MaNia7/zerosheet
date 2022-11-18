@@ -35,7 +35,7 @@ public class Performa implements Serializable {
     private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueDate = new Date(new Date().getTime() + oneDay);
+    private Date dueDate = new Date(new Date().getTime());
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
@@ -143,7 +143,7 @@ public class Performa implements Serializable {
         this.cust.editCost(this.transPrice, old_trans_price, this.collateral, old_collateral_price);
     }
     public void reverseDayDifference(long dayDifference){
-        this.dueDate =  new Date(new Date().getTime() + oneDay);
+        this.dueDate =  new Date(new Date().getTime());
         this.dueBackDate =  new Date(this.dueDate.getTime() + oneDay * dayDifference);
     }
     

@@ -39,7 +39,7 @@ public class Transaction implements Serializable{
     private int itemQuantity = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date dueDate = new Date(new Date().getTime() + oneDay);
+    private Date dueDate = new Date(new Date().getTime());
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueBackDate = new Date(dueDate.getTime() + oneDay * 30L);
