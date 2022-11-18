@@ -13,7 +13,7 @@
 
           <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
             <p th:if="${status.first}" class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                th:text="${status.first}? ${#numbers.formatInteger(trans.transId-1, 4)}"></span><span
                 class="year">/15</span>
             </p>
         </div>
@@ -283,7 +283,7 @@
           <div class="mb-3">
             <div th:each="trans,status : ${transactions}" id="agreementNumber" class="row justify-content-end">
               <p th:if="${status.first}" class="col-6 col-md-3">የውል ቁጥር ሂ/ጠ/ሥ <span
-                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId, 4)}"></span><span
+                  th:text="${status.first}? ${#numbers.formatInteger(trans.transId-1, 4)}"></span><span
                   class="year">/15</span></p>
             </div>
           </div>
