@@ -10,6 +10,11 @@ footer {
     flex-shrink: 0;
 }
 
+.linkk a {
+    text-decoration: none;
+    color: #264653;
+}
+
 .price {
     font-weight: bold;
     color: saddlebrown;
