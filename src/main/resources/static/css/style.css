@@ -17,6 +17,9 @@
 .footer_h {
     color: var(--primary-color);
 }
+.list-group-item-primary {
+    background-color: var(--secondary-color) !important;
+}
 .btn-primary, .badge {
     background-color : var(--primary-button) !important;
     border-color: var(--primary-button) !important;
@@ -54,7 +57,7 @@
     border-color: var(--warning-color) !important;
 }
 .card.border-danger {
-    color: whitesmoke !important;
+    color: white !important;
     background-color: var(--danger-color) !important;
     border-color: var(--danger-color) !important;
 }
