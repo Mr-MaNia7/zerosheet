@@ -24,22 +24,22 @@
             aria-valuenow="67" aria-valuemin="0" aria-valuemax="100">67%</div>
         </div>
         <h2 class="mt-2 mb-3" style="text-align: center;">Agreement Page</h2>
-        <form class="mt-5" action="#" th:action="@{/orders/updatesummary/{id}(id = ${customer.id})}" th:object="${customer}"
-          method="get">
+        <form class="mt-5" action="#" th:action="@{/orders/updatesummary/{id}(id = ${customer.id})}"
+          th:object="${customer}" method="get">
           <div class="row justify-content-evenly">
             <a href="/cancel" class="col-2 align-self-center btn btn-primary" role="button" data-bs-toggle="tooltip"
               data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard changes">
               Cancel
             </a>
-            <a href="/orders/saveperforma" class="col-2 align-self-center btn btn-success" role="button"
+            <a href="/orders/saveperforma" class="col-2 align-self-center btn btn-primary" role="button"
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-              title="Save as proforma and continue later">
+              title="Save as proforma and continue later"><i class="fa-solid fa-floppy-disk"></i>
               Save as proforma
             </a>
             <a th:href="@{/orders/updatesummary/{id}(id = ${customer.id})}"
               class="col-2 align-self-center btn btn-primary" role="button" data-bs-toggle="tooltip"
               data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Accept and Continue">
-              Continue
+              <i class="fa-solid fa-circle-right"></i> Continue
             </a>
             <button class="col-2 align-self-center btn btn-primary" onclick="window.print(); return false;"
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
@@ -60,15 +60,15 @@
               data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Cancel and discard changes">
               Cancel
             </a>
-            <a href="/orders/saveperforma" class="col-2 align-self-center btn btn-success" role="button"
+            <a href="/orders/saveperforma" class="col-2 align-self-center btn btn-primary" role="button"
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-              title="Save as proforma and continue later">
+              title="Save as proforma and continue later"><i class="fa-solid fa-floppy-disk"></i>
               Save as proforma
             </a>
             <a th:href="@{/orders/updatesummary/{id}(id = ${customer.id})}"
               class="col-2 align-self-center btn btn-primary" role="button" data-bs-toggle="tooltip"
               data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Accept and Continue">
-              Continue
+              <i class="fa-solid fa-circle-right"></i> Continue
             </a>
             <button class="col-2 align-self-center btn btn-primary" onclick="window.print(); return false;"
               data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"

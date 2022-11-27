@@ -9,79 +9,82 @@
 <body>
   <header th:replace="general.html :: header"></header>
 
-  <main class="pt-2 pb-4 mb-4 mx-2">
-    <!-- <p th:text="${isCommented}"></p>
-      <div th:if="${isCommented == true}">
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header">
-            <strong class="me-auto">Confirmation</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  <main>
+    <div class="container mt-4">
+
+      <!-- <p th:text="${isCommented}"></p>
+        <div th:if="${isCommented == true}">
+          <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="me-auto">Confirmation</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+              Your response has been recorded successfully!
+            </div>
           </div>
-          <div class="toast-body">
-            Your response has been recorded successfully!
+        </div> -->
+      <div class="list-group my-1">
+        <a href="/company" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Company</div>
+            Company information
           </div>
-        </div>
-      </div> -->
-    <div class="list-group my-1">
-      <a href="/company" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Company</div>
-          Company information
-        </div>
-      </a>
-      <a href="/items" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold"> Items</div>
-          Items available in store
-        </div>
-        <span th:each="item, status : ${items}" class="badge bg-primary rounded-pill"
-        th:text="${status.first}? ${status.size}">14</span>
-      </a>
-      <a href="/customers" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Customers</div>
-          List of previous customers
-        </div>
-        <span th:each="customer, status : ${customers}" class="badge bg-primary rounded-pill"
+        </a>
+        <a href="/items" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold"> Items</div>
+            Items available in store
+          </div>
+          <span th:each="item, status : ${items}" class="badge rounded-pill"
           th:text="${status.first}? ${status.size}">14</span>
-      </a>
-      <a href="/transactions" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Transactions</div>
-          List of completed transactions
-        </div>
-        <span th:each="transaction, status : ${transactions}" class="badge bg-primary rounded-pill"
-          th:text="${status.first}? ${status.size}">14</span>
-      </a>
-      <a href="/transactions/performas" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Proformas</div>
-          List of incompleted transactions
-        </div>
-        <span th:each="performa, status : ${performas}" class="badge bg-primary rounded-pill"
-          th:text="${status.first}? ${status.size}">14</span>
-      </a>
-      <a href="/agreements/saved" class="list-group-item d-flex justify-content-between align-items-start">
-        <div class="ms-2 me-auto">
-          <div class="fw-bold">Agreements</div>
-          List of saved agreements
-        </div>
-        <span th:each="agreement, status : ${agreements}" class="badge bg-primary rounded-pill"
-          th:text="${status.first}? ${status.size}">14</span>
-      </a>
-    </div>
-    <div class="container mt-5">
-      <div class="float-md-end col-12 col-md-9">
-        <div class="row justify-content-evenly">
-          <a class="col-3 align-self-center btn btn-primary" href="/items/newitem" role="button">
-            <i class="fas fa-plus"></i> Add New Item
-          </a>
-          <a class="col-3 align-self-center btn btn-primary" href="customers/newcustomer" role="button">
-            <i class="fas fa-plus"></i> Add New Customer
-          </a>
-          <a class="col-3 align-self-center btn btn-primary" href="/transactions/newtransaction" role="button">
-            <i class="fas fa-plus"></i> Add New Transaction
-          </a>
+        </a>
+        <a href="/customers" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Customers</div>
+            List of previous customers
+          </div>
+          <span th:each="customer, status : ${customers}" class="badge rounded-pill"
+            th:text="${status.first}? ${status.size}">14</span>
+        </a>
+        <a href="/transactions" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Transactions</div>
+            List of completed transactions
+          </div>
+          <span th:each="transaction, status : ${transactions}" class="badge rounded-pill"
+            th:text="${status.first}? ${status.size}">14</span>
+        </a>
+        <a href="/transactions/performas" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Proformas</div>
+            List of incompleted transactions
+          </div>
+          <span th:each="performa, status : ${performas}" class="badge rounded-pill"
+            th:text="${status.first}? ${status.size}">14</span>
+        </a>
+        <a href="/agreements/saved" class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Agreements</div>
+            List of saved agreements
+          </div>
+          <span th:each="agreement, status : ${agreements}" class="badge rounded-pill"
+            th:text="${status.first}? ${status.size}">14</span>
+        </a>
+      </div>
+      <div class="container mt-5">
+        <div class="float-md-end col-12 col-md-9">
+          <div class="row justify-content-evenly">
+            <a class="col-3 align-self-center btn btn-primary" href="/items/newitem" role="button">
+              <i class="fas fa-plus"></i> Add New Item
+            </a>
+            <a class="col-3 align-self-center btn btn-primary" href="customers/newcustomer" role="button">
+              <i class="fas fa-plus"></i> Add New Customer
+            </a>
+            <a class="col-3 align-self-center btn btn-primary" href="/transactions/newtransaction" role="button">
+              <i class="fas fa-plus"></i> Add New Transaction
+            </a>
+          </div>
         </div>
       </div>
     </div>

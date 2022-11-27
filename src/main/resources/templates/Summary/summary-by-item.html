@@ -16,39 +16,44 @@
         </div>
         <div th:unless="${#lists.isEmpty(items)}">
           <h2 class="mt-2 mb-3" style="text-align: center;">Summary Catagorised Based On Items</h2>
-
-          <div th:each="item : ${items}" class="bg-secondary bg-opacity-10">
-            <div class="p-3 bg-light bg-opacity-10 rounded-end"><strong th:text="${item.itemName}"></strong></div>            
-            <div class="row">
-              <div class="card col-md-3 col-6 border-success">
-                <div class="card-body text-success">
-                  <h5 class="card-title"><span th:text="${item.totalQuantity}"></span></h5>
-                  <p class="card-text">AVAILABLE</p>
+          <div>
+            <div th:each="item : ${items}" class="bg-secondary bg-opacity-10">
+              <div class="p-3 bg-opacity-10 rounded-end"><strong th:text="${item.itemName}"></strong></div>            
+              <div class="row">
+                <div class="card col-md-3 col-6 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title"><span th:text="${item.totalQuantity}"></span></h5>
+                    <p class="card-text">AVAILABLE</p>
+                  </div>
                 </div>
-              </div>
-              <div class="card col-md-3 col-6 border-primary">
-                <div class="card-body text-primary">
-                  <h5 class="card-title"><span th:text='${item.loanedQuantity}'></span></h5>
-                  <p class="card-text">LOANED</p>
+                <div class="card col-md-3 col-6 border-info">
+                  <div class="card-body">
+                    <h5 class="card-title"><span th:text='${item.loanedQuantity}'></span></h5>
+                    <p class="card-text">LOANED</p>
+                  </div>
                 </div>
-              </div>
-              <div class="card col-md-3 col-6 border-warning">
-                <div class="card-body" style="color:rgb(230, 174, 8);">
-                  <h5 class="card-title"><span th:text="${item.maintenanceQuantity}" ></span></h5>
-                  <p class="card-text">MAINTENANCE</p>
+                <div class="card col-md-3 col-6 border-warning">
+                  <div class="card-body">
+                    <h5 class="card-title"><span th:text="${item.maintenanceQuantity}" ></span></h5>
+                    <p class="card-text">MAINTENANCE</p>
+                  </div>
                 </div>
-              </div>
-              <div class="card col-md-3 col-6 border-danger">
-                <div class="card-body text-danger">
-                  <h5 class="card-title"><span th:text="${item.defectedQuantity}"></span></h5>
-                  <p class="card-text">DEFECTED</p>
+                <div class="card col-md-3 col-6 border-danger">
+                  <div class="card-body">
+                    <h5 class="card-title"><span th:text="${item.defectedQuantity}"></span></h5>
+                    <p class="card-text">DEFECTED</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="row justify-content-start mt-5">
+        <a name="" id="" class="btn btn-primary col-6 col-md-2" href="/items" role="button">
+          <i class="fa-solid fa-arrow-left"></i> Back to Items
+        </a>
+      </div>
     </div>
   </main>
   <div th:replace="general.html :: footer"></div>

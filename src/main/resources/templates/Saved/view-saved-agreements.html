@@ -29,38 +29,45 @@
         </div>
       </div>
       <div th:unless="${#lists.isEmpty(customers)}">
-        <h2 class="mt-2 mb-3" style="text-align: center;">List of Agreements</h2>
-        <div th:each="customer : ${customers}">
-          <ul class="list-group">
-            <li class="list-group-item">
-              <h6 th:text="${customer.fullName}"></h6>
+        <h2 class="mt-2 mb-3" style="text-align: center;">List of All Agreements</h2>
+        <div th:each="customer : ${customers}" class="row justify-content-center">
+          <ul class="list-group col-8 col-md-7">
+            <li class="list-group-item bg-light">
+              <h5>By <span class="badge rounded-pill" th:text="${customer.fullName}"></span></h5>
             </li>
             <li class="list-group-item" th:each="agreement, status : ${customer.savedAgreements}">
-              <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}' style="font-weight: bold;"></span>
-              </div>
-              <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
-                <ul class="list-group">
-                  <div>Items: </div>
-                  <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
-                    <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
-                  </div>
-                </ul>
-              </div>
-              <div>TotalPrice: <span
-                  th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                  style="font-weight: bold;"></span></div>
-              <div>Total Collateral = <span
-                  th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
-                  style="font-weight: bold;"></span></div>
-              <div class="my-3">
-                <a class="btn btn-primary btn-sm" th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}"
-                  role="button">
-                  <i class="fa-solid fa-eye"></i><span> View Agreement</span>
-                </a>
+              <div class="mx-3">
+                <div>Agreement Time Stamp: <span class="datewclock" th:text='${agreement.agreementDate}' style="font-weight: bold;"></span>
+                </div>
+                <div th:unless="${#lists.isEmpty(agreement.savedTransactions)}">
+                  <ul class="list-group">
+                    <div>Items: </div>
+                    <div class="list-group-item" th:each="trans : ${agreement.savedTransactions}">
+                      <div><span th:text='${trans.itemName}' style="font-weight: bold;"></span></div>
+                    </div>
+                  </ul>
+                </div>
+                <div>Total Price: <span
+                    th:text="${#numbers.formatDecimal(agreement.totalPriceVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                    style="font-weight: bold;"></span></div>
+                <div>Total Collateral = <span
+                    th:text="${#numbers.formatDecimal(agreement.totalCollateralVATP, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+                    style="font-weight: bold;"></span></div>
+                <div class="my-3">
+                  <a class="btn btn-primary btn-sm" th:href="@{/agreements/{agtId}(agtId=${agreement.agtId})}"
+                    role="button">
+                    <i class="fa-solid fa-eye"></i><span> View Agreement</span>
+                  </a>
+                </div>
               </div>
             </li>
           </ul>
         </div>
+      </div>
+      <div class="row justify-content-start mt-5">
+        <a name="" id="" class="btn btn-primary col-6 col-md-2" href="/" role="button">
+          <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
       </div>
     </div>
     </div>

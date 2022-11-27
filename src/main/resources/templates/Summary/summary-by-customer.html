@@ -44,28 +44,28 @@
                   <div class="row">
                     <div class="col-md-3 col-6" th:each="instance : ${customer.instances}">
                       <div th:if="${instance.Status == instance.Status.ONLOAN}">
-                        <div class="card border-primary">
-                          <div class="card-body text-primary">
+                        <div class="card border-info">
+                          <div class="card-body">
                             <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
-                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <p class="card-text" th:text="${instance.Status}">ONLOAN</p>
                             <div th:text="${instance.itemQuantity}"></div>
                           </div>
                         </div>
                       </div>
                       <div th:if="${instance.Status == instance.Status.MAINTENANCE}">
                         <div class="card border-warning">
-                          <div class="card-body text-warning">
+                          <div class="card-body">
                             <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
-                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <p class="card-text" th:text="${instance.Status}">MAINTENANCE</p>
                             <div th:text="${instance.itemQuantity}"></div>
                           </div>
                         </div>
                       </div>
                       <div th:if="${instance.Status == instance.Status.DEFECTED}">
                         <div class="card border-danger">
-                          <div class="card-body text-danger">
+                          <div class="card-body">
                             <h5 class="card-title"><span th:text="${instance.item.itemName}"></span></h5>
-                            <p class="card-text" th:text="${instance.Status}">AVAILABLE</p>
+                            <p class="card-text" th:text="${instance.Status}">DEFECTED</p>
                             <div th:text="${instance.itemQuantity}"></div>
                           </div>
                         </div>
@@ -78,6 +78,12 @@
           </div>
         </div>
       </div>
+      <div class="row justify-content-start mt-5">
+        <a name="" id="" class="btn btn-primary col-6 col-md-2" href="/customers" role="button">
+          <i class="fa-solid fa-arrow-left"></i> Back to Customers
+        </a>
+      </div>
+    </div>
   </main>
   <div th:replace="general.html :: footer"></div>
 </body>

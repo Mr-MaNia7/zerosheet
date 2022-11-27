@@ -42,11 +42,11 @@
                   <td th:text="${item.areaCoverage}"></td>
                   <td>
                     <a class="me-3" th:href="@{/items/edititem/{itemId}(itemId=${item.itemId})}">
-                      <i class="fa-solid fa-pen"></i></a>
+                      <i class="fa-solid fa-pen alone"></i></a>
                     <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                       th:data-bs-itemId="${item.itemId}" th:data-bs-itemName="${item.itemName}">
-                      <!-- <i class="fa-solid fa-trash" style="color:rgb(223, 77, 52) ;"></i> -->
-                      <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i>
+                      <i class="fa-solid fa-trash"></i>
+                      <!-- <i class="fa-solid fa-delete-left"></i> -->
                     </a>
 
                     <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"

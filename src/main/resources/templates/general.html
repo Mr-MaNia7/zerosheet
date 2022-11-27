@@ -21,7 +21,7 @@
 
 <body>
   <header th:fragment="header" class="sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:rgb(176, 72, 228) ;">
+    <nav class="navbar navbar-expand-lg navbar-dark header_nav">
       <div class="container-fluid">
         <!-- <a class="navbar-brand" href="/"><img class="img-fluid" th:src="@{images/logo.svg}" alt="" width="30" height="24"> ZeroSheet</a> -->
         <a class="navbar-brand loggo" href="/"><i id="logo" class="fa-solid fa-circle-notch fa-lg"></i> ZeroSheet</a>
@@ -90,10 +90,10 @@
               <a class="nav-link active" href="/agreements/saved">Agreements</a>
             </li>
           </ul>
-          <form class="d-flex" role="search">
+          <!-- <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          </form> -->
         </div>
       </div>
     </nav>
@@ -104,7 +104,7 @@
         <div class="col-lg-3 mb-3">
           <a class="d-inline-flex align-items-center mb-2 link-dark text-decoration-none" href="/"
             aria-label="ZeroSheet">
-            <h5 class="fs-5" style="color:darkorchid ;"><i class="fa-solid fa-circle-notch fa-lg"></i> ZeroSheet</h5>
+            <h5 class="fs-5 footer_h" ><i class="fa-solid fa-circle-notch fa-lg"></i> ZeroSheet</h5>
           </a>
           <ul class="list-unstyled linkk small text-muted">
             <!-- <li class="mb-2">Designed and built with <i id="heart" class="fa fa-heart" aria-hidden="true"></i> by <a -->
@@ -117,7 +117,7 @@
           </ul>
         </div>
         <div class="col-6 col-lg-2 offset-lg-1 mb-3">
-          <h5 style="color:darkorchid ;">Links</h5>
+          <h5 class="footer_h">Links</h5>
           <ul class="list-unstyled linkk">
             <li class="mb-2"><a href="/">Home</a></li>
             <li class="mb-2"><a href="/contact">Contact&lt;dev&gt;</a></li>
@@ -125,19 +125,19 @@
           </ul>
         </div>
         <div class="col-6 col-lg-2 mb-3">
-          <h5 style="color:darkorchid ;">Guides</h5>
+          <h5 class="footer_h">Guides</h5>
           <ul class="list-unstyled linkk">
             <li class="mb-2"><a href="#">Getting started</a></li>
           </ul>
         </div>
         <div class="col-6 col-lg-2 mb-3">
-          <h5 style="color:darkorchid ;">Projects</h5>
+          <h5 class="footer_h" >Projects</h5>
           <ul class="list-unstyled linkk">
             <li class="mb-2"><a href="#">ZeroSheet</a></li>
           </ul>
         </div>
         <div class="col-6 col-lg-2 mb-3">
-          <h5 style="color:darkorchid ;">Community</h5>
+          <h5 class="footer_h">Community</h5>
           <ul class="list-unstyled linkk">
             <li class="mb-2"><a href="https://github.com/Mr-MaNia7/zs-heroku-psql" target="_blank">Github</a></li>
             <li class="mb-2"><a href="https://github.com/Mr-MaNia7/zs-heroku-psql/issues" target="_blank">Issues</a>

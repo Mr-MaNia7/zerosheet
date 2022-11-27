@@ -22,13 +22,11 @@
           <form action="#" th:action="@{/updatecompany/{compName}(compName=${company.compName})}" th:object="${company}"
             method="post">
             <div class="mb-3">
-              <label for="compName" class="form-label">Company name <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compName" class="form-label">Company name <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compName}" id="compName" th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compName')}" th:errors="*{compName}"></span>
             </div>
-            <label for="compPhoneNumber" class="form-label">Phone number <i class="fa-solid fa-asterisk fa-xs"
-                style="color:crimson;"></i></label>
+            <label for="compPhoneNumber" class="form-label">Phone number <i class="fa-solid fa-asterisk fa-xs"></i></label>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon3">+251</span>
               <input type="text" class="form-control" th:field="*{compPhoneNumber}" id="compPhoneNumber"
@@ -37,38 +35,33 @@
                 th:errors="*{compPhoneNumber}"></span>
             </div>
             <div class="mb-3">
-              <label for="compHouseNumber" class="form-label">House number <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compHouseNumber" class="form-label">House number <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compHouseNumber}" id="compHouseNumber"
                 th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compHouseNumber')}"
                 th:errors="*{compHouseNumber}"></span>
             </div>
             <div class="mb-3">
-              <label for="compCity" class="form-label">City <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compCity" class="form-label">City <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compCity}" id="compCity" th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compCity')}" th:errors="*{compCity}"></span>
             </div>
             <div class="mb-3">
-              <label for="compWoreda" class="form-label">Woreda <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compWoreda" class="form-label">Woreda <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compWoreda}" id="compWoreda"
                 th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compWoreda')}"
                 th:errors="*{compWoreda}"></span>
             </div>
             <div class="mb-3">
-              <label for="compSubCity" class="form-label">Sub-City <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compSubCity" class="form-label">Sub-City <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compSubCity}" id="compSubCity"
                 th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compSubCity')}"
                 th:errors="*{compSubCity}"></span>
             </div>
             <div class="mb-3">
-              <label for="compCountry" class="form-label">Country <i class="fa-solid fa-asterisk fa-xs"
-                  style="color:crimson;"></i></label>
+              <label for="compCountry" class="form-label">Country <i class="fa-solid fa-asterisk fa-xs"></i></label>
               <input type="text" class="form-control" th:field="*{compCountry}" id="compCountry"
                 th:errorclass="is-invalid">
               <span class="invalid-feedback" th:if="${#fields.hasErrors('compCountry')}"
@@ -82,7 +75,7 @@
               </a>
               <button type="reset" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
                 data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Reset to defaults">
-                Reset
+                Reset 
               </button>
               <button type="submit" class="col-2 col-sm-3 btn btn-primary" data-bs-toggle="tooltip"
                 data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="Update and save changes">
@@ -91,7 +84,7 @@
             </div>
             <footer>
               <div class="mt-3">
-                <i class="fa-solid fa-asterisk fa-xs" style="color:crimson;"></i> Required field
+                <i class="fa-solid fa-asterisk fa-xs"></i> Required field
               </div>
             </footer>
           </form>

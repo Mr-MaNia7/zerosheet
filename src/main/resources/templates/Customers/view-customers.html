@@ -36,28 +36,25 @@
                           <h6>Personal Address Information</h6>
                           <div class="justify-content-center">
                             <div>
-                              <i class="fa-solid fa-envelope me-2" style="color:rgb(176, 72, 228)" ;></i><span
+                              <i class="fa-solid fa-envelope me-2 iconn"></i><span
                                 th:text="${#strings.defaultString(customer.email, 'N/A')}"></span>
                             </div>
                             <div>
-                              <i class="fa-solid fa-phone me-2" style="color:rgb(176, 72, 228)"></i><span
+                              <i class="fa-solid fa-phone me-2 iconn"></i><span
                                 th:text="${customer.phoneNumber}"></span>
                             </div>
                             <div>
-                              <i class="fa-solid fa-house me-2" style="color:rgb(176, 72, 228)"></i><span
+                              <i class="fa-solid fa-house me-2 iconn"></i><span
                                 th:text="${#strings.defaultString(customer.houseNumber, 'N/A')}"></span>
                             </div>
                             <div>
-                              <span class="badge rounded-pill me-1"
-                                style="background-color:rgb(176, 72, 228);">city</span><span
+                              <span class="badge rounded-pill me-1">city</span><span
                                 th:text="${customer.city}"></span>
                             </div>
                             <div>
-                              <span class="badge rounded-pill me-1"
-                                style="background-color:rgb(176, 72, 228);">subcity</span>
+                              <span class="badge rounded-pill me-1">subcity</span>
                               <span th:text="${#strings.defaultString(customer.subcity, 'N/A')}"></span>
-                              <span class="badge rounded-pill me-1"
-                                style="background-color:rgb(176, 72, 228);">woreda</span>
+                              <span class="badge rounded-pill me-1">woreda</span>
                               <span th:text="${customer.woreda != 0} ? ${customer.woreda} : 'N/A'"></span>
                             </div>
                           </div>
@@ -123,7 +120,7 @@
                                     </div>
                                   </form>
                                 </div>
-                                <div>Each Transaction Price: <span
+                                <div>Price (without VAT): <span
                                   th:text='${#numbers.formatDecimal(transaction.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}'
                                   style="font-weight: bold;"></span>
                                 </div>
@@ -181,9 +178,9 @@
                                 th:href="@{/transactions/addtransaction/{id}(id=${customer.id})}" role="button">
                                 <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
                               </a>
-                              <a class="col-md-3 col-4 ms-3" th:each="transaction, status : ${customer.transactions}"
+                              <a class="link-secondary col-md-3 col-4 ms-3" th:each="transaction, status : ${customer.transactions}"
                                 th:if="${status.size > 2 && status.first}" th:href="@{transactions/bycustomer/{id}(id=${customer.id})}">
-                                <span> View More Transactions</span>
+                                <span>View more transactions <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                               </a>
                             </div>
                           </div>
@@ -199,7 +196,7 @@
                                 <div><span th:text="${performa.item.itemName}" style="font-weight: bold;"></span></div>
                                 <div>Item Quantity: <span th:text='${performa.itemQuantity}'
                                     style="font-weight: bold;"></span></div>
-                                <div>Each proforma Price: <span
+                                <div>Price (without VAT): <span
                                     th:text='${#numbers.formatDecimal(performa.transPrice, 1,"COMMA", 2, "DEFAULT") + " Birr"}'
                                     style="font-weight: bold;"></span></div>
                                 <div>Loan days: <span th:text='${performa.dayDifference + "  days"}'
@@ -266,8 +263,8 @@
                             </ul>
                             <div th:each="agreement, status : ${customer.savedAgreements}"
                               th:if="${status.size > 1 && status.first}">
-                              <a th:href="@{/agreements/bycustomer/{id}(id=${customer.id})}"><span> View More
-                                  Agreements</span>
+                              <a class="link-secondary" th:href="@{/agreements/bycustomer/{id}(id=${customer.id})}"><span> View more
+                                  agreements <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                               </a>
                             </div>
                           </div>
@@ -307,7 +304,7 @@
           <a name="" id="" class="btn btn-primary col-6 col-md-3" href="customers/newcustomer" role="button">
             <i class="fas fa-plus fa-lg"></i> Add New Customer
           </a>
-          <a class="col-5 col-md-3" href="/customerstabular">Go To Tabular View</a>
+          <a class="col-5 col-md-3" href="/customerstabular"> <i class="fa-solid fa-table iconn"> Tabular view </i></a>
         </div>
         <nav aria-label="Page navigation" class="paging mt-2">
           <ul class="pagination justify-content-center" th:if="${customers.page.totalPages > 1}">

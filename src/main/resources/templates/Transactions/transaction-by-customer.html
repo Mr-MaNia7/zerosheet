@@ -13,14 +13,14 @@
   <main>
     <div class="row align-self-center justify-content-center">
       <div class="col-md-8 col-10">
-        <h2 class="mt-2 mb-5" style="text-align: center;"
-          th:text="${'List of Transactions for ' + customer.fullName}">
+        <h2 class="mt-2 mb-5" style="text-align: center;">List of transactions for 
+          <span type="button" class="badge rounded-pill" th:text="${customer.fullName}"></span>
         </h2>
         <div>
           <ul class="list-group">
             <li class="list-group-item" th:each="transaction, status : ${transactions.page}">
               <div>
-                <span class="badge bg-primary rounded-pill" th:text="${transaction.transId}">14</span>
+                <span class="badge rounded-pill" th:text="${'#' + transaction.transId}">14</span>
                 <span th:text="${transaction.item.itemName}" style="font-weight: bold;"></span>
               </div>
               <div>
@@ -111,6 +111,12 @@
                 </div>
               </div>
             </li>
+            <div class="row justify-content-center mt-5">
+              <a class="btn btn-primary col-6 col-md-3"
+                th:href="@{/transactions/addtransaction/{id}(id=${customer.id})}" role="button">
+                <i class="fa-solid fa-plus"></i><span> Add Transactions</span>
+              </a>
+            </div>
           </ul>
           <nav aria-label="Page navigation" class="paging">
             <ul class="pagination" th:if="${transactions.page.totalPages > 1}">

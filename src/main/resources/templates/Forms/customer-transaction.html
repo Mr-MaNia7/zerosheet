@@ -46,8 +46,8 @@
               <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#cart-content"
                   aria-expanded="true" aria-controls="cart-content">
-                  <i class="fa-solid fa-cart-shopping fa-xl"></i><b>Cart</b>
-                  <span th:each="performa, status : ${customer.performas}" class="badge bg-primary rounded-pill ms-2"
+                  <i class="fa-solid fa-cart-shopping fa-lg"><b>Cart</b></i>
+                  <span th:each="performa, status : ${customer.performas}" class="badge rounded-pill ms-2"
                   th:text='${status.first}? ${"# " + status.size}'>14</span>
                 </button>
               </h2>

@@ -4,8 +4,7 @@
 <body>
   <div th:fragment="card" class="card">
     <div class="card-body">
-      <h5 class="card-title"><span
-          th:text="${customer.fullName}"></span></h5>
+      <h5 class="card-title"><span th:text="${customer.fullName}"></span></h5>
       <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
     </div>
     <ul class="list-group list-group-flush">
@@ -13,20 +12,19 @@
         <h6>Transactions to be completed</h6>
         <ol class="list-group list-group-numbered list-group-flush">
           <li th:each="trans, status : ${transactions}" class="list-group-item col-12 col-md-6">
-            <span class="badge bg-primary rounded-pill me-1"
-              style="background-color:rgb(176, 72, 228);">Item</span><span th:text="${trans.item.itemName}"></span>
+            <span class="badge rounded-pill me-1">Item</span><span th:text="${trans.item.itemName}"></span>
             <div class="ms-3">
-              <span class="badge bg-primary rounded-pill me-1" style="background-color:rgb(176, 72, 228);">Transaction
+              <span class="badge rounded-pill me-1">Transaction
                 price</span><span
                 th:text="${#numbers.formatDecimal(trans.transPrice, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"></span>
             </div>
             <div class="ms-3">
-              <span class="badge bg-primary rounded-pill me-1" style="background-color:rgb(176, 72, 228);">Collateral
+              <span class="badge rounded-pill me-1">Collateral
                 price</span><span
                 th:text="${#numbers.formatDecimal(trans.collateral, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"></span>
             </div>
             <div class="ms-3">
-              <span class="badge bg-primary rounded-pill me-1" style="background-color:rgb(176, 72, 228);">Loan
+              <span class="badge rounded-pill me-1">Loan
                 days</span><span th:text="${trans.dayDifference + ' days'}"></span>
             </div>
           </li>
@@ -41,8 +39,7 @@
               <div class="fw-bold"><span th:text="${trans.item.itemName}"></span></div>
               Remaining Quantity = <span th:text="${trans.item.totalQuantity}"></span>
             </div>
-            <span class="badge bg-primary rounded-pill" style="background-color:rgb(176, 72, 228);"
-              th:text="${trans.itemQuantity}"></span>
+            <span class="badge rounded-pill" th:text="${trans.itemQuantity}"></span>
           </li>
         </ol>
       </li>
@@ -63,7 +60,8 @@
               <div class="card-title">Total Remaining Balance</div>
             </div>
             <div class="card-body">
-              <div><span th:text="${#numbers.formatDecimal(customer.remainingPrice, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
+              <div><span
+                  th:text="${#numbers.formatDecimal(customer.remainingPrice, 1, 'COMMA', 2, 'DEFAULT') + ' Birr'}"
                   style="font-size:x-large ;"></span></div>
             </div>
           </div>

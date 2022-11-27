@@ -16,7 +16,7 @@
           <h2 class="mt-2 mb-3" style="text-align: center;">No transactions available at the moment!</h2>
         </div>
         <div th:unless="${transactions.page.isEmpty()}">
-          <h2 class="mt-2 mb-3" style="text-align: center;">List of Transactions</h2>
+          <h2 class="mt-2 mb-3" style="text-align: center;">List of All Transactions</h2>
           <div class="table-responsive">
             <table class="table table-hover">
               <thead class="table-light align-middle">
@@ -52,12 +52,12 @@
                   </td>
                   <td>
                     <a class="me-3" th:href="@{/transactions/edittransaction/{transId}(transId=${transaction.transId})}">
-                      <i class="fa-solid fa-pen"></i></a>
+                      <i class="fa-solid fa-pen alone"></i></a>
                     <a class="ms-3" data-bs-toggle="modal" data-bs-target="#confirm-delete"
                       th:data-bs-transId="${transaction.transId}" th:data-bs-itemName="${transaction.item.itemName}"
                       th:data-bs-custName="${transaction.customer.fullName}">
-                      <!-- <i class="fa-solid fa-delete-left" style="color:rgb(223, 77, 52) ;"></i> -->
-                      <i class="fa-solid fa-right-to-bracket" style="color:rgb(223, 77, 52) ;"></i>
+                      <!-- <i class="fa-solid fa-delete-left"></i> -->
+                      <i class="fa-solid fa-right-to-bracket alone"></i>
                     </a>
 
                     <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
