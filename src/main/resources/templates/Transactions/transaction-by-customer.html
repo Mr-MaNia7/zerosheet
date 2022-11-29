@@ -4,7 +4,7 @@
 <head>
   <div th:replace="general.html :: head"></div>
   <title
-    th:text="${'Transactions for ' + customer.fullName} + ' · ZeroSheet '">
+    th:text="${'Transactions for ' + customer.fullName} + ' · HiyaScaffold Service '">
   </title>
 </head>
 
@@ -142,7 +142,7 @@
       </div>
     </div>
   </main>
-  <header th:replace="general.html :: footer"></header>
+  <footer th:replace="general.html :: footer"></footer>
   <script th:src="@{/js/convert-date.js}"></script>
   <script>
     const returnModal = document.getElementById('confirm-return')
