@@ -95,6 +95,9 @@ function toCurrencyAM(num) {
     };
     var numString = num.toString();
     var dotPos = numString.indexOf('.');
+    if (dotPos == -1) {
+      return toNumeralsAM(+numString) + ' ብር ከ ዜሮ ሳንቲም';
+    }
     var numString = num.toPrecision(dotPos + 2).toString();
     if (dotPos > 0) {
       var currency = toNumeralsAM(+numString.slice(0, dotPos)) + ' ብር ከ ' + toNumeralsAM(+numString.slice(dotPos + 1)) + ' ሳንቲም';
@@ -110,4 +113,5 @@ function toCurrencyAM(num) {
 var numeralEl = document.getElementById('numeralprice');
 var el = document.getElementById('totalprice');
 var totalprice = el.getAttribute('data-bs-totalprice');
+// alert(totalprice);
 numeralEl.textContent = toCurrencyAM(+totalprice);
