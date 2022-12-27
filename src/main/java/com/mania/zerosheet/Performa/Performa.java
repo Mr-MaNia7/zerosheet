@@ -100,7 +100,10 @@ public class Performa implements Serializable {
               .toDays(difference_In_Time);
     }
     public void setTransPrice(double remainingPrice){
-        this.transPrice = (this.itemPrice * this.dayDifference * this.itemQuantity) - remainingPrice;
+        if (this.item.getItemName().startsWith("H frame 2.4")){
+            this.transPrice = (Math.ceil(3.84  * this.itemQuantity) * this.itemPrice * this.dayDifference) - remainingPrice;
+        }
+        else this.transPrice = (this.itemPrice * this.dayDifference * this.itemQuantity) - remainingPrice;
     }
     public void setCollateral(){
         this.collateral = this.item.getUnitPrice() * this.itemQuantity;

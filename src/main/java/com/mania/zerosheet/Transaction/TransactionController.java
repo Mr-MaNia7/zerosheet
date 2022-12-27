@@ -82,7 +82,24 @@ public class TransactionController {
             return "Forms/item-transaction";
         }
         performa.addNewTransaction(0);
-        order.addPerforma(performa);
+        if (performa.getItem().getItemName().startsWith("H frame 2.4")) {
+            Item x = itemRepository.findById(4L)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + 4L));
+            ;
+            Item u = itemRepository.findById(5L)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + 5L));
+            ;
+            Performa xbrace = new Performa(performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(),
+                    performa.getDayDifference(), x.getUnitPrice()*performa.getItemQuantity(), (2.84 / 3 * performa.getTransPrice()*0), performa.getItemPrice(),
+                    order, x);
+            Performa uhead = new Performa(2*performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(),
+                    performa.getDayDifference(), u.getUnitPrice()*2*performa.getItemQuantity(), (5.68 / 3 * performa.getTransPrice()*0), performa.getItemPrice(),
+                    order, u);
+            order.addPerforma(performa);
+            order.addPerforma(xbrace);
+            order.addPerforma(uhead);  
+        }
+        else order.addPerforma(performa);
         return "redirect:/orders/current";
     }
 
