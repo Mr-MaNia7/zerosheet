@@ -139,37 +139,11 @@
                                     <i class="fa-solid fa-pen"></i><span> Edit Transaction</span>
                                   </a>
                                   <a class="col-4 col-md-3 btn btn-danger btn-sm ms-3" data-bs-toggle="modal"
-                                    data-bs-target="#confirm-return" th:data-bs-transId="${transaction.transId}"
+                                    th:data-bs-target='${"#confirm-return"}' th:data-bs-transId="${transaction.transId}"
                                     th:data-bs-itemName="${transaction.item.itemName}"
                                     th:data-bs-custName="${customer.fullName}">
                                     <i class="fa-solid fa-right-to-bracket"></i><span> Return All</span>
                                   </a>
-                                  <div class="modal fade" id="confirm-return" tabindex="-1" aria-labelledby="deleteItem"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <div class="container">Delete transaction of item <span id="itemName"
-                                              style="font-weight: bold;">item name</span> by a customer <span
-                                              class="custName" style="font-weight: bold;">customer name</span>
-                                            permanently?</div>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-primary"
-                                            data-bs-dismiss="modal">Cancel</button>
-                                          <button id="deletebutton" type="button" class="btn btn-danger"
-                                            data-bs-dismiss="modal">
-                                            <a id="deletelink" class="link-light text-decoration-none">Delete</a>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
                                 </div>
                               </li>
                             </ul>
@@ -326,6 +300,27 @@
             </li>
           </ul>
         </nav>
+      </div>
+      <div class="modal fade" th:id='${"confirm-return"}' tabindex="-1" aria-labelledby="deleteItem" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteItem">Confirm Delete Action</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">Delete transaction of item <span id="itemName" style="font-weight: bold;">item
+                  name</span> by a customer <span class="custName" style="font-weight: bold;">customer name</span>
+                permanently?</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
+              <button id="deletebutton" type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                <a id="deletelink" class="link-light text-decoration-none">Delete</a>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal fade" id="confirm-delete" tabindex="-1" aria-labelledby="deleteItem"
         aria-hidden="true">
