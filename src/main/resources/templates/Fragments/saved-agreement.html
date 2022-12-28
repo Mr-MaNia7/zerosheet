@@ -121,7 +121,7 @@
             <li>ተከራይ የሚከራየውን ንብረት ከተገለገለበት በኃላ ጊዜው ሲጠናቀቅ እቃዎቹን በተረከበበት ሁኔታ የማያስረክብ ቢሆን ግን ለ ዕቃዎቹ ሲባል በመያዣነት የተቀበለውን
               ቼክ ባንክ ይዞ በመቅረብ የመመንዘር መብት አከራይ አለው ፡፡</li>
             <div th:each="trans,status : ${transactions}">
-              <li>
+              <li th:if="${status.first}">
                 ይህ የኪራይ ውል ከ ዛሬ ቀን
                 <span class="date" th:text="${#dates.format(customer.agreementDate, 'dd-MM-yyyy')}"></span>
                 ጀምሮ በአዲስ አበባ ከተማ የተደረገ ሲሆን ተከራዩ እቃውን ከወሰደበት ጊዜ ጀምሮ ለ
