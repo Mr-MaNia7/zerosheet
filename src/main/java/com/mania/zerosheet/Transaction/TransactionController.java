@@ -95,9 +95,11 @@ public class TransactionController {
             Performa uhead = new Performa(2*performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(),
                     performa.getDayDifference(), u.getUnitPrice()*2*performa.getItemQuantity(), (5.68 / 3 * performa.getTransPrice()*0), performa.getItemPrice(),
                     order, u);
+            double area = Math.ceil(3.84*performa.getItemQuantity());
+            performa.setCollateral(area / 3.84 * performa.getItem().getUnitPrice());
             order.addPerforma(performa);
             order.addPerforma(xbrace);
-            order.addPerforma(uhead);  
+            order.addPerforma(uhead);
         }
         else order.addPerforma(performa);
         return "redirect:/orders/current";
