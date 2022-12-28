@@ -58,7 +58,7 @@ public class CustomerController {
     for (Customer cust : customerRepository.findAll()){
       if (
         customer.getFullName().equals(cust.getFullName()) || 
-        customer.getEmail().equals(cust.getEmail()) ||
+        (!(customer.getEmail().isEmpty()) && customer.getEmail().equals(cust.getEmail())) ||
         customer.getPhoneNumber().equals(cust.getPhoneNumber())
       ){
         isDuplicate = true;
