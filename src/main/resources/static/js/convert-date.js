@@ -248,16 +248,25 @@ due_back_date.addEventListener('change', function(){
   dueDateEC.textContent = `= ${formatDate(etDate)}`
 })
 
+var area = document.getElementById("areaCoverage")
+area.addEventListener('change', function(){
+  var a = this.value
+  var qtyel = document.getElementById("itemQuantity")
+  qtyel.value = `${Math.round(a/3.84)}`
+})
+
 function defaultValue() {
   var selectedElement = document.getElementById('itemSel')
   var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
   var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+  var area = document.getElementById("areaCoverage").getAttribute('value')
 
   var priceElement = document.getElementById('itemPrice')
   priceElement.setAttribute('value', `${loanprice}`)
 
   var quantityElement = document.getElementById('itemQuantity')
   quantityElement.setAttribute('max', `${totalquantity}`)
+  quantityElement.setAttribute('value', `${Math.round(area/3.84)}`)
 
   defaultDate()
   

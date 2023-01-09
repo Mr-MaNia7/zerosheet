@@ -32,11 +32,22 @@
       <span class="invalid-feedback" th:if="${#fields.hasErrors('itemPrice')}" th:errors="*{itemPrice}"></span>
     </div>
     <div class="mb-3">
-      <label class="form-label" for="itemQuantity">Item Quantity <i class="fa-solid fa-asterisk fa-xs"
-          style="color:crimson;"></i></label>
-      <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity"
-        th:errorclass="is-invalid" th:value="${transaction.itemQuantity}" required>
-      <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+      <div class="row">
+        <div class="col">
+          <label class="form-label" for="areaCoverage">Area Coverage <i class="fa-solid fa-asterisk fa-xs"
+              style="color:crimson;"></i></label>
+          <input type="number" min="1" max="1000" class="form-control" name="areaCoverage" id="areaCoverage"
+            th:errorclass="is-invalid" value="10" required>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('areaCoverage')}" th:errors="*{areaCoverage}"></span>
+        </div>
+        <div class="col">
+          <label class="form-label" for="itemQuantity">Item Quantity <i class="fa-solid fa-asterisk fa-xs"
+              style="color:crimson;"></i></label>
+          <input type="number" min="1" max="11" class="form-control" name="itemQuantity" id="itemQuantity"
+            th:errorclass="is-invalid" value="10" required>
+          <span class="invalid-feedback" th:if="${#fields.hasErrors('itemQuantity')}" th:errors="*{itemQuantity}"></span>
+        </div>
+      </div>
     </div>
     <div class="mb-3">
       <label class="form-label" for="dueDate">Start Date <i class="fa-solid fa-asterisk fa-xs"

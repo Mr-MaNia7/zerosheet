@@ -36,8 +36,10 @@ public class Transaction implements Serializable{
     private long transId;
 
     @Min(value = 1, message = "Item Quantity should be atleast 1")
-    private int itemQuantity = 10;
-    
+    private int itemQuantity = 3;
+    @Min(value = 1, message = "Area Coverage should be atleast 1")
+    private int areaCoverage = 10;
+
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueDate = new Date(new Date().getTime());
 

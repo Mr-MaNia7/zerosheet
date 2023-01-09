@@ -32,7 +32,9 @@ public class Performa implements Serializable {
     private long transId;
     
     @Min(value = 1, message = "Item Quantity should be atleast 1")
-    private int itemQuantity = 10;
+    private int itemQuantity = 3;
+    @Min(value = 1, message = "Area Coverage should be atleast 1")
+    private int areaCoverage = 10;
     
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dueDate = new Date(new Date().getTime());
@@ -100,8 +102,8 @@ public class Performa implements Serializable {
               .toDays(difference_In_Time);
     }
     public void setTransPrice(double remainingPrice){
-        if (this.item.getItemName().startsWith("H frame 2.4")){
-            this.transPrice = (Math.ceil(3.84  * this.itemQuantity) * this.itemPrice * this.dayDifference) - remainingPrice;
+        if (this.item.getItemId() == 1L || this.item.getItemId() == 2L){
+            this.transPrice = (this.areaCoverage * this.itemPrice * this.dayDifference) - remainingPrice;
         }
         else this.transPrice = (this.itemPrice * this.dayDifference * this.itemQuantity) - remainingPrice;
     }
