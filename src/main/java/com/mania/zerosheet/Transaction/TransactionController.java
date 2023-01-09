@@ -74,33 +74,40 @@ public class TransactionController {
     public Transaction transaction() {
         return new Transaction();
     }
+
     @PostMapping("/addtransaction")
-    public String processTransaction(@Valid Performa performa, BindingResult result,
-    @ModelAttribute Customer order, Model model) {
+    public String processTransaction(@Valid Performa performa,
+            @RequestParam(value = "item2", required = false) Long itemId2,
+            @RequestParam(value = "item3", required = false) Long itemId3,
+            @RequestParam(value = "mult2", required = false) int mult2,
+            @RequestParam(value = "mult3", required = false) int mult3, BindingResult result,
+            @ModelAttribute Customer order, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("items", itemRepository.findAll());
             return "Forms/item-transaction";
         }
         performa.addNewTransaction(0);
         if (performa.getItem().getItemId() == 1L || performa.getItem().getItemId() == 2L) {
-            Item x = itemRepository.findById(4L)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + 4L));
-            ;
-            Item u = itemRepository.findById(5L)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + 5L));
-            ;
-            Performa xbrace = new Performa(performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(),
-                    performa.getDayDifference(), x.getUnitPrice()*performa.getItemQuantity(), (2.84 / 3 * performa.getTransPrice()*0), performa.getItemPrice(),
-                    order, x);
-            Performa uhead = new Performa(2*performa.getItemQuantity(), performa.getDueDate(), performa.getDueBackDate(),
-                    performa.getDayDifference(), u.getUnitPrice()*2*performa.getItemQuantity(), (5.68 / 3 * performa.getTransPrice()*0), performa.getItemPrice(),
-                    order, u);
+            Item item2 = itemRepository
+                    .findById(itemId2)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId2));
+            Item item3 = itemRepository
+                    .findById(itemId3)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid item Id: " + itemId3));
+            Performa performa2 = new Performa(performa.getItemQuantity() * mult2, performa.getDueDate(), performa.getDueBackDate(),
+                performa.getDayDifference(), item2.getUnitPrice() * performa.getItemQuantity(),
+                (2.84 / 3 * performa.getTransPrice() * 0), performa.getItemPrice(),
+                order, item2);
+            Performa performa3 = new Performa(performa.getItemQuantity() * mult3, performa.getDueDate(), performa.getDueBackDate(),
+                performa.getDayDifference(), item3.getUnitPrice() * performa.getItemQuantity(),
+                (2.84 / 3 * performa.getTransPrice() * 0), performa.getItemPrice(),
+                order, item3);
             performa.setCollateral(performa.getAreaCoverage() / 3.84 * performa.getItem().getUnitPrice());
             order.addPerforma(performa);
-            order.addPerforma(xbrace);
-            order.addPerforma(uhead);
-        }
-        else order.addPerforma(performa);
+            order.addPerforma(performa2);
+            order.addPerforma(performa3);
+        } else
+            order.addPerforma(performa);
         return "redirect:/orders/current";
     }
 

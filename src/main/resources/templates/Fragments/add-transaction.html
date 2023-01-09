@@ -23,6 +23,46 @@
       </select>
       <span class="invalid-feedback" th:if="${#fields.hasErrors('item')}" th:errors="*{item}"></span>
     </div>
+    <div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col-8">
+            <label class="form-label" for="item">Choose a second Item <i class="fa-solid fa-asterisk fa-xs"
+              style="color:crimson;"></i></label>
+            <select id="item2" name="item2" class="form-select" aria-label="Select an item">
+              <div th:each="item : ${items}">
+                <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}"
+                  th:data-bs-totalquantity="${item.totalQuantity}"
+                  th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+              </div>
+            </select>
+          </div>
+          <div class="col-4">
+            <label class="form-label" for="mult1">Multiplicity</label>
+            <input type="number" min="1" max="1000" class="form-control" name="mult2" id="mult2" value="1">
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="row">
+          <div class="col-8">
+            <label class="form-label" for="item">Choose a third Item <i class="fa-solid fa-asterisk fa-xs"
+                style="color:crimson;"></i></label>
+            <select id="item3" name="item3" class="form-select" aria-label="Select an item">
+              <div th:each="item : ${items}">
+                <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}"
+                  th:data-bs-totalquantity="${item.totalQuantity}"
+                  th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>
+              </div>
+            </select>
+          </div>
+          <div class="col-4">
+            <label class="form-label" for="mult3">Multiplicity</label>
+            <input type="number" min="1" max="1000" class="form-control" name="mult3" id="mult3" value="2">
+        </div>
+        </div>
+      </div>
+    </div>
     <div th:fragment="update">
       <div class="mb-3">
         <label class="form-label" for="itemPrice">Item Unit Price <i class="fa-solid fa-asterisk fa-xs"
