@@ -75,7 +75,7 @@
                 </div>
               </form>
               <div class="my-3">
-                <a class="col-md-3 col-4 btn btn-primary btn-sm"
+                <a th:unless="${transaction.transPrice == 0}" class="col-md-3 col-4 btn btn-primary btn-sm"
                   th:href="@{/transactions/edittransaction/{transId}(transId=${transaction.transId})}"
                   role="button">
                   <i class="fa-solid fa-pen"></i><span> Edit Transaction</span>
