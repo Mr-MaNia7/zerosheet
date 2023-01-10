@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.mania.zerosheet.Customers.Customer;
 import com.mania.zerosheet.Items.Item;
 import com.mania.zerosheet.Items.ItemRepository;
+import com.mania.zerosheet.Items.ItemService;
 import com.mania.zerosheet.Performa.Performa;
 import com.mania.zerosheet.Performa.PerformaRepository;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class TransactionController {
     private final CompanyRepository companyRepository;
     private final PerformaRepository performaRepository;
     private final TransactionService transactionService;
+    private final ItemService itemService;
     private final InstanceRepository instanceRepository;
     private boolean isDuplicate = false;
     private boolean isEdited = true;
@@ -63,7 +65,7 @@ public class TransactionController {
     @GetMapping("/transactions/newtransaction")
     public String showTransactionForm(Performa performa, Model model) {
         model.addAttribute("performa", performa);
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("items", itemService.getPage(1, 30));
         return "Forms/item-transaction";
     }
     @ModelAttribute(name = "customer")
@@ -83,7 +85,7 @@ public class TransactionController {
             @RequestParam(value = "mult3", required = false) int mult3, BindingResult result,
             @ModelAttribute Customer order, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("items", itemRepository.findAll());
+            model.addAttribute("items", itemService.getPage(1, 30));
             return "Forms/item-transaction";
         }
         performa.addNewTransaction(0);
@@ -136,7 +138,7 @@ public class TransactionController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid transaction Id: " + transId));
 
         model.addAttribute("transaction", transaction);
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("items", itemService.getPage(1, 30));
         model.addAttribute("isEdited", isEdited);
         return "Transactions/update-transaction";
     }
@@ -145,7 +147,7 @@ public class TransactionController {
     @Valid Transaction new_trans, BindingResult result, Model model){
         if (result.hasErrors()) {
             new_trans.setTransId(transId);
-            model.addAttribute("items", itemRepository.findAll());
+            model.addAttribute("items", itemService.getPage(1, 30));
             return "Transactions/update-transaction";
         }
         Item new_item =
@@ -190,7 +192,7 @@ public class TransactionController {
             .orElseThrow(() -> new IllegalArgumentException("Invalid customer Id: " + id));
 
         model.addAttribute("customer", customer);
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("items", itemService.getPage(1, 30));
         model.addAttribute("isDuplicate", isDuplicate);
         return "Forms/customer-transaction";
     }
@@ -199,7 +201,7 @@ public class TransactionController {
     public String addCustomerTransaction(@PathVariable("id") long id,
     @Valid Performa performa, BindingResult result, Model model){
         if (result.hasErrors()) {
-            model.addAttribute("items", itemRepository.findAll());
+            model.addAttribute("items", itemService.getPage(1, 30));
             return "Forms/customer-transaction";
         }
         Customer customer =

@@ -15,7 +15,7 @@
           style="color:crimson;"></i></label>
       <select id="itemSel" th:field="*{item.itemId}" class="form-select" aria-label="Select an item"
         th:errorclass="is-invalid" onchange="changeHandler()">
-        <div th:each="item : ${items}">
+        <div th:each="item : ${items.page}">
           <option th:value="${item.itemId}" th:data-bs-loanprice="${item.unitLoanPrice}"
             th:data-bs-totalquantity="${item.totalQuantity}"
             th:text="${item.itemName + ' [quantity = ' + item.totalQuantity} + ']'"></option>

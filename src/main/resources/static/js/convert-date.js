@@ -252,7 +252,14 @@ var area = document.getElementById("areaCoverage")
 area.addEventListener('change', function(){
   var a = this.value
   var qtyel = document.getElementById("itemQuantity")
-  qtyel.value = `${Math.round(a/3.84)}`
+  qtyel.value = `${Math.round(a / 3.84)}`
+})
+
+var itemQty = document.getElementById("itemQuantity")
+itemQty.addEventListener('change', function(){
+  var q = this.value
+  var areael = document.getElementById("areaCoverage")
+  areael.value = `${Math.round(q * 3.84)}`
 })
 
 function defaultValue() {
@@ -260,6 +267,8 @@ function defaultValue() {
   var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
   var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
   var area = document.getElementById("areaCoverage").getAttribute('value')
+  var itemId = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-itemId')
+  var comboEl = document.getElementById("combo")
 
   var priceElement = document.getElementById('itemPrice')
   priceElement.setAttribute('value', `${loanprice}`)
@@ -267,6 +276,10 @@ function defaultValue() {
   var quantityElement = document.getElementById('itemQuantity')
   quantityElement.setAttribute('max', `${totalquantity}`)
   quantityElement.setAttribute('value', `${Math.round(area/3.84)}`)
+
+  if (itemId == 1 || itemId == 2) {
+    comboEl.setAttribute("class", "collapse show")
+  }
 
   defaultDate()
   
@@ -279,9 +292,18 @@ function changeHandler() {
   var selectedElement = document.getElementById('itemSel')
   var loanprice = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-loanprice')
   var totalquantity = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-totalquantity')
+  var itemId = selectedElement.options[selectedElement.selectedIndex].getAttribute('data-bs-itemId')
+  var comboEl = document.getElementById("combo")
 
   var priceElement = document.getElementById('itemPrice')
   priceElement.setAttribute('value', `${loanprice}`)
+
+  if (itemId == 1 || itemId == 2) {
+    comboEl.setAttribute("class", "collapse show")
+  }
+  else {
+    comboEl.setAttribute("class", "collapse")
+  }
 
   var quantityElement = document.getElementById('itemQuantity')
   quantityElement.setAttribute('max', `${totalquantity}`)
